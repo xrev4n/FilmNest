@@ -142,6 +142,10 @@
   height: 1rem;
 }
 
+body.dark-mode .movie-rating mat-icon {
+  color: #f39c12 !important;
+}
+
 /* Sinopsis de la película */
 .movie-overview {
   color: #666;

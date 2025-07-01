@@ -20,4 +20,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background-color);
   color: var(--text-color);
+}
+
+body.dark-mode .mat-button-toggle-group {
+  background: #232323 !important;
+  border-radius: 8px;
+}
+
+body.dark-mode .mat-button-toggle-button {
+  color: #fff !important;
+}
+
+body.dark-mode .mat-icon {
+  color: #fff !important;
 } 

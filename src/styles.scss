@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+@use '@angular/material' as mat;
+
 html, body { 
   height: 100%; 
 }
@@ -14,6 +16,11 @@ body {
 body.dark-mode {
   --background-color: #181818;
   --text-color: #fafafa;
+  @include mat.button-toggle-overrides((
+    background-color: #232323,
+    selected-state-background-color: #333,
+    selected-state-text-color: #fff
+  ));
 }
 
 * {
@@ -70,4 +77,28 @@ body.dark-mode {
   --card-border: #444;
   --paginator-bg: #232323;
   --paginator-color: #fafafa;
+}
+
+body.dark-mode .mat-mdc-button-toggle-group {
+  background: #232323 !important;
+  border-radius: 8px;
+}
+
+body.dark-mode .mat-mdc-button-toggle-button {
+  background: transparent !important;
+  color: #fff !important;
+}
+
+body.dark-mode .mat-mdc-button-toggle-checked {
+  background: #333 !important;
+  color: #fff !important;
+}
+
+body.dark-mode .mat-icon {
+  color: #fff !important;
+}
+
+body.dark-mode .movie-rating mat-icon,
+body.dark-mode .movie-meta .meta-item mat-icon {
+  color: #f39c12 !important;
 }

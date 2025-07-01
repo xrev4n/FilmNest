@@ -1,7 +1,12 @@
 <!-- Contenedor principal de la aplicación -->
 <main>
-  <button (click)="toggleDarkMode()" style="position: absolute; top: 1rem; right: 1rem; z-index: 1000;">
-    {{ isDarkMode ? 'Modo Claro' : 'Modo Oscuro' }}
-  </button>
+  <mat-button-toggle-group [value]="isDarkMode ? 'dark' : 'light'" (change)="toggleDarkMode()" [hideSingleSelectionIndicator]="true" style="position: absolute; top: 1rem; right: 1rem; z-index: 1000;">
+    <mat-button-toggle value="light">
+      <mat-icon>light_mode</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="dark">
+      <mat-icon>dark_mode</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
   <router-outlet></router-outlet>
 </main> 

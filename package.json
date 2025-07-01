@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "serve:ssr:catalogo-peliculas": "node dist/catalogo-peliculas/server/server.mjs"
+    "serve:ssr:FilmNest": "node dist/FilmNest/server/server.mjs"
   },
   "private": true,
   "dependencies": {

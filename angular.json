@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "catalogo-peliculas": {
+    "FilmNest": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -41,7 +41,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/catalogo-peliculas",
+            "outputPath": "dist/FilmNest",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -53,7 +53,8 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/assets"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
@@ -94,10 +95,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "catalogo-peliculas:build:production"
+              "buildTarget": "FilmNest:build:production"
             },
             "development": {
-              "buildTarget": "catalogo-peliculas:build:development"
+              "buildTarget": "FilmNest:build:development"
             }
           },
           "defaultConfiguration": "development"
