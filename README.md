@@ -34,7 +34,7 @@ Una plataforma web moderna para gestionar watchlists y calificaciones de pelícu
    - Solicita una API key
    - Copia tu API key
 
-   Luego crea el archivo `src/environments/environment.ts` y pega el siguiente codigo y reemplaza el campo tmdbApiKey por tu APIKey de TMDB:
+   Luego crea el archivo `src/environments/environment.ts` , pega el siguiente codigo y reemplaza el campo tmdbApiKey por tu APIKey de TMDB:
    ```typescript
    export const environment = {
      production: false,
