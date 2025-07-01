@@ -11,8 +11,6 @@ Una plataforma web moderna para gestionar watchlists y calificaciones de pelícu
 - 🎭 **Detalles Completos**: Información detallada de cada película
 - ⭐ **Calificaciones**: Visualización de puntuaciones de usuarios
 - 🎨 **Material Design**: Componentes de Angular Material
-- 📝 **Código Documentado**: Comentarios descriptivos en todo el código
-- 🗂️ **Estructura Organizada**: Archivos HTML, SCSS y TypeScript separados
 
 ## 🚀 Instalación
 
@@ -36,13 +34,13 @@ Una plataforma web moderna para gestionar watchlists y calificaciones de pelícu
    - Solicita una API key
    - Copia tu API key
 
-   Luego crea el archivo `src/environments/environment.ts` y pega el siguiente codigo y reemplaza el campo tmdbApiKey:
+   Luego crea el archivo `src/environments/environment.ts` y pega el siguiente codigo y reemplaza el campo tmdbApiKey por tu APIKey de TMDB:
    ```typescript
    export const environment = {
-  production: false,
-  tmdbApiKey: 'tu_api_key_aqui' // Reemplaza con tu API key real
-  tmdbBaseUrl: 'https://api.themoviedb.org/3',
-  tmdbImageBaseUrl: 'https://image.tmdb.org/t/p'};,
+     production: false,
+     tmdbApiKey: 'tu_api_key_aqui' // Reemplaza con tu API key real
+     tmdbBaseUrl: 'https://api.themoviedb.org/3',
+     tmdbImageBaseUrl: 'https://image.tmdb.org/t/p'};
    ```
 
 4. **Ejecuta la aplicación**
