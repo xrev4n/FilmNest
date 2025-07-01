@@ -7,8 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { TmdbService, MovieDetail } from '../../services/tmdb.service';
+import { TrailerModalComponent } from '../../components/trailer-modal/trailer-modal.component';
 
 /**
  * Componente de detalle de película
@@ -23,7 +25,8 @@ import { TmdbService, MovieDetail } from '../../services/tmdb.service';
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDialogModule
   ],
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.scss']
@@ -38,7 +41,8 @@ export class MovieDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private tmdbService: TmdbService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   /**
@@ -130,5 +134,22 @@ export class MovieDetailComponent implements OnInit {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(amount);
+  }
+
+  /**
+   * Abre el modal del trailer
+   */
+  openTrailerModal(): void {
+    if (this.movie) {
+      this.dialog.open(TrailerModalComponent, {
+        data: {
+          movieId: this.movie.id,
+          movieTitle: this.movie.title
+        },
+        maxWidth: '90vw',
+        maxHeight: '90vh',
+        width: '800px'
+      });
+    }
   }
 }

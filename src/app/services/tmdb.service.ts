@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
+
 
 /**
  * Interfaz que representa una película básica
@@ -115,5 +116,28 @@ export class TmdbService {
   getImageUrl(path: string, size: string = 'w500'): string {
     if (!path) return 'assets/no-image.jpg';
     return `${this.imageBaseUrl}/${size}${path}`;
+  }
+
+    /**
+   * Obtiene la URL del tráiler en YouTube de una película por su ID
+   * @param movieId - ID de la película
+   * @returns Observable con la URL del tráiler de YouTube o null si no se encuentra
+   */
+  getMovieTrailerUrl(movieId: number): Observable<string | null> {
+    return this.http.get<any>(
+      `${this.baseUrl}/movie/${movieId}/videos?api_key=${this.apiKey}`
+    ).pipe(
+      map(response => {
+        const trailers = response.results?.filter(
+          (video: any) =>
+            video.site === 'YouTube' && video.type === 'Trailer'
+        );
+        if (trailers && trailers.length > 0) {
+          const trailerKey = trailers[0].key;
+          return `https://www.youtube.com/watch?v=${trailerKey}`;
+        }
+        return null;
+      })
+    );
   }
 }

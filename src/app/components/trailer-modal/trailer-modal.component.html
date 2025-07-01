@@ -1,0 +1,41 @@
+<div class="trailer-modal-container">
+  <!-- Header del modal -->
+  <div class="modal-header">
+    <h2 mat-dialog-title>Trailer: {{ data.movieTitle }}</h2>
+    <button 
+      mat-icon-button 
+      (click)="close()"
+      aria-label="Cerrar"
+      class="close-button"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Contenido del modal -->
+  <div mat-dialog-content class="modal-content">
+    <!-- Estado de carga -->
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Cargando trailer...</p>
+    </div>
+
+    <!-- Error si no hay trailer -->
+    <div *ngIf="error" class="error-container">
+      <mat-icon>error</mat-icon>
+      <h3>Trailer no disponible</h3>
+      <p>No se encontró un trailer para esta película.</p>
+    </div>
+
+    <!-- Reproductor de YouTube -->
+    <div *ngIf="!loading && !error && trailerUrl" class="video-container">
+      <iframe
+        [src]="getEmbedUrl() | safe"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        class="youtube-iframe"
+      ></iframe>
+    </div>
+  </div>
+</div> 

@@ -71,6 +71,19 @@
           </mat-chip>
         </div>
 
+        <!-- Botón para ver trailer -->
+        <div class="trailer-section">
+            <button 
+            mat-flat-button 
+            (click)="openTrailerModal()"
+            class="trailer-button"
+            color="primary"
+          >
+            <mat-icon>play_circle</mat-icon>
+            Ver Trailer
+          </button>
+        </div>
+
         <!-- Sección de sinopsis -->
         <div class="overview-section">
           <h3>Sinopsis</h3>

@@ -8,7 +8,7 @@
 
 body.dark-mode {
   --searchbar-bg: #232323;
-  --searchbar-text: #fafafa;
+  --searchbar-text: #1565c0;
   --searchbar-border: #444;
   --searchbar-btn-bg: #1565c0;
   --searchbar-btn-text: #fafafa;
@@ -57,11 +57,6 @@ body.dark-mode {
 
 .mat-form-field-label, .mat-icon {
   color: var(--searchbar-text) !important;
-}
-
-.search-button, .search-button.mat-raised-button {
-  background: var(--searchbar-btn-bg) !important;
-  color: var(--searchbar-btn-text) !important;
 }
 
 @media (max-width: 768px) {

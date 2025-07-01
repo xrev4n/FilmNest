@@ -126,13 +126,37 @@ body.dark-mode .meta-item mat-icon {
 .genres {
   display: flex;
   gap: 8px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
 }
 
 .genre-chip {
   background: var(--detail-genre-bg);
   color: var(--detail-genre-color);
+}
+
+/* Sección del trailer */
+.trailer-section {
+  margin-bottom: 32px;
+}
+
+.trailer-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 25px;
+  background-color: #e91e63;
+  color: white;
+}
+
+.trailer-button mat-icon {
+  font-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  
 }
 
 /* Sección de sinopsis */
