@@ -41,6 +41,7 @@ Una plataforma web moderna para gestionar watchlists y calificaciones de pelícu
      tmdbApiKey: 'tu_api_key_aqui' // Reemplaza con tu API key real
      tmdbBaseUrl: 'https://api.themoviedb.org/3',
      tmdbImageBaseUrl: 'https://image.tmdb.org/t/p'};
+   }
    ```
 
 4. **Ejecuta la aplicación**
