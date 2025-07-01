@@ -1,6 +1,6 @@
-# 🎬 Catálogo de Películas
+# 🎬 FilmNest
 
-Un catálogo de películas moderno y responsivo construido con Angular y la API de TMDB.
+Una plataforma web moderna para gestionar watchlists y calificaciones de películas, construida con Angular e integrada con la API de TMDB.
 
 ## ✨ Características
 
@@ -18,8 +18,8 @@ Un catálogo de películas moderno y responsivo construido con Angular y la API 
 
 1. **Clona el repositorio**
    ```bash
-   git clone <tu-repositorio>
-   cd catalogo-peliculas
+   git clone https://github.com/xrev4n/FilmNest.git
+   cd FilmNest
    ```
 
 2. **Instala las dependencias**
@@ -36,14 +36,13 @@ Un catálogo de películas moderno y responsivo construido con Angular y la API 
    - Solicita una API key
    - Copia tu API key
 
-   Luego, edita el archivo `src/environments/environment.ts` y reemplaza:
+   Luego crea el archivo `src/environments/environment.ts` y pega el siguiente codigo y reemplaza el campo tmdbApiKey:
    ```typescript
-   tmdbApiKey: 'tu_api_key_aqui',
-   ```
-   
-   Con tu API key real:
-   ```typescript
-   tmdbApiKey: 'tu_api_key_real_aqui',
+   export const environment = {
+  production: false,
+  tmdbApiKey: 'tu_api_key_aqui' // Reemplaza con tu API key real
+  tmdbBaseUrl: 'https://api.themoviedb.org/3',
+  tmdbImageBaseUrl: 'https://image.tmdb.org/t/p'};,
    ```
 
 4. **Ejecuta la aplicación**
@@ -137,10 +136,6 @@ src/
 - `GET /search/movie` - Búsqueda de películas
 - `GET /movie/{id}` - Detalles de película específica
 
-## 📝 Documentación del Código
-
-El proyecto incluye comentarios descriptivos en:
-
 ### Componentes
 - **JSDoc**: Documentación de clases y métodos
 - **Comentarios HTML**: Explicación de secciones del template
@@ -151,30 +146,6 @@ El proyecto incluye comentarios descriptivos en:
 - **Métodos**: Descripción de parámetros y valores de retorno
 - **Propiedades**: Explicación de variables importantes
 
-### Ejemplo de Documentación
-```typescript
-/**
- * Componente de barra de búsqueda para películas
- * Permite a los usuarios buscar películas por título
- */
-@Component({
-  selector: 'app-search-bar',
-  templateUrl: './search-bar.component.html',
-  styleUrls: ['./search-bar.component.scss']
-})
-export class SearchBarComponent {
-  /** Evento emitido cuando se realiza una búsqueda */
-  @Output() search = new EventEmitter<string>();
-  
-  /**
-   * Ejecuta la búsqueda cuando se hace clic en el botón
-   */
-  onSearch(): void {
-    // Lógica de búsqueda
-  }
-}
-```
-
 ## 🚀 Despliegue
 
 Para desplegar la aplicación:
@@ -184,14 +155,6 @@ npm run build
 ```
 
 Los archivos de producción se generarán en la carpeta `dist/`.
-
-## 🤝 Contribuir
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
 
 ## 📄 Licencia
 
@@ -205,6 +168,4 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 ---
 
-¡Disfruta explorando el catálogo de películas! 🎬✨
-
-# FilmNest
+¡Disfruta explorando FilmNest! 🎬✨
