@@ -1,0 +1,79 @@
+<!-- Contenedor principal de la página de inicio -->
+<div class="home-container">
+  <!-- Encabezado de la página -->
+  <header class="header">
+    <h1 class="title">🎬 FilmNest</h1>
+    <p class="subtitle">Descubre las mejores películas del momento en FilmNest</p>
+  </header>
+
+  <!-- Componente de barra de búsqueda -->
+  <app-search-bar (search)="onSearch($event)"></app-search-bar>
+
+  <!-- Contenido principal -->
+  <div class="content">
+    <!-- Estado de carga -->
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Cargando películas...</p>
+    </div>
+
+    <!-- Estado cuando no hay resultados -->
+    <div *ngIf="!loading && movies.length === 0" class="no-results">
+      <mat-icon>movie_off</mat-icon>
+      <h3>No se encontraron películas</h3>
+      <p *ngIf="searchQuery">Intenta con otros términos de búsqueda</p>
+      <button 
+        *ngIf="searchQuery" 
+        mat-raised-button 
+        color="primary" 
+        (click)="loadPopularMovies()"
+      >
+        Ver películas populares
+      </button>
+    </div>
+
+    <!-- Grid de películas -->
+    <div *ngIf="!loading && movies.length > 0" class="movies-grid">
+      <!-- Tarjeta de película individual -->
+      <mat-card 
+        *ngFor="let movie of movies" 
+        class="movie-card"
+        (click)="viewMovieDetail(movie.id)"
+      >
+        <!-- Póster de la película -->
+        <img 
+          mat-card-image 
+          [src]="getImageUrl(movie.poster_path)" 
+          [alt]="movie.title"
+          class="movie-poster"
+          (error)="onImageError($event)"
+        >
+        <!-- Contenido de la tarjeta -->
+        <mat-card-content class="movie-content">
+          <h3 class="movie-title">{{ movie.title }}</h3>
+          <!-- Metadatos de la película -->
+          <div class="movie-meta">
+            <span class="movie-year">{{ getYear(movie.release_date) }}</span>
+            <div class="movie-rating">
+              <mat-icon>star</mat-icon>
+              <span>{{ movie.vote_average.toFixed(1) }}</span>
+            </div>
+          </div>
+          <!-- Sinopsis truncada -->
+          <p class="movie-overview">{{ truncateOverview(movie.overview) }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Paginador -->
+    <mat-paginator
+      *ngIf="!loading && totalPages > 1"
+      [length]="totalResults"
+      [pageSize]="20"
+      [pageIndex]="currentPage - 1"
+      [pageSizeOptions]="[20]"
+      (page)="onPageChange($event)"
+      class="paginator"
+    ></mat-paginator>
+  </div>
+</div> 

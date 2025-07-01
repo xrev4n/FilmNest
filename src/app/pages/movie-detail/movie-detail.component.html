@@ -1,0 +1,106 @@
+<!-- Contenedor principal del detalle de película -->
+<div class="movie-detail-container">
+  <!-- Estado de carga -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Cargando detalles de la película...</p>
+  </div>
+
+  <!-- Contenido de la película cuando está cargada -->
+  <div *ngIf="!loading && movie" class="movie-content">
+    <!-- Contenedor de imagen de fondo -->
+    <div class="backdrop-container">
+      <img 
+        [src]="getBackdropUrl(movie.backdrop_path)" 
+        [alt]="movie.title"
+        class="backdrop-image"
+        (error)="onImageError($event)"
+      >
+      <!-- Overlay con botón de regreso -->
+      <div class="backdrop-overlay">
+        <button 
+          mat-icon-button 
+          class="back-button"
+          (click)="goBack()"
+          aria-label="Volver"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Información de la película -->
+    <div class="movie-info">
+      <!-- Sección del póster -->
+      <div class="poster-section">
+        <img 
+          [src]="getImageUrl(movie.poster_path)" 
+          [alt]="movie.title"
+          class="movie-poster"
+          (error)="onImageError($event)"
+        >
+      </div>
+
+      <!-- Sección de detalles -->
+      <div class="details-section">
+        <h1 class="movie-title">{{ movie.title }}</h1>
+        
+        <!-- Metadatos de la película -->
+        <div class="movie-meta">
+          <div class="meta-item">
+            <mat-icon>calendar_today</mat-icon>
+            <span>{{ getYear(movie.release_date) }}</span>
+          </div>
+          <div class="meta-item">
+            <mat-icon>schedule</mat-icon>
+            <span>{{ movie.runtime }} min</span>
+          </div>
+          <div class="meta-item">
+            <mat-icon>star</mat-icon>
+            <span>{{ movie.vote_average.toFixed(1) }}/10</span>
+          </div>
+        </div>
+
+        <!-- Géneros de la película -->
+        <div class="genres" *ngIf="movie.genres && movie.genres.length > 0">
+          <mat-chip 
+            *ngFor="let genre of movie.genres" 
+            class="genre-chip"
+          >
+            {{ genre.name }}
+          </mat-chip>
+        </div>
+
+        <!-- Sección de sinopsis -->
+        <div class="overview-section">
+          <h3>Sinopsis</h3>
+          <p class="overview">{{ movie.overview || 'Sinopsis no disponible' }}</p>
+        </div>
+
+        <!-- Información adicional (presupuesto y recaudación) -->
+        <div class="additional-info" *ngIf="movie.budget || movie.revenue">
+          <div class="info-item" *ngIf="movie.budget">
+            <strong>Presupuesto:</strong> {{ formatCurrency(movie.budget) }}
+          </div>
+          <div class="info-item" *ngIf="movie.revenue">
+            <strong>Recaudación:</strong> {{ formatCurrency(movie.revenue) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estado de error cuando no se encuentra la película -->
+  <div *ngIf="!loading && !movie" class="error-container">
+    <mat-icon>error</mat-icon>
+    <h3>Película no encontrada</h3>
+    <p>La película que buscas no existe o ha sido eliminada.</p>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="goBack()"
+    >
+      Volver al catálogo
+    </button>
+  </div>
+</div> 

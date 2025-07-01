@@ -1,0 +1,7 @@
+<!-- Contenedor principal de la aplicación -->
+<main>
+  <button (click)="toggleDarkMode()" style="position: absolute; top: 1rem; right: 1rem; z-index: 1000;">
+    {{ isDarkMode ? 'Modo Claro' : 'Modo Oscuro' }}
+  </button>
+  <router-outlet></router-outlet>
+</main> 

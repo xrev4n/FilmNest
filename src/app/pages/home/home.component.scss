@@ -1,0 +1,215 @@
+/* Contenedor principal de la página de inicio */
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Encabezado de la página */
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0 0 8px 0;
+  color: var(--text-color);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Contenido principal */
+.content {
+  min-height: 400px;
+}
+
+/* Contenedor de carga */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.loading-container p {
+  margin-top: 16px;
+  color: #666;
+}
+
+/* Estado cuando no hay resultados */
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.no-results mat-icon {
+  font-size: 4rem;
+  width: 4rem;
+  height: 4rem;
+  color: #ccc;
+  margin-bottom: 16px;
+}
+
+.no-results h3 {
+  margin: 0 0 8px 0;
+  color: var(--text-color);
+}
+
+.no-results p {
+  margin: 0 0 24px 0;
+  color: #666;
+}
+
+/* Grid de películas */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+/* Tarjeta de película */
+.movie-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+}
+
+.movie-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Póster de la película */
+.movie-poster {
+  height: 400px;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Contenido de la tarjeta */
+.movie-content {
+  padding: 16px;
+}
+
+.movie-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0 0 8px 0;
+  color: var(--text-color);
+  line-height: 1.3;
+}
+
+/* Metadatos de la película */
+.movie-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.movie-year {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.movie-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #f39c12;
+  font-weight: 500;
+}
+
+.movie-rating mat-icon {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Sinopsis de la película */
+.movie-overview {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Paginador */
+.paginator {
+  margin-top: 32px;
+  background: var(--paginator-bg);
+  color: var(--paginator-color);
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+
+/* Estilos responsivos para tablets */
+@media (max-width: 1024px) {
+  .movies-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .movies-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .movie-poster {
+    height: 350px;
+  }
+}
+
+/* Estilos responsivos para móviles */
+@media (max-width: 480px) {
+  .movies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .movie-poster {
+    height: 400px;
+  }
+}
+
+:root {
+  --card-bg: #fff;
+  --card-border: #e0e0e0;
+  --paginator-bg: #fff;
+  --paginator-color: #222;
+}
+
+body.dark-mode {
+  --card-bg: #232323;
+  --card-border: #444;
+  --paginator-bg: #232323;
+  --paginator-color: #fafafa;
+} 
