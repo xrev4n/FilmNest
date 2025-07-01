@@ -1,7 +1,7 @@
 /* Contenedor principal del detalle de película */
 .movie-detail-container {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: var(--detail-bg);
 }
 
 /* Contenedor de carga */
@@ -84,17 +84,17 @@
 
 /* Sección de detalles */
 .details-section {
-  background: white;
+  background: var(--detail-card-bg);
   padding: 32px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--detail-card-shadow);
 }
 
 .movie-title {
   font-size: 2.5rem;
   font-weight: 300;
   margin: 0 0 24px 0;
-  color: #333;
+  color: var(--detail-title);
   line-height: 1.2;
 }
 
@@ -110,7 +110,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #666;
+  color: var(--detail-meta);
   font-size: 1rem;
 }
 
@@ -127,8 +127,8 @@
 }
 
 .genre-chip {
-  background: #e3f2fd;
-  color: #1976d2;
+  background: var(--detail-genre-bg);
+  color: var(--detail-genre-color);
 }
 
 /* Sección de sinopsis */
@@ -140,13 +140,13 @@
   font-size: 1.3rem;
   font-weight: 500;
   margin: 0 0 16px 0;
-  color: #333;
+  color: var(--detail-title);
 }
 
 .overview {
   font-size: 1rem;
   line-height: 1.6;
-  color: #666;
+  color: var(--detail-overview);
   margin: 0;
 }
 
@@ -159,11 +159,11 @@
 .info-item {
   margin-bottom: 12px;
   font-size: 0.95rem;
-  color: #666;
+  color: var(--detail-info);
 }
 
 .info-item strong {
-  color: #333;
+  color: var(--detail-info-strong);
 }
 
 /* Contenedor de error */
@@ -186,12 +186,12 @@
 
 .error-container h3 {
   margin: 0 0 8px 0;
-  color: #333;
+  color: var(--detail-title);
 }
 
 .error-container p {
   margin: 0 0 24px 0;
-  color: #666;
+  color: var(--detail-info);
 }
 
 /* Estilos responsivos para tablets */

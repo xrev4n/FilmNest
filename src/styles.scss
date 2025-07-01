@@ -37,4 +37,37 @@ body.dark-mode {
 :root {
   --background-color: #fafafa;
   --text-color: #222;
+  --detail-bg: #f5f5f5;
+  --detail-card-bg: #fff;
+  --detail-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --detail-title: #333;
+  --detail-meta: #666;
+  --detail-genre-bg: #e3f2fd;
+  --detail-genre-color: #1976d2;
+  --detail-overview: #666;
+  --detail-info: #666;
+  --detail-info-strong: #333;
+  --card-bg: #fff;
+  --card-border: #e0e0e0;
+  --paginator-bg: #fff;
+  --paginator-color: #222;
+}
+
+body.dark-mode {
+  --background-color: #181818;
+  --text-color: #fafafa;
+  --detail-bg: #181818;
+  --detail-card-bg: #232323;
+  --detail-card-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  --detail-title: #fafafa;
+  --detail-meta: #bdbdbd;
+  --detail-genre-bg: #263238;
+  --detail-genre-color: #90caf9;
+  --detail-overview: #bdbdbd;
+  --detail-info: #bdbdbd;
+  --detail-info-strong: #fafafa;
+  --card-bg: #232323;
+  --card-border: #444;
+  --paginator-bg: #232323;
+  --paginator-color: #fafafa;
 }
