@@ -18,11 +18,17 @@
           <mat-icon>arrow_back</mat-icon>
         </button>
       </div>
+      <!-- Foto de perfil en móvil -->
+      <div class="profile-section-mobile">
+        <img [src]="person.profile_path ? getImageUrl(person.profile_path) : 'assets/img/cast-not-found.png'"
+          [alt]="person.name" class="person-profile-mobile"
+          (error)="onImageError($event)">
+      </div>
     </div>
 
     <!-- Información del actor -->
     <div class="person-info">
-      <!-- Sección de la foto de perfil -->
+      <!-- Sección de la foto de perfil (solo desktop/tablet) -->
       <div class="profile-section">
         <img [src]="person.profile_path ? getImageUrl(person.profile_path) : 'assets/img/cast-not-found.png'"
           [alt]="person.name" class="person-profile"
@@ -73,11 +79,11 @@
         <div class="additional-info" *ngIf="person.homepage || person.imdb_id">
           <h3 class="info-title">Información adicional</h3>
           <div class="info-item" *ngIf="person.homepage">
-            <strong>Sitio web oficial:</strong> 
+            <strong>Sitio web oficial: </strong> 
             <a [href]="person.homepage" target="_blank" rel="noopener noreferrer">{{ person.homepage }}</a>
           </div>
           <div class="info-item" *ngIf="person.imdb_id">
-            <strong>IMDB:</strong> 
+            <strong>IMDB: </strong> 
             <a [href]="'https://www.imdb.com/name/' + person.imdb_id" target="_blank" rel="noopener noreferrer">
               Ver en IMDB
             </a>

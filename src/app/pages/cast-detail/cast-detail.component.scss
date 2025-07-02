@@ -55,6 +55,24 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
+/* Foto de perfil en móvil (sobre el backdrop) */
+.profile-section-mobile {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: none;
+}
+
+.person-profile-mobile {
+  width: 160px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
 /* Información del actor */
 .person-info {
   max-width: 1200px;
@@ -115,7 +133,7 @@
 }
 
 .meta-item mat-icon {
-  color: #f39c12;
+  color: #f39c12 !important;
 }
 
 body.dark-mode .meta-item mat-icon {
@@ -369,6 +387,11 @@ body.dark-mode .info-item a {
 @media (max-width: 480px) {
   .backdrop-container {
     height: 250px;
+    position: relative;
+  }
+
+  .profile-section-mobile {
+    display: block;
   }
 
   .person-info {
@@ -378,11 +401,6 @@ body.dark-mode .info-item a {
 
   .profile-section {
     display: none;
-  }
-
-  .person-profile {
-    width: 200px;
-    height: 300px;
   }
 
   .details-section {
