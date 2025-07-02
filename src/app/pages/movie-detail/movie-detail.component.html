@@ -113,6 +113,33 @@
           </div>
         </div>
 
+        <!-- Sección de películas recomendadas -->
+        <div class="recommendations-section" *ngIf="recommendations.length > 0">
+          <h3 class="cast-title">Películas sugeridas</h3>
+          <div class="cast-cards">
+            <div class="cast-card" *ngFor="let rec of visibleRecommendations"
+                 [routerLink]="['/movie', rec.id]"
+                 style="cursor: pointer;">
+              <img [src]="rec.poster_path ? getImageUrl(rec.poster_path) : 'assets/img/poster-not-found.png'"
+                   [alt]="rec.title" class="cast-photo">
+              <div class="cast-info">
+                <span class="cast-name">{{ rec.title }}</span>
+                <span class="cast-character">{{ rec.release_date | date:'yyyy' }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="cast-carousel-controls" *ngIf="recommendations.length > recommendationsPageSize">
+            <button mat-icon-button (click)="prevRecommendationsPage()" [disabled]="recommendationsPage === 0">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="cast-page-indicator">{{ recommendationsPage + 1 }} / {{ recommendationsTotalPages }}</span>
+            <button mat-icon-button (click)="nextRecommendationsPage()"
+                    [disabled]="(recommendationsPage + 1) * recommendationsPageSize >= recommendations.length">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

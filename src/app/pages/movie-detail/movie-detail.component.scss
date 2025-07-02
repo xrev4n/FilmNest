@@ -309,6 +309,28 @@ body.dark-mode .meta-item mat-icon {
     flex-direction: column;
     gap: 12px;
   }
+
+  .recommendations-section .cast-cards {
+    flex-direction: row;
+    overflow-x: auto;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding-bottom: 8px;
+  }
+  .recommendations-section .cast-card {
+    width: 70vw;
+    min-width: 180px;
+    max-width: 240px;
+    min-height: 200px;
+    flex: 0 0 auto;
+  }
+  .recommendations-section .cast-photo {
+    width: 60vw;
+    max-width: 180px;
+    height: 90vw;
+    max-height: 260px;
+  }
 }
 
 .info-title {
@@ -319,15 +341,13 @@ body.dark-mode .meta-item mat-icon {
 }
 
 /* Actores principales */
-.main-cast {
-  margin-bottom: 12px;
-}
 
 .cast-title {
   font-size: 1.3rem;
   font-weight: 500;
   margin: 0 0 16px 0;
   color: var(--detail-title);
+  margin-top: 18px;
 }
 
 .cast-cards {
@@ -404,7 +424,6 @@ body.dark-mode .meta-item mat-icon {
   align-items: center;
   justify-content: flex-end;
   gap: 8px;
-  margin-bottom: 12px;
 }
 
 .cast-page-indicator {
@@ -412,4 +431,14 @@ body.dark-mode .meta-item mat-icon {
   color: var(--detail-meta);
   min-width: 40px;
   text-align: center;
+}
+
+.recommendations-section .cast-card {
+  width: 180px;
+  min-height: 260px;
+}
+
+.recommendations-section .cast-photo {
+  width: 120px;
+  height: 180px;
 } 

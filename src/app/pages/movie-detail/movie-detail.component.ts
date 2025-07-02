@@ -46,6 +46,12 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   castPageSize = 5;
   /** Backdrop aleatorio de la película */
   randomBackdrop: string = '';
+  /** Películas recomendadas */
+  recommendations: any[] = [];
+  /** Página actual de recomendaciones */
+  recommendationsPage = 0;
+  /** Tamaño de página de recomendaciones */
+  recommendationsPageSize = 3;
 
   constructor(
     private route: ActivatedRoute,
@@ -57,7 +63,11 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   ) {
     if (isPlatformBrowser(this.platformId)) {
       this.updateCastPageSize();
-      window.addEventListener('resize', this.updateCastPageSize.bind(this));
+      this.updateRecommendationsPageSize();
+      window.addEventListener('resize', () => {
+        this.updateCastPageSize();
+        this.updateRecommendationsPageSize();
+      });
     }
   }
 
@@ -74,6 +84,18 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Ajusta el tamaño de página de recomendaciones según el ancho de pantalla
+   */
+  updateRecommendationsPageSize(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.recommendationsPageSize = window.innerWidth <= 480 ? 1 : 3;
+      if (this.recommendationsPage * this.recommendationsPageSize >= this.recommendations.length) {
+        this.recommendationsPage = 0;
+      }
+    }
+  }
+
+  /**
    * Inicializa el componente y carga los detalles de la película
    */
   ngOnInit(): void {
@@ -82,6 +104,7 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
       if (movieId) {
         this.loadMovieDetail(movieId);
         this.loadMovieCast(movieId);
+        this.loadMovieRecommendations(movieId);
       }
     });
   }
@@ -176,6 +199,20 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error loading cast:', error);
+      }
+    });
+  }
+
+  /**
+   * Carga las películas recomendadas para la película actual
+   */
+  loadMovieRecommendations(movieId: number): void {
+    this.tmdbService.getMovieRecommendations(movieId).subscribe({
+      next: (response) => {
+        this.recommendations = response.results || [];
+      },
+      error: (error) => {
+        console.error('Error loading recommendations:', error);
       }
     });
   }
@@ -296,9 +333,33 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
     return Math.ceil(this.actors.length / this.castPageSize);
   }
 
+  /** Devuelve las películas recomendadas visibles en la página actual */
+  get visibleRecommendations(): any[] {
+    const start = this.recommendationsPage * this.recommendationsPageSize;
+    return this.recommendations.slice(start, start + this.recommendationsPageSize);
+  }
+
+  /** Número total de páginas de recomendaciones */
+  get recommendationsTotalPages(): number {
+    return Math.ceil(this.recommendations.length / this.recommendationsPageSize);
+  }
+
+  /** Página anterior de recomendaciones */
+  prevRecommendationsPage(): void {
+    if (this.recommendationsPage > 0) this.recommendationsPage--;
+  }
+
+  /** Página siguiente de recomendaciones */
+  nextRecommendationsPage(): void {
+    if ((this.recommendationsPage + 1) * this.recommendationsPageSize < this.recommendations.length) this.recommendationsPage++;
+  }
+
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
-      window.removeEventListener('resize', this.updateCastPageSize.bind(this));
+      window.removeEventListener('resize', () => {
+        this.updateCastPageSize();
+        this.updateRecommendationsPageSize();
+      });
     }
   }
 }

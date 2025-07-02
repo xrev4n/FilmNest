@@ -359,4 +359,15 @@ export class TmdbService {
       `${this.baseUrl}/movie/${movieId}/images?api_key=${this.apiKey}`
     );
   }
+
+  /**
+   * Obtiene las películas recomendadas para una película específica
+   * @param movieId - ID de la película
+   * @returns Observable con las películas recomendadas
+   */
+  getMovieRecommendations(movieId: number): Observable<MovieResponse> {
+    return this.http.get<MovieResponse>(
+      `${this.baseUrl}/movie/${movieId}/recommendations?api_key=${this.apiKey}&language=es-ES`
+    );
+  }
 }

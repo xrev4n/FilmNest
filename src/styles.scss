@@ -45,7 +45,7 @@ body.dark-mode {
   --background-color: #fafafa;
   --text-color: #222;
   --detail-bg: #f5f5f5;
-  --detail-card-bg: #fff;
+  --detail-card-bg: rgba(255, 255, 255, 0.75);
   --detail-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   --detail-title: #333;
   --detail-meta: #666;
@@ -64,7 +64,7 @@ body.dark-mode {
   --background-color: #181818;
   --text-color: #fafafa;
   --detail-bg: #181818;
-  --detail-card-bg: #232323;
+  --detail-card-bg: rgba(35, 35, 35, 0.75);
   --detail-card-shadow: 0 4px 20px rgba(0,0,0,0.4);
   --detail-title: #fafafa;
   --detail-meta: #bdbdbd;
