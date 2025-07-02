@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, map, forkJoin, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 
@@ -137,6 +137,45 @@ export class TmdbService {
           return `https://www.youtube.com/watch?v=${trailerKey}`;
         }
         return null;
+      })
+    );
+  }
+
+  /**
+   * Obtiene los detalles completos de múltiples películas
+   * @param movieIds - Array de IDs de películas
+   * @returns Observable con array de películas con detalles completos
+   */
+  getMoviesDetails(movieIds: number[]): Observable<MovieDetail[]> {
+    const requests = movieIds.map(id => this.getMovieDetail(id));
+    return forkJoin(requests);
+  }
+
+  /**
+   * Obtiene las películas populares con detalles completos
+   * @param page - Número de página (opcional, por defecto 1)
+   * @returns Observable con películas populares
+   */
+  getPopularMoviesWithDetails(page: number = 1): Observable<MovieDetail[]> {
+    return this.getPopularMovies(page).pipe(
+      switchMap(response => {
+        const movieIds = response.results.map(movie => movie.id);
+        return this.getMoviesDetails(movieIds);
+      })
+    );
+  }
+
+  /**
+   * Busca películas con detalles completos
+   * @param query - Término de búsqueda
+   * @param page - Número de página (opcional, por defecto 1)
+   * @returns Observable con películas de búsqueda
+   */
+  searchMoviesWithDetails(query: string, page: number = 1): Observable<MovieDetail[]> {
+    return this.searchMovies(query, page).pipe(
+      switchMap(response => {
+        const movieIds = response.results.map(movie => movie.id);
+        return this.getMoviesDetails(movieIds);
       })
     );
   }

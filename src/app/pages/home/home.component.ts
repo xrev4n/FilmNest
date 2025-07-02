@@ -10,7 +10,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
-import { TmdbService, Movie } from '../../services/tmdb.service';
+import { TmdbService, Movie, MovieDetail } from '../../services/tmdb.service';
 
 /**
  * Componente de la página principal del catálogo de películas
@@ -34,7 +34,7 @@ import { TmdbService, Movie } from '../../services/tmdb.service';
 })
 export class HomeComponent implements OnInit {
   /** Lista de películas a mostrar */
-  movies: Movie[] = [];
+  movies: MovieDetail[] = [];
   /** Estado de carga */
   loading = false;
   /** Página actual */
@@ -66,12 +66,17 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this.searchQuery = '';
     
-    this.tmdbService.getPopularMovies(this.currentPage).subscribe({
-      next: (response) => {
-        this.movies = response.results;
-        this.totalPages = response.total_pages;
-        this.totalResults = response.total_results;
-        this.loading = false;
+    this.tmdbService.getPopularMoviesWithDetails(this.currentPage).subscribe({
+      next: (movies) => {
+        this.movies = movies;
+        // Para mantener la paginación, necesitamos obtener el total de páginas
+        this.tmdbService.getPopularMovies(this.currentPage).subscribe({
+          next: (response) => {
+            this.totalPages = response.total_pages;
+            this.totalResults = response.total_results;
+            this.loading = false;
+          }
+        });
       },
       error: (error) => {
         console.error('Error loading movies:', error);
@@ -97,12 +102,17 @@ export class HomeComponent implements OnInit {
     }
 
     this.loading = true;
-    this.tmdbService.searchMovies(query, this.currentPage).subscribe({
-      next: (response) => {
-        this.movies = response.results;
-        this.totalPages = response.total_pages;
-        this.totalResults = response.total_results;
-        this.loading = false;
+    this.tmdbService.searchMoviesWithDetails(query, this.currentPage).subscribe({
+      next: (movies) => {
+        this.movies = movies;
+        // Para mantener la paginación, necesitamos obtener el total de páginas
+        this.tmdbService.searchMovies(query, this.currentPage).subscribe({
+          next: (response) => {
+            this.totalPages = response.total_pages;
+            this.totalResults = response.total_results;
+            this.loading = false;
+          }
+        });
       },
       error: (error) => {
         console.error('Error searching movies:', error);
@@ -160,14 +170,5 @@ export class HomeComponent implements OnInit {
    */
   getYear(date: string): string {
     return new Date(date).getFullYear().toString();
-  }
-
-  /**
-   * Trunca la sinopsis a un número máximo de caracteres
-   * @param overview - Sinopsis completa
-   * @returns Sinopsis truncada
-   */
-  truncateOverview(overview: string): string {
-    return overview.length > 120 ? overview.substring(0, 120) + '...' : overview;
   }
 }

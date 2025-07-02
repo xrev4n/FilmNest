@@ -58,8 +58,15 @@
               <span>{{ movie.vote_average.toFixed(1) }}</span>
             </div>
           </div>
-          <!-- Sinopsis truncada -->
-          <p class="movie-overview">{{ truncateOverview(movie.overview) }}</p>
+          <!-- Géneros de la película -->
+          <div class="movie-genres" *ngIf="movie.genres && movie.genres.length > 0">
+            <mat-chip 
+              *ngFor="let genre of movie.genres.slice(0, 3)" 
+              class="genre-chip"
+            >
+              {{ genre.name }}
+            </mat-chip>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>

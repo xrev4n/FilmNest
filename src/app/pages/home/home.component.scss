@@ -146,16 +146,19 @@ body.dark-mode .movie-rating mat-icon {
   color: #f39c12 !important;
 }
 
-/* Sinopsis de la película */
-.movie-overview {
-  color: #666;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* Géneros de la película */
+.movie-genres {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.genre-chip {
+  font-size: 0.75rem;
+  height: 24px;
+  background: var(--detail-genre-bg);
+  color: var(--detail-genre-color);
 }
 
 /* Paginador */
