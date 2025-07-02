@@ -40,6 +40,10 @@ export interface MovieDetail extends Movie {
   revenue: number;
   /** Ruta de la imagen de fondo */
   backdrop_path: string;
+  /** Tagline de la película */
+  tagline?: string;
+  /** Países de producción */
+  production_countries: { iso_3166_1: string; name: string }[];
 }
 
 /**

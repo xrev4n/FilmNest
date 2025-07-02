@@ -45,11 +45,14 @@
       <div class="details-section">
         <h1 class="movie-title">{{ movie.title }}</h1>
         
+        <!-- Tagline de la película -->
+        <h2 *ngIf="movie.tagline" class="movie-tagline">{{ movie.tagline }}</h2>
+        
         <!-- Metadatos de la película -->
         <div class="movie-meta">
           <div class="meta-item">
             <mat-icon>calendar_today</mat-icon>
-            <span>{{ getYear(movie.release_date) }}</span>
+            <span>{{ movie.release_date | date:'dd/MM/yyyy' }}</span>
           </div>
           <div class="meta-item">
             <mat-icon>schedule</mat-icon>
@@ -58,6 +61,19 @@
           <div class="meta-item">
             <mat-icon>star</mat-icon>
             <span>{{ movie.vote_average.toFixed(1) }}/10</span>
+          </div>
+          <div class="meta-item" *ngIf="movie.production_countries && movie.production_countries.length > 0">
+            <span class="country-flags">
+              <ng-container *ngFor="let country of movie.production_countries; let last = last">
+                <img 
+                  [src]="getCountryFlagUrl(country.iso_3166_1)"
+                  [alt]="country.name"
+                  [title]="country.name"
+                  class="country-flag"
+                >
+                <span *ngIf="!last" class="flag-separator">/</span>
+              </ng-container>
+            </span>
           </div>
         </div>
 

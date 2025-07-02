@@ -113,15 +113,6 @@ export class MovieDetailComponent implements OnInit {
   }
 
   /**
-   * Extrae el año de la fecha de lanzamiento
-   * @param date - Fecha de lanzamiento
-   * @returns Año como string
-   */
-  getYear(date: string): string {
-    return new Date(date).getFullYear().toString();
-  }
-
-  /**
    * Formatea una cantidad monetaria en formato de moneda
    * @param amount - Cantidad a formatear
    * @returns String formateado de la moneda
@@ -151,5 +142,27 @@ export class MovieDetailComponent implements OnInit {
         width: '800px'
       });
     }
+  }
+
+  /**
+   * Convierte un código ISO de país a emoji de bandera
+   * @param isoCode - Código ISO 3166-1 del país (ej: 'US', 'ES')
+   * @returns Emoji de la bandera del país
+   */
+  getCountryFlag(isoCode: string): string {
+    const codePoints = isoCode
+      .toUpperCase()
+      .split('')
+      .map(char => 127397 + char.charCodeAt(0));
+    return String.fromCodePoint(...codePoints);
+  }
+
+  /**
+   * Obtiene la URL de la bandera de un país usando flagsapi.com
+   * @param isoCode - Código ISO 3166-1 del país (ej: 'US', 'ES')
+   * @returns URL de la imagen de la bandera
+   */
+  getCountryFlagUrl(isoCode: string): string {
+    return `https://flagsapi.com/${isoCode.toUpperCase()}/flat/32.png`;
   }
 }
