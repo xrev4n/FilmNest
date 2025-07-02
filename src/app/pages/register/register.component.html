@@ -13,18 +13,21 @@
     <div class="form-group">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Contraseña</mat-label>
-        <input matInput id="password" name="password" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" required />
+        <input matInput id="password" name="password" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password"
+          required />
       </mat-form-field>
     </div>
     <div class="form-group">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Confirmar Contraseña</mat-label>
-        <input matInput id="confirmPassword" name="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'" [(ngModel)]="confirmPassword" required />
+        <input matInput id="confirmPassword" name="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'"
+          [(ngModel)]="confirmPassword" required />
       </mat-form-field>
     </div>
     <div *ngIf="confirmPassword && !passwordsMatch()" class="error">Las contraseñas no coinciden</div>
-    <button type="submit" [disabled]="loading || !passwordsMatch()" mat-raised-button color="primary" class="register-btn">Crear cuenta</button>
+    <button type="submit" [disabled]="loading || !passwordsMatch()" mat-raised-button color="primary"
+      class="register-btn">Crear cuenta</button>
     <div *ngIf="error" class="error">{{ error }}</div>
     <div *ngIf="success" class="success">{{ success }}</div>
   </form>
-</div> 
+</div>

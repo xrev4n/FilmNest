@@ -5,13 +5,15 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router'; 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['../../pages/login/login.component.scss'],
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule, MatIconModule, MatButtonModule] 
+  imports: [FormsModule, CommonModule, RouterModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule] 
 })
 export class LoginComponent {
   email = '';

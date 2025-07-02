@@ -30,7 +30,7 @@ export class RegisterComponent {
   constructor(
     private supabaseService: SupabaseService,
     private router: Router
-  ) {}
+  ) { }
 
   hide = signal(true);
 

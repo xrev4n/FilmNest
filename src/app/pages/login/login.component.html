@@ -5,18 +5,23 @@
   <form (ngSubmit)="login()" #loginForm="ngForm">
     <h2>Iniciar sesión</h2>
     <div class="form-group">
-      <label for="email">Email</label>
-      <input id="email" name="email" type="email" [(ngModel)]="email" required matInput />
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput id="email" name="email" type="email" [(ngModel)]="email" required />
+      </mat-form-field>
     </div>
     <div class="form-group">
-      <label for="password">Contraseña</label>
-      <input id="password" name="password" type="password" [(ngModel)]="password" required matInput />
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput id="password" name="password" type="password" [(ngModel)]="password"
+          required />
+      </mat-form-field>
     </div>
     <button type="submit" [disabled]="loading" mat-raised-button color="primary" class="login-btn">Entrar</button>
     <div *ngIf="error" class="error">{{ error }}</div>
     <div class="login-actions">
       <a class="forgot-password" (click)="$event.preventDefault()">¿Olvidaste tu contraseña?</a>
-      <button type="button" mat-raised-button color="primary" mat-button class="action-btn" (click)="register()">Registrarse</button>
+      <button type="button" mat-button class="action-btn" (click)="register()">Registrarse</button>
     </div>
   </form>
 </div> 
