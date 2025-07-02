@@ -12,10 +12,10 @@
 }
 
 .title {
-  font-size: 2.5rem;
-  font-weight: 300;
-  margin: 0 0 8px 0;
-  color: var(--text-color);
+  max-width: 100%;
+  height: auto;
+  width: auto;
+  object-fit: contain;
 }
 
 .subtitle {
@@ -182,10 +182,6 @@ body.dark-mode .movie-rating mat-icon {
     padding: 16px;
   }
 
-  .title {
-    font-size: 2rem;
-  }
-
   .movies-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
@@ -198,6 +194,7 @@ body.dark-mode .movie-rating mat-icon {
 
 /* Estilos responsivos para móviles */
 @media (max-width: 480px) {
+
   .movies-grid {
     grid-template-columns: 1fr;
   }
