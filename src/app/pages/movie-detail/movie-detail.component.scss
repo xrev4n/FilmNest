@@ -27,7 +27,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding-top: 250px;
+  padding-top: 150px;
 }
 
 .movie-content::before {
@@ -245,7 +245,7 @@ body.dark-mode .meta-item mat-icon {
 /* Estilos responsivos para tablets */
 @media (max-width: 768px) {
   .movie-content {
-    padding-top: 150px;
+    padding-top: 100px;
   }
 
   .movie-info {
