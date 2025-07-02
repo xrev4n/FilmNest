@@ -134,10 +134,10 @@ export class CastDetailComponent implements OnInit, OnDestroy {
     if (moviesWithBackdrop.length > 0) {
       // Seleccionar una película aleatoria
       const randomMovie = moviesWithBackdrop[Math.floor(Math.random() * moviesWithBackdrop.length)];
-      this.randomBackdrop = this.getImageUrl(randomMovie.backdrop_path);
+      this.randomBackdrop = this.tmdbService.getHighQualityImageUrl(randomMovie.backdrop_path);
     } else {
       // Si no hay películas con backdrop, usar la foto de perfil del actor
-      this.randomBackdrop = this.person?.profile_path ? this.getImageUrl(this.person.profile_path) : '';
+      this.randomBackdrop = this.person?.profile_path ? this.tmdbService.getHighQualityImageUrl(this.person.profile_path) : '';
     }
   }
 

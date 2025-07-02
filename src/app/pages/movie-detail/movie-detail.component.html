@@ -8,17 +8,10 @@
 
   <!-- Contenido de la película cuando está cargada -->
   <div *ngIf="!loading && movie" class="movie-content">
-    <!-- Contenedor de imagen de fondo -->
-    <div class="backdrop-container">
-      <img [src]="getBackdropUrl(movie.backdrop_path)" [alt]="movie.title" class="backdrop-image"
-        (error)="onImageError($event)">
-      <!-- Overlay con botón de regreso -->
-      <div class="backdrop-overlay">
-        <button mat-icon-button class="back-button" (click)="goBack()" aria-label="Volver">
-          <mat-icon>arrow_back</mat-icon>
-        </button>
-      </div>
-    </div>
+    <!-- Botón de regreso -->
+    <button mat-icon-button class="back-button" (click)="goBack()" aria-label="Volver">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
 
     <!-- Información de la película -->
     <div class="movie-info">

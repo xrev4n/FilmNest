@@ -149,6 +149,40 @@ export interface PersonMovieCreditsResponse {
 }
 
 /**
+ * Interfaz que representa una imagen de película
+ */
+export interface MovieImage {
+  /** Ruta de la imagen */
+  file_path: string;
+  /** Ancho de la imagen */
+  width: number;
+  /** Alto de la imagen */
+  height: number;
+  /** Aspecto de la imagen */
+  aspect_ratio: number;
+  /** Puntuación de la imagen */
+  vote_average: number;
+  /** Número de votos */
+  vote_count: number;
+  /** ISO del idioma */
+  iso_639_1: string;
+}
+
+/**
+ * Interfaz que representa la respuesta de imágenes de una película
+ */
+export interface MovieImagesResponse {
+  /** ID de la película */
+  id: number;
+  /** Lista de backdrops */
+  backdrops: MovieImage[];
+  /** Lista de posters */
+  posters: MovieImage[];
+  /** Lista de logos */
+  logos: MovieImage[];
+}
+
+/**
  * Servicio para interactuar con la API de TMDB
  * Proporciona métodos para obtener información de películas
  */
@@ -208,6 +242,16 @@ export class TmdbService {
   getImageUrl(path: string, size: string = 'w500'): string {
     if (!path) return 'assets/no-image.jpg';
     return `${this.imageBaseUrl}/${size}${path}`;
+  }
+
+  /**
+   * Construye la URL completa de una imagen de TMDB en alta calidad
+   * @param path - Ruta de la imagen
+   * @returns URL completa de la imagen en tamaño original
+   */
+  getHighQualityImageUrl(path: string): string {
+    if (!path) return 'assets/no-image.jpg';
+    return `${this.imageBaseUrl}/original${path}`;
   }
 
     /**
@@ -302,6 +346,17 @@ export class TmdbService {
   getPersonMovieCredits(personId: number): Observable<PersonMovieCreditsResponse> {
     return this.http.get<PersonMovieCreditsResponse>(
       `${this.baseUrl}/person/${personId}/movie_credits?api_key=${this.apiKey}&language=es-ES`
+    );
+  }
+
+  /**
+   * Obtiene las imágenes de una película (backdrops, posters, logos)
+   * @param movieId - ID de la película
+   * @returns Observable con las imágenes de la película
+   */
+  getMovieImages(movieId: number): Observable<MovieImagesResponse> {
+    return this.http.get<MovieImagesResponse>(
+      `${this.baseUrl}/movie/${movieId}/images?api_key=${this.apiKey}`
     );
   }
 }

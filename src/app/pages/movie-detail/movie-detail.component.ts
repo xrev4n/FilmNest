@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { isPlatformBrowser } from '@angular/common';
 
-import { TmdbService, MovieDetail } from '../../services/tmdb.service';
+import { TmdbService, MovieDetail, MovieImagesResponse } from '../../services/tmdb.service';
 import { TrailerModalComponent } from '../../components/trailer-modal/trailer-modal.component';
 
 /**
@@ -44,6 +44,8 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   castPage = 0;
   /** Tamaño de página del cast */
   castPageSize = 5;
+  /** Backdrop aleatorio de la película */
+  randomBackdrop: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -95,6 +97,8 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
       next: (movie) => {
         this.movie = movie;
         this.loading = false;
+        // Cargar imágenes de la película para obtener backdrop aleatorio
+        this.loadMovieImages(movieId);
       },
       error: (error) => {
         console.error('Error loading movie detail:', error);
@@ -104,6 +108,62 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  /**
+   * Carga las imágenes de la película y selecciona un backdrop aleatorio
+   * @param movieId - ID de la película
+   */
+  loadMovieImages(movieId: number): void {
+    this.tmdbService.getMovieImages(movieId).subscribe({
+      next: (images) => {
+        this.selectRandomBackdrop(images);
+      },
+      error: (error) => {
+        console.error('Error loading movie images:', error);
+        // Si falla, usar el backdrop original de la película
+        if (this.movie?.backdrop_path) {
+          this.randomBackdrop = this.getBackdropUrl(this.movie.backdrop_path);
+        }
+      }
+    });
+  }
+
+  /**
+   * Selecciona un backdrop aleatorio de las imágenes de la película
+   * @param images - Respuesta de imágenes de la película
+   */
+  selectRandomBackdrop(images: MovieImagesResponse): void {
+    if (images.backdrops && images.backdrops.length > 0) {
+      // Seleccionar cualquier backdrop aleatorio
+      const randomBackdrop = images.backdrops[Math.floor(Math.random() * images.backdrops.length)];
+      // Usar tamaño original para máxima calidad
+      this.randomBackdrop = this.tmdbService.getHighQualityImageUrl(randomBackdrop.file_path);
+      this.updateBackdropBackground();
+    } else {
+      // Si no hay backdrops, usar el original
+      this.useOriginalBackdrop();
+    }
+  }
+
+  /**
+   * Usa el backdrop original de la película
+   */
+  private useOriginalBackdrop(): void {
+    if (this.movie?.backdrop_path) {
+      this.randomBackdrop = this.getBackdropUrl(this.movie.backdrop_path);
+      this.updateBackdropBackground();
+    }
+  }
+
+  /**
+   * Actualiza la variable CSS del backdrop
+   */
+  private updateBackdropBackground(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const backdropUrl = this.randomBackdrop || this.getBackdropUrl(this.movie?.backdrop_path || '');
+      document.documentElement.style.setProperty('--backdrop-image', `url(${backdropUrl})`);
+    }
   }
 
   /**
