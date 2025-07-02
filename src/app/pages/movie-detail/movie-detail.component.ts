@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,6 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { isPlatformBrowser } from '@angular/common';
 
 import { TmdbService, MovieDetail } from '../../services/tmdb.service';
 import { TrailerModalComponent } from '../../components/trailer-modal/trailer-modal.component';
@@ -21,6 +22,7 @@ import { TrailerModalComponent } from '../../components/trailer-modal/trailer-mo
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -31,19 +33,43 @@ import { TrailerModalComponent } from '../../components/trailer-modal/trailer-mo
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.scss']
 })
-export class MovieDetailComponent implements OnInit {
+export class MovieDetailComponent implements OnInit, OnDestroy {
   /** Datos de la película actual */
   movie: MovieDetail | null = null;
   /** Estado de carga */
   loading = false;
+  /** Actores principales */
+  actors: any[] = [];
+  /** Página actual del cast */
+  castPage = 0;
+  /** Tamaño de página del cast */
+  castPageSize = 5;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private tmdbService: TmdbService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.updateCastPageSize();
+      window.addEventListener('resize', this.updateCastPageSize.bind(this));
+    }
+  }
+
+  /**
+   * Ajusta el tamaño de página del cast según el ancho de pantalla
+   */
+  updateCastPageSize(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.castPageSize = window.innerWidth <= 480 ? 3 : 5;
+      if (this.castPage * this.castPageSize >= this.actors.length) {
+        this.castPage = 0;
+      }
+    }
+  }
 
   /**
    * Inicializa el componente y carga los detalles de la película
@@ -53,6 +79,7 @@ export class MovieDetailComponent implements OnInit {
       const movieId = +params['id'];
       if (movieId) {
         this.loadMovieDetail(movieId);
+        this.loadMovieCast(movieId);
       }
     });
   }
@@ -75,6 +102,20 @@ export class MovieDetailComponent implements OnInit {
         this.snackBar.open('Error al cargar los detalles de la película', 'Cerrar', {
           duration: 3000
         });
+      }
+    });
+  }
+
+  /**
+   * Carga los 4 primeros actores del cast
+   */
+  loadMovieCast(movieId: number): void {
+    this.tmdbService.getMovieCast(movieId).subscribe({
+      next: (actors) => {
+        this.actors = actors;
+      },
+      error: (error) => {
+        console.error('Error loading cast:', error);
       }
     });
   }
@@ -164,5 +205,40 @@ export class MovieDetailComponent implements OnInit {
    */
   getCountryFlagUrl(isoCode: string): string {
     return `https://flagsapi.com/${isoCode.toUpperCase()}/flat/32.png`;
+  }
+
+  /**
+   * Devuelve los actores visibles en la página actual
+   */
+  get visibleActors(): any[] {
+    const start = this.castPage * this.castPageSize;
+    return this.actors.slice(start, start + this.castPageSize);
+  }
+
+  /**
+   * Navega a la página anterior del cast
+   */
+  prevCastPage(): void {
+    if (this.castPage > 0) this.castPage--;
+  }
+
+  /**
+   * Navega a la página siguiente del cast
+   */
+  nextCastPage(): void {
+    if ((this.castPage + 1) * this.castPageSize < this.actors.length) this.castPage++;
+  }
+
+  /**
+   * Devuelve el número total de páginas del cast
+   */
+  get castTotalPages(): number {
+    return Math.ceil(this.actors.length / this.castPageSize);
+  }
+
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.removeEventListener('resize', this.updateCastPageSize.bind(this));
+    }
   }
 }

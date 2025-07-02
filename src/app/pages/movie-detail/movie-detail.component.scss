@@ -169,7 +169,7 @@ body.dark-mode .meta-item mat-icon {
 
 /* Sección del trailer */
 .trailer-section {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .trailer-button {
@@ -186,12 +186,11 @@ body.dark-mode .meta-item mat-icon {
   font-size: 1.2rem;
   width: 1.2rem;
   height: 1.2rem;
-  
 }
 
 /* Sección de sinopsis */
 .overview-section {
-  margin-bottom: 32px;
+  margin-bottom: 12px;
 }
 
 .overview-section h3 {
@@ -209,11 +208,6 @@ body.dark-mode .meta-item mat-icon {
 }
 
 /* Información adicional */
-.additional-info {
-  border-top: 1px solid #eee;
-  padding-top: 24px;
-}
-
 .info-item {
   margin-bottom: 12px;
   font-size: 0.95rem;
@@ -319,4 +313,107 @@ body.dark-mode .meta-item mat-icon {
     flex-direction: column;
     gap: 12px;
   }
+}
+
+.info-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 0 0 16px 0;
+  color: var(--detail-title);
+}
+
+/* Actores principales */
+.main-cast {
+  margin-bottom: 12px;
+}
+
+.cast-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 0 0 16px 0;
+  color: var(--detail-title);
+}
+
+.cast-cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cast-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 12px 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  min-height: 210px;
+  transition: all 0.3s ease;
+}
+
+.cast-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: var(--primary-color);
+}
+
+.cast-photo {
+  width: 80px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  background: #eee;
+}
+
+.cast-info {
+  text-align: center;
+}
+
+.cast-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--detail-title);
+  display: block;
+}
+
+.cast-character {
+  font-size: 0.85rem;
+  color: var(--detail-meta);
+  font-style: italic;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .cast-cards {
+    gap: 10px;
+  }
+  .cast-card {
+    width: 90px;
+    min-height: 170px;
+    padding: 8px 4px 8px 4px;
+  }
+  .cast-photo {
+    width: 60px;
+    height: 80px;
+  }
+}
+
+.cast-carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.cast-page-indicator {
+  font-size: 1rem;
+  color: var(--detail-meta);
+  min-width: 40px;
+  text-align: center;
 } 

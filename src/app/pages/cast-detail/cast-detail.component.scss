@@ -1,0 +1,425 @@
+/* Contenedor principal del detalle de actor */
+.cast-detail-container {
+  min-height: 100vh;
+  background: var(--detail-bg);
+}
+
+/* Contenedor de carga */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.loading-container p {
+  margin-top: 16px;
+  color: #666;
+}
+
+/* Contenido del actor */
+.person-content {
+  position: relative;
+}
+
+/* Contenedor de imagen de fondo */
+.backdrop-container {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+
+.backdrop-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay del fondo con gradiente */
+.backdrop-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.back-button {
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Información del actor */
+.person-info {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+  margin-top: -100px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Sección de la foto de perfil */
+.profile-section {
+  display: flex;
+  justify-content: center;
+}
+
+.person-profile {
+  width: 280px;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Sección de detalles */
+.details-section {
+  background: var(--detail-card-bg);
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: var(--detail-card-shadow);
+}
+
+.person-name {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0 0 24px 0;
+  color: var(--detail-title);
+  line-height: 1.2;
+}
+
+/* Metadatos del actor */
+.person-meta {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--detail-meta);
+  font-size: 1rem;
+}
+
+.meta-item mat-icon {
+  color: #f39c12;
+}
+
+body.dark-mode .meta-item mat-icon {
+  color: #f39c12 !important;
+}
+
+/* También conocido como */
+.also-known-as {
+  margin-bottom: 24px;
+}
+
+.names-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.name-chip {
+  background: var(--detail-genre-bg);
+  color: var(--detail-genre-color);
+}
+
+/* Sección de biografía */
+.biography-section {
+  margin-bottom: 24px;
+}
+
+.biography {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--detail-overview);
+  margin: 0;
+}
+
+/* Información adicional */
+.additional-info {
+  margin-bottom: 24px;
+}
+
+.info-item {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: var(--detail-info);
+}
+
+.info-item strong {
+  color: var(--detail-info-strong);
+}
+
+.info-item a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.info-item a:hover {
+  text-decoration: underline;
+}
+
+body.dark-mode .info-item a {
+  color: #64b5f6;
+}
+
+/* Sección de películas */
+.movies-section {
+  margin-bottom: 24px;
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.movie-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  transition: all 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-color: var(--primary-color);
+}
+
+.movie-poster {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  background: #eee;
+}
+
+.movie-info {
+  padding: 16px;
+}
+
+.movie-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 8px 0;
+  color: var(--detail-title);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.movie-character {
+  font-size: 0.9rem;
+  color: var(--detail-meta);
+  font-style: italic;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.movie-job {
+  font-size: 0.85rem;
+  color: var(--detail-meta);
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.movie-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--detail-meta);
+}
+
+.movie-year {
+  font-weight: 500;
+}
+
+.movie-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Controles de paginación de películas */
+.movies-carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.movies-page-indicator {
+  font-size: 1rem;
+  color: var(--detail-meta);
+  min-width: 40px;
+  text-align: center;
+}
+
+/* Títulos de sección */
+.info-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 0 0 16px 0;
+  color: var(--detail-title);
+}
+
+/* Contenedor de error */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.error-container mat-icon {
+  font-size: 4rem;
+  width: 4rem;
+  height: 4rem;
+  color: #f44336;
+  margin-bottom: 16px;
+}
+
+.error-container h3 {
+  margin: 0 0 8px 0;
+  color: var(--detail-title);
+}
+
+.error-container p {
+  margin: 0 0 24px 0;
+  color: var(--detail-info);
+}
+
+/* Estilos responsivos para tablets */
+@media (max-width: 768px) {
+  .backdrop-container {
+    height: 300px;
+  }
+
+  .person-info {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: -50px;
+    padding: 20px;
+  }
+
+  .profile-section {
+    order: 2;
+  }
+
+  .person-profile {
+    width: 240px;
+    height: 360px;
+  }
+
+  .details-section {
+    padding: 24px;
+  }
+
+  .person-name {
+    font-size: 2rem;
+  }
+
+  .person-meta {
+    gap: 16px;
+  }
+
+  .movies-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .movie-poster {
+    height: 240px;
+  }
+}
+
+/* Estilos responsivos para móviles */
+@media (max-width: 480px) {
+  .backdrop-container {
+    height: 250px;
+  }
+
+  .person-info {
+    margin-top: -30px;
+    padding: 16px;
+  }
+
+  .profile-section {
+    display: none;
+  }
+
+  .person-profile {
+    width: 200px;
+    height: 300px;
+  }
+
+  .details-section {
+    padding: 20px;
+  }
+
+  .person-name {
+    font-size: 1.8rem;
+  }
+
+  .person-meta {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .movies-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .movie-poster {
+    height: 200px;
+  }
+
+  .movie-info {
+    padding: 12px;
+  }
+
+  .movie-title {
+    font-size: 0.9rem;
+  }
+
+  .movie-character {
+    font-size: 0.8rem;
+  }
+
+  .movie-meta {
+    font-size: 0.8rem;
+  }
+} 

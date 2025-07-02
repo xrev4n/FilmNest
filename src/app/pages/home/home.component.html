@@ -42,7 +42,7 @@
         <!-- Póster de la película -->
         <img 
           mat-card-image 
-          [src]="getImageUrl(movie.poster_path)" 
+          [src]="movie.poster_path ? getImageUrl(movie.poster_path) : 'assets/img/poster-not-found.png'" 
           [alt]="movie.title"
           class="movie-poster"
           (error)="onImageError($event)"

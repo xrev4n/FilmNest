@@ -10,20 +10,11 @@
   <div *ngIf="!loading && movie" class="movie-content">
     <!-- Contenedor de imagen de fondo -->
     <div class="backdrop-container">
-      <img 
-        [src]="getBackdropUrl(movie.backdrop_path)" 
-        [alt]="movie.title"
-        class="backdrop-image"
-        (error)="onImageError($event)"
-      >
+      <img [src]="getBackdropUrl(movie.backdrop_path)" [alt]="movie.title" class="backdrop-image"
+        (error)="onImageError($event)">
       <!-- Overlay con botón de regreso -->
       <div class="backdrop-overlay">
-        <button 
-          mat-icon-button 
-          class="back-button"
-          (click)="goBack()"
-          aria-label="Volver"
-        >
+        <button mat-icon-button class="back-button" (click)="goBack()" aria-label="Volver">
           <mat-icon>arrow_back</mat-icon>
         </button>
       </div>
@@ -33,21 +24,18 @@
     <div class="movie-info">
       <!-- Sección del póster -->
       <div class="poster-section">
-        <img 
-          [src]="getImageUrl(movie.poster_path)" 
-          [alt]="movie.title"
-          class="movie-poster"
-          (error)="onImageError($event)"
-        >
+        <img [src]="movie.poster_path ? getImageUrl(movie.poster_path) : 'assets/img/poster-not-found.png'"
+          [alt]="movie.title" class="movie-poster"
+          (error)="onImageError($event)">
       </div>
 
       <!-- Sección de detalles -->
       <div class="details-section">
         <h1 class="movie-title">{{ movie.title }}</h1>
-        
+
         <!-- Tagline de la película -->
         <h2 *ngIf="movie.tagline" class="movie-tagline">{{ movie.tagline }}</h2>
-        
+
         <!-- Metadatos de la película -->
         <div class="movie-meta">
           <div class="meta-item">
@@ -65,12 +53,8 @@
           <div class="meta-item" *ngIf="movie.production_countries && movie.production_countries.length > 0">
             <span class="country-flags">
               <ng-container *ngFor="let country of movie.production_countries; let last = last">
-                <img 
-                  [src]="getCountryFlagUrl(country.iso_3166_1)"
-                  [alt]="country.name"
-                  [title]="country.name"
-                  class="country-flag"
-                >
+                <img [src]="getCountryFlagUrl(country.iso_3166_1)" [alt]="country.name" [title]="country.name"
+                  class="country-flag">
                 <span *ngIf="!last" class="flag-separator">/</span>
               </ng-container>
             </span>
@@ -79,22 +63,14 @@
 
         <!-- Géneros de la película -->
         <div class="genres" *ngIf="movie.genres && movie.genres.length > 0">
-          <mat-chip 
-            *ngFor="let genre of movie.genres" 
-            class="genre-chip"
-          >
+          <mat-chip *ngFor="let genre of movie.genres" class="genre-chip">
             {{ genre.name }}
           </mat-chip>
         </div>
 
         <!-- Botón para ver trailer -->
         <div class="trailer-section">
-            <button 
-            mat-flat-button 
-            (click)="openTrailerModal()"
-            class="trailer-button"
-            color="primary"
-          >
+          <button mat-flat-button (click)="openTrailerModal()" class="trailer-button" color="primary">
             <mat-icon>play_circle</mat-icon>
             Ver Trailer
           </button>
@@ -108,13 +84,42 @@
 
         <!-- Información adicional (presupuesto y recaudación) -->
         <div class="additional-info" *ngIf="movie.budget || movie.revenue">
+          <h3 class="info-title">Información adicional</h3>
           <div class="info-item" *ngIf="movie.budget">
-            <strong>Presupuesto:</strong> {{ formatCurrency(movie.budget) }}
+            Presupuesto: {{ formatCurrency(movie.budget) }}
           </div>
           <div class="info-item" *ngIf="movie.revenue">
-            <strong>Recaudación:</strong> {{ formatCurrency(movie.revenue) }}
+            Recaudación: {{ formatCurrency(movie.revenue) }}
           </div>
         </div>
+
+        <!-- Actores principales -->
+        <div class="main-cast" *ngIf="actors.length > 0">
+          <h3 class="cast-title">Reparto</h3>
+          <div class="cast-cards">
+            <div class="cast-card" *ngFor="let actor of visibleActors" 
+                 [routerLink]="['/cast', actor.id]" 
+                 style="cursor: pointer;">
+              <img [src]="actor.profile_path ? 'https://image.tmdb.org/t/p/w185' + actor.profile_path : 'assets/img/cast-not-found.png'"
+                [alt]="actor.name" class="cast-photo">
+              <div class="cast-info">
+                <span class="cast-name">{{ actor.name }}</span>
+                <span class="cast-character">{{ actor.character }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="cast-carousel-controls" *ngIf="actors.length > 5">
+            <button mat-icon-button (click)="prevCastPage()" [disabled]="castPage === 0">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="cast-page-indicator">{{ castPage + 1 }} / {{ castTotalPages }}</span>
+            <button mat-icon-button (click)="nextCastPage()"
+              [disabled]="(castPage + 1) * castPageSize >= actors.length">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -124,12 +129,8 @@
     <mat-icon>error</mat-icon>
     <h3>Película no encontrada</h3>
     <p>La película que buscas no existe o ha sido eliminada.</p>
-    <button 
-      mat-raised-button 
-      color="primary" 
-      (click)="goBack()"
-    >
+    <button mat-raised-button color="primary" (click)="goBack()">
       Volver al catálogo
     </button>
   </div>
-</div> 
+</div>

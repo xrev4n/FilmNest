@@ -61,6 +61,94 @@ export interface MovieResponse {
 }
 
 /**
+ * Interfaz que representa los detalles completos de una persona/actor
+ */
+export interface PersonDetail {
+  /** ID único de la persona */
+  id: number;
+  /** Nombre de la persona */
+  name: string;
+  /** Biografía de la persona */
+  biography: string;
+  /** Fecha de nacimiento */
+  birthday: string;
+  /** Fecha de fallecimiento (si aplica) */
+  deathday: string | null;
+  /** Lugar de nacimiento */
+  place_of_birth: string;
+  /** Ruta de la foto de perfil */
+  profile_path: string;
+  /** Género (1 = femenino, 2 = masculino) */
+  gender: number;
+  /** Conocido por (departamento) */
+  known_for_department: string;
+  /** Popularidad */
+  popularity: number;
+  /** También conocido como */
+  also_known_as: string[];
+  /** ID de IMDB */
+  imdb_id: string;
+  /** Página web oficial */
+  homepage: string;
+}
+
+/**
+ * Interfaz que representa una película en los créditos de una persona
+ */
+export interface PersonMovieCredit {
+  /** ID de la película */
+  id: number;
+  /** Título de la película */
+  title: string;
+  /** Personaje interpretado */
+  character: string;
+  /** Ruta del póster */
+  poster_path: string;
+  /** Ruta de la imagen de fondo */
+  backdrop_path: string;
+  /** Fecha de lanzamiento */
+  release_date: string;
+  /** Calificación promedio */
+  vote_average: number;
+  /** Orden de aparición en los créditos */
+  order: number;
+}
+
+/**
+ * Interfaz que representa una película en los créditos de crew de una persona
+ */
+export interface PersonCrewCredit {
+  /** ID de la película */
+  id: number;
+  /** Título de la película */
+  title: string;
+  /** Departamento (Director, Productor, etc.) */
+  department: string;
+  /** Trabajo específico */
+  job: string;
+  /** Ruta del póster */
+  poster_path: string;
+  /** Ruta de la imagen de fondo */
+  backdrop_path: string;
+  /** Fecha de lanzamiento */
+  release_date: string;
+  /** Calificación promedio */
+  vote_average: number;
+}
+
+/**
+ * Interfaz que representa la respuesta de créditos de películas de una persona
+ */
+export interface PersonMovieCreditsResponse {
+  /** ID de la persona */
+  id: number;
+  /** Lista de películas en las que actuó */
+  cast: PersonMovieCredit[];
+  /** Lista de películas en las que participó como crew */
+  crew: PersonCrewCredit[];
+}
+
+/**
  * Servicio para interactuar con la API de TMDB
  * Proporciona métodos para obtener información de películas
  */
@@ -181,6 +269,39 @@ export class TmdbService {
         const movieIds = response.results.map(movie => movie.id);
         return this.getMoviesDetails(movieIds);
       })
+    );
+  }
+
+  /**
+   * Obtiene todo el cast de una película
+   * @param movieId - ID de la película
+   * @returns Observable con el cast completo
+   */
+  getMovieCast(movieId: number): Observable<any[]> {
+    return this.http.get<any>(`${this.baseUrl}/movie/${movieId}/credits?api_key=${this.apiKey}`).pipe(
+      map(response => response.cast ? response.cast : [])
+    );
+  }
+
+  /**
+   * Obtiene los detalles completos de una persona/actor
+   * @param personId - ID de la persona
+   * @returns Observable con los detalles de la persona
+   */
+  getPersonDetail(personId: number): Observable<PersonDetail> {
+    return this.http.get<PersonDetail>(
+      `${this.baseUrl}/person/${personId}?api_key=${this.apiKey}&language=es-ES`
+    );
+  }
+
+  /**
+   * Obtiene las películas en las que ha actuado una persona
+   * @param personId - ID de la persona
+   * @returns Observable con las películas en las que actuó
+   */
+  getPersonMovieCredits(personId: number): Observable<PersonMovieCreditsResponse> {
+    return this.http.get<PersonMovieCreditsResponse>(
+      `${this.baseUrl}/person/${personId}/movie_credits?api_key=${this.apiKey}&language=es-ES`
     );
   }
 }

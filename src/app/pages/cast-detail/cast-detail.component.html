@@ -1,0 +1,172 @@
+<!-- Contenedor principal del detalle de actor -->
+<div class="cast-detail-container">
+  <!-- Estado de carga -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Cargando detalles del actor...</p>
+  </div>
+
+  <!-- Contenido del actor cuando está cargado -->
+  <div *ngIf="!loading && person" class="person-content">
+    <!-- Contenedor de imagen de fondo -->
+    <div class="backdrop-container">
+      <img [src]="randomBackdrop || getImageUrl(person.profile_path)" [alt]="person.name" class="backdrop-image"
+        (error)="onImageError($event)">
+      <!-- Overlay con botón de regreso -->
+      <div class="backdrop-overlay">
+        <button mat-icon-button class="back-button" (click)="goBack()" aria-label="Volver">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Información del actor -->
+    <div class="person-info">
+      <!-- Sección de la foto de perfil -->
+      <div class="profile-section">
+        <img [src]="person.profile_path ? getImageUrl(person.profile_path) : 'assets/img/cast-not-found.png'"
+          [alt]="person.name" class="person-profile"
+          (error)="onImageError($event)">
+      </div>
+
+      <!-- Sección de detalles -->
+      <div class="details-section">
+        <h1 class="person-name">{{ person.name }}</h1>
+
+        <!-- Información básica -->
+        <div class="person-meta" *ngIf="person.birthday || person.place_of_birth || person.known_for_department">
+          <div class="meta-item" *ngIf="person.birthday">
+            <mat-icon>cake</mat-icon>
+            <span>{{ formatDate(person.birthday) }} ({{ calculateAge(person.birthday, person.deathday) }} años)</span>
+          </div>
+          <div class="meta-item" *ngIf="person.deathday">
+            <mat-icon>event_busy</mat-icon>
+            <span>Falleció el {{ formatDate(person.deathday) }}</span>
+          </div>
+          <div class="meta-item" *ngIf="person.place_of_birth">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ person.place_of_birth }}</span>
+          </div>
+          <div class="meta-item" *ngIf="person.known_for_department">
+            <mat-icon>work</mat-icon>
+            <span>{{ person.known_for_department }}</span>
+          </div>
+        </div>
+
+        <!-- También conocido como -->
+        <div class="also-known-as" *ngIf="person.also_known_as && person.also_known_as.length > 0">
+          <h3 class="info-title">También conocido como</h3>
+          <div class="names-list">
+            <mat-chip *ngFor="let name of person.also_known_as" class="name-chip">
+              {{ name }}
+            </mat-chip>
+          </div>
+        </div>
+
+        <!-- Biografía -->
+        <div class="biography-section" *ngIf="person.biography">
+          <h3 class="info-title">Biografía</h3>
+          <p class="biography">{{ person.biography }}</p>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="additional-info" *ngIf="person.homepage || person.imdb_id">
+          <h3 class="info-title">Información adicional</h3>
+          <div class="info-item" *ngIf="person.homepage">
+            <strong>Sitio web oficial:</strong> 
+            <a [href]="person.homepage" target="_blank" rel="noopener noreferrer">{{ person.homepage }}</a>
+          </div>
+          <div class="info-item" *ngIf="person.imdb_id">
+            <strong>IMDB:</strong> 
+            <a [href]="'https://www.imdb.com/name/' + person.imdb_id" target="_blank" rel="noopener noreferrer">
+              Ver en IMDB
+            </a>
+          </div>
+        </div>
+
+        <!-- Películas en las que ha actuado -->
+        <div class="movies-section" *ngIf="movies.length > 0">
+          <h3 class="info-title">Peliculas como actor</h3>
+          <div class="movies-grid">
+            <div class="movie-card" *ngFor="let movie of visibleMovies" 
+                 [routerLink]="['/movie', movie.id]" 
+                 style="cursor: pointer;">
+              <img [src]="movie.poster_path ? getImageUrl(movie.poster_path) : 'assets/img/poster-not-found.png'"
+                [alt]="movie.title" class="movie-poster"
+                (error)="onImageError($event)">
+              <div class="movie-info">
+                <h4 class="movie-title">{{ movie.title }}</h4>
+                <p class="movie-character" *ngIf="movie.character">{{ movie.character }}</p>
+                <div class="movie-meta">
+                  <span class="movie-year" *ngIf="movie.release_date">
+                    {{ movie.release_date | date:'yyyy' }}
+                  </span>
+                  <span class="movie-rating" *ngIf="movie.vote_average">
+                    ⭐ {{ movie.vote_average.toFixed(1) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="movies-carousel-controls" *ngIf="movies.length > moviesPageSize">
+            <button mat-icon-button (click)="prevMoviesPage()" [disabled]="moviesPage === 0">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="movies-page-indicator">{{ moviesPage + 1 }} / {{ moviesTotalPages }}</span>
+            <button mat-icon-button (click)="nextMoviesPage()"
+              [disabled]="(moviesPage + 1) * moviesPageSize >= movies.length">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Películas en las que ha participado como crew -->
+        <div class="movies-section" *ngIf="crewMovies.length > 0">
+          <h3 class="info-title">Películas en las que ha participado</h3>
+          <div class="movies-grid">
+            <div class="movie-card" *ngFor="let movie of visibleCrewMovies" 
+                 [routerLink]="['/movie', movie.id]" 
+                 style="cursor: pointer;">
+              <img [src]="movie.poster_path ? getImageUrl(movie.poster_path) : 'assets/img/poster-not-found.png'"
+                [alt]="movie.title" class="movie-poster"
+                (error)="onImageError($event)">
+              <div class="movie-info">
+                <h4 class="movie-title">{{ movie.title }}</h4>
+                <p class="movie-character" *ngIf="movie.department">{{ movie.department }}</p>
+                <p class="movie-job" *ngIf="movie.job">{{ movie.job }}</p>
+                <div class="movie-meta">
+                  <span class="movie-year" *ngIf="movie.release_date">
+                    {{ movie.release_date | date:'yyyy' }}
+                  </span>
+                  <span class="movie-rating" *ngIf="movie.vote_average">
+                    ⭐ {{ movie.vote_average.toFixed(1) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="movies-carousel-controls" *ngIf="crewMovies.length > crewPageSize">
+            <button mat-icon-button (click)="prevCrewPage()" [disabled]="crewPage === 0">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="movies-page-indicator">{{ crewPage + 1 }} / {{ crewTotalPages }}</span>
+            <button mat-icon-button (click)="nextCrewPage()"
+              [disabled]="(crewPage + 1) * crewPageSize >= crewMovies.length">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Estado de error cuando no se encuentra el actor -->
+  <div *ngIf="!loading && !person" class="error-container">
+    <mat-icon>error</mat-icon>
+    <h3>Actor no encontrado</h3>
+    <p>El actor que buscas no existe o ha sido eliminado.</p>
+    <button mat-raised-button color="primary" (click)="goBack()">
+      Volver al catálogo
+    </button>
+  </div>
+</div> 
