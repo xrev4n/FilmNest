@@ -16,6 +16,8 @@ export interface Movie {
   overview: string;
   /** Ruta del póster de la película */
   poster_path: string;
+  /** Ruta del fondo de la película */
+  backdrop_path: string;
   /** Fecha de lanzamiento */
   release_date: string;
   /** Calificación promedio */

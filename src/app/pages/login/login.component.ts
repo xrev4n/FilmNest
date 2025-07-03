@@ -7,15 +7,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { LoginBackgroundComponent } from './login-background.component';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['../../pages/login/login.component.scss'],
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule] 
+  imports: [FormsModule, CommonModule, RouterModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, LoginBackgroundComponent] 
 })
-export class LoginComponent {
+export class LoginComponent{
+
   email = '';
   password = '';
   error: string | null = null;
@@ -38,7 +40,7 @@ export class LoginComponent {
     }
   }
   register() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/register'], { queryParams: { fromLogin: 'true' } });
   }
   goBack() {
     this.router.navigate(['/']);
