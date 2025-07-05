@@ -44,6 +44,7 @@ body.dark-mode {
 :root {
   --background-color: #fafafa;
   --text-color: #222;
+  --primary-color: #1976d2;
   --detail-bg: #f5f5f5;
   --detail-card-bg: rgba(255, 255, 255, 0.75);
   --detail-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -63,6 +64,7 @@ body.dark-mode {
 body.dark-mode {
   --background-color: #181818;
   --text-color: #fafafa;
+  --primary-color: #90caf9;
   --detail-bg: #181818;
   --detail-card-bg: rgba(35, 35, 35, 0.75);
   --detail-card-shadow: 0 4px 20px rgba(0,0,0,0.4);
@@ -101,4 +103,22 @@ body.dark-mode .mat-icon {
 body.dark-mode .movie-rating mat-icon,
 body.dark-mode .movie-meta .meta-item mat-icon {
   color: #f39c12 !important;
+}
+
+/* Estilos para chips de géneros clickeables */
+.genre-chip.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.genre-chip.clickable:hover {
+  background: var(--primary-color, #1976d2) !important;
+  color: white !important;
+  transform: scale(1.05);
+}
+
+/* Asegurar que el color blanco se aplique en modo oscuro también */
+body.dark-mode .genre-chip.clickable:hover {
+  background: var(--primary-color, #1976d2) !important;
+  color: white !important;
 }

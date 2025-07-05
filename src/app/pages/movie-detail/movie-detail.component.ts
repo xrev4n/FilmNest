@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -59,6 +60,7 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
     private tmdbService: TmdbService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
+    private location: Location,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     if (isPlatformBrowser(this.platformId)) {
@@ -221,7 +223,7 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
    * Navega de vuelta a la página principal
    */
   goBack(): void {
-    this.router.navigate(['/']);
+    this.location.back();
   }
 
   /**
@@ -352,6 +354,14 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   /** Página siguiente de recomendaciones */
   nextRecommendationsPage(): void {
     if ((this.recommendationsPage + 1) * this.recommendationsPageSize < this.recommendations.length) this.recommendationsPage++;
+  }
+
+  /**
+   * Navega a la página de género
+   * @param genreId - ID del género
+   */
+  viewGenre(genreId: number): void {
+    this.router.navigate(['/genre', genreId]);
   }
 
   ngOnDestroy(): void {

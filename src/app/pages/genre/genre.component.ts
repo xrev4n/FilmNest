@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,15 +9,14 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
-import { TmdbService, Movie, MovieDetail } from '../../services/tmdb.service';
+import { TmdbService, MovieDetail } from '../../services/tmdb.service';
 
 /**
- * Componente de la página principal del catálogo de películas
- * Muestra una lista de películas populares y permite búsquedas
+ * Componente de la página de género
+ * Muestra películas filtradas por un género específico
  */
 @Component({
-  selector: 'app-home',
+  selector: 'app-genre',
   standalone: true,
   imports: [
     CommonModule,
@@ -26,14 +25,13 @@ import { TmdbService, Movie, MovieDetail } from '../../services/tmdb.service';
     MatIconModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
-    MatChipsModule,
-    SearchBarComponent
+    MatChipsModule
   ],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  templateUrl: './genre.component.html',
+  styleUrls: ['./genre.component.scss']
 })
-export class HomeComponent implements OnInit {
-  /** Lista de películas a mostrar */
+export class GenreComponent implements OnInit {
+  /** Lista de películas del género */
   movies: MovieDetail[] = [];
   /** Estado de carga */
   loading = false;
@@ -43,45 +41,50 @@ export class HomeComponent implements OnInit {
   totalPages = 0;
   /** Total de resultados */
   totalResults = 0;
-  /** Término de búsqueda actual */
-  searchQuery = '';
+  /** ID del género actual */
+  genreId: number = 0;
+  /** Nombre del género actual */
+  genreName: string = '';
+  /** Lista de géneros disponibles */
+  genres: { id: number; name: string }[] = [];
 
   constructor(
     private tmdbService: TmdbService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
   /**
-   * Inicializa el componente cargando las películas populares
+   * Inicializa el componente cargando las películas del género
    */
   ngOnInit(): void {
-    this.loadPopularMovies();
+    this.route.params.subscribe(params => {
+      this.genreId = +params['id'];
+      if (this.genreId) {
+        this.loadGenresAndMovies();
+      }
+    });
   }
 
   /**
-   * Carga las películas populares desde la API
+   * Carga los géneros y luego las películas del género especificado
    */
-  loadPopularMovies(): void {
+  loadGenresAndMovies(): void {
     this.loading = true;
-    this.searchQuery = '';
     
-    this.tmdbService.getPopularMoviesWithDetails(this.currentPage).subscribe({
-      next: (movies) => {
-        this.movies = movies;
-        // Para mantener la paginación, necesitamos obtener el total de páginas
-        this.tmdbService.getPopularMovies(this.currentPage).subscribe({
-          next: (response) => {
-            this.totalPages = response.total_pages;
-            this.totalResults = response.total_results;
-            this.loading = false;
-          }
-        });
+    this.tmdbService.getGenres().subscribe({
+      next: (response) => {
+        this.genres = response.genres;
+        // Actualizar el nombre del género después de cargar los géneros
+        this.updateGenreName();
+        // Cargar las películas del género
+        this.loadMoviesByGenre();
       },
       error: (error) => {
-        console.error('Error loading movies:', error);
+        console.error('Error loading genres:', error);
         this.loading = false;
-        this.snackBar.open('Error al cargar las películas', 'Cerrar', {
+        this.snackBar.open('Error al cargar los géneros', 'Cerrar', {
           duration: 3000
         });
       }
@@ -89,24 +92,22 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * Realiza una búsqueda de películas por título
-   * @param query - Término de búsqueda
+   * Actualiza el nombre del género basado en el ID
    */
-  onSearch(query: string): void {
-    this.searchQuery = query;
-    this.currentPage = 1;
-    
-    if (!query.trim()) {
-      this.loadPopularMovies();
-      return;
-    }
+  updateGenreName(): void {
+    const genre = this.genres.find(g => g.id === this.genreId);
+    this.genreName = genre ? genre.name : `Género ${this.genreId}`;
+  }
 
-    this.loading = true;
-    this.tmdbService.searchMoviesWithDetails(query, this.currentPage).subscribe({
+  /**
+   * Carga las películas del género especificado
+   */
+  loadMoviesByGenre(): void {
+    this.tmdbService.getMoviesByGenreWithDetails(this.genreId, this.currentPage).subscribe({
       next: (movies) => {
         this.movies = movies;
         // Para mantener la paginación, necesitamos obtener el total de páginas
-        this.tmdbService.searchMovies(query, this.currentPage).subscribe({
+        this.tmdbService.getMoviesByGenre(this.genreId, this.currentPage).subscribe({
           next: (response) => {
             this.totalPages = response.total_pages;
             this.totalResults = response.total_results;
@@ -115,9 +116,9 @@ export class HomeComponent implements OnInit {
         });
       },
       error: (error) => {
-        console.error('Error searching movies:', error);
+        console.error('Error loading movies by genre:', error);
         this.loading = false;
-        this.snackBar.open('Error al buscar películas', 'Cerrar', {
+        this.snackBar.open('Error al cargar las películas del género', 'Cerrar', {
           duration: 3000
         });
       }
@@ -130,12 +131,7 @@ export class HomeComponent implements OnInit {
    */
   onPageChange(event: PageEvent): void {
     this.currentPage = event.pageIndex + 1;
-    
-    if (this.searchQuery) {
-      this.onSearch(this.searchQuery);
-    } else {
-      this.loadPopularMovies();
-    }
+    this.loadMoviesByGenre();
   }
 
   /**
@@ -160,7 +156,7 @@ export class HomeComponent implements OnInit {
    * @param event - Evento de error de la imagen
    */
   onImageError(event: any): void {
-    event.target.src = 'assets/no-image.jpg';
+    event.target.src = 'assets/img/poster-not-found.png';
   }
 
   /**
@@ -181,4 +177,11 @@ export class HomeComponent implements OnInit {
     event.stopPropagation(); // Evita que se active el click de la tarjeta
     this.router.navigate(['/genre', genreId]);
   }
-}
+
+  /**
+   * Navega a la página de inicio
+   */
+  goBack(): void {
+    this.router.navigate(['/']);
+  }
+} 

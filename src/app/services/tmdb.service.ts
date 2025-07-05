@@ -372,4 +372,41 @@ export class TmdbService {
       `${this.baseUrl}/movie/${movieId}/recommendations?api_key=${this.apiKey}&language=es-ES`
     );
   }
+
+  /**
+   * Obtiene películas por género
+   * @param genreId - ID del género
+   * @param page - Número de página (opcional, por defecto 1)
+   * @returns Observable con las películas del género especificado
+   */
+  getMoviesByGenre(genreId: number, page: number = 1): Observable<MovieResponse> {
+    return this.http.get<MovieResponse>(
+      `${this.baseUrl}/discover/movie?api_key=${this.apiKey}&language=es-ES&with_genres=${genreId}&page=${page}&sort_by=popularity.desc`
+    );
+  }
+
+  /**
+   * Obtiene películas por género con detalles completos
+   * @param genreId - ID del género
+   * @param page - Número de página (opcional, por defecto 1)
+   * @returns Observable con las películas del género especificado con detalles completos
+   */
+  getMoviesByGenreWithDetails(genreId: number, page: number = 1): Observable<MovieDetail[]> {
+    return this.getMoviesByGenre(genreId, page).pipe(
+      switchMap(response => {
+        const movieIds = response.results.map(movie => movie.id);
+        return this.getMoviesDetails(movieIds);
+      })
+    );
+  }
+
+  /**
+   * Obtiene la lista de géneros disponibles
+   * @returns Observable con la lista de géneros
+   */
+  getGenres(): Observable<{ genres: { id: number; name: string }[] }> {
+    return this.http.get<{ genres: { id: number; name: string }[] }>(
+      `${this.baseUrl}/genre/movie/list?api_key=${this.apiKey}&language=es-ES`
+    );
+  }
 }

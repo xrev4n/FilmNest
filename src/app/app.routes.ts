@@ -11,6 +11,10 @@ export const routes: Routes = [
     path: 'cast/:id',
     loadComponent: () => import('./pages/cast-detail/cast-detail.component').then(m => m.CastDetailComponent)
   },
+  {
+    path: 'genre/:id',
+    loadComponent: () => import('./pages/genre/genre.component').then(m => m.GenreComponent)
+  },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '**', redirectTo: '' }

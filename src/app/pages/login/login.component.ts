@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule , Location} from '@angular/common';
 import { Router, RouterModule } from '@angular/router'; 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,7 +25,8 @@ export class LoginComponent{
 
   constructor(
     private supabaseService: SupabaseService,
-    private router: Router 
+    private router: Router,
+    private location: Location
   ) {}
 
   async login() {
@@ -43,6 +44,6 @@ export class LoginComponent{
     this.router.navigate(['/register'], { queryParams: { fromLogin: 'true' } });
   }
   goBack() {
-    this.router.navigate(['/']);
+    this.location.back();
   }
 }

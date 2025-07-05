@@ -56,7 +56,7 @@
 
         <!-- Géneros de la película -->
         <div class="genres" *ngIf="movie.genres && movie.genres.length > 0">
-          <mat-chip *ngFor="let genre of movie.genres" class="genre-chip">
+          <mat-chip *ngFor="let genre of movie.genres" class="genre-chip clickable" (click)="viewGenre(genre.id)">
             {{ genre.name }}
           </mat-chip>
         </div>

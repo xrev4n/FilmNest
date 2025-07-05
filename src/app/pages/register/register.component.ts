@@ -1,7 +1,7 @@
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule , Location} from '@angular/common';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { signal } from '@angular/core';
 import { RegisterBackgroundComponent } from './register-background.component';
+
 
 @Component({
   selector: 'app-register',
@@ -32,7 +33,8 @@ export class RegisterComponent implements AfterViewInit, OnInit {
   constructor(
     private supabaseService: SupabaseService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
 
   hide = signal(true);
@@ -104,7 +106,7 @@ export class RegisterComponent implements AfterViewInit, OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/login']);
+    this.location.back();
   }
 
   /**

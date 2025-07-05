@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -55,6 +56,7 @@ export class CastDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private tmdbService: TmdbService,
     private snackBar: MatSnackBar,
+    private location: Location,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     if (isPlatformBrowser(this.platformId)) {
@@ -145,7 +147,7 @@ export class CastDetailComponent implements OnInit, OnDestroy {
    * Navega de vuelta a la página anterior
    */
   goBack(): void {
-    this.router.navigate(['/']);
+    this.location.back();
   }
 
   /**

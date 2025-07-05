@@ -1,13 +1,19 @@
-/* Contenedor principal de la página de inicio */
-.home-container {
+/* Contenedor principal de la página de género */
+.genre-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
+.back-button {
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+}
+
 /* Encabezado de la página */
 .header {
   text-align: center;
+  margin-bottom: 32px;
 }
 
 .title {
@@ -15,6 +21,14 @@
   height: auto;
   width: auto;
   object-fit: contain;
+}
+
+.genre-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-color);
+  text-transform: capitalize;
 }
 
 /* Contenido principal */
@@ -173,8 +187,12 @@ body.dark-mode .movie-rating mat-icon {
 }
 
 @media (max-width: 768px) {
-  .home-container {
+  .genre-container {
     padding: 16px;
+  }
+
+  .genre-title {
+    font-size: 2rem;
   }
 
   .movies-grid {
@@ -189,6 +207,9 @@ body.dark-mode .movie-rating mat-icon {
 
 /* Estilos responsivos para móviles */
 @media (max-width: 480px) {
+  .genre-title {
+    font-size: 1.8rem;
+  }
 
   .movies-grid {
     grid-template-columns: 1fr;

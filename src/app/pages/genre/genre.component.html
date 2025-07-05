@@ -1,12 +1,16 @@
-<!-- Contenedor principal de la página de inicio -->
-<div class="home-container">
+<!-- Contenedor principal de la página de género -->
+<div class="genre-container">
+  <!-- Overlay con botón de regreso -->
+  <div class="backdrop-overlay">
+    <button mat-icon-button class="back-button" (click)="goBack()" aria-label="Volver">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
+
   <!-- Encabezado de la página -->
   <header class="header">
-    <img src="../assets/img/filmnest-text-logo.png" alt="FilmNest" class="title" />
+    <h1 class="genre-title">{{ genreName }}</h1>
   </header>
-
-  <!-- Componente de barra de búsqueda -->
-  <app-search-bar (search)="onSearch($event)"></app-search-bar>
 
   <!-- Contenido principal -->
   <div class="content">
@@ -20,33 +24,17 @@
     <div *ngIf="!loading && movies.length === 0" class="no-results">
       <mat-icon>movie_off</mat-icon>
       <h3>No se encontraron películas</h3>
-      <p *ngIf="searchQuery">Intenta con otros términos de búsqueda</p>
-      <button 
-        *ngIf="searchQuery" 
-        mat-raised-button 
-        color="primary" 
-        (click)="loadPopularMovies()"
-      >
-        Ver películas populares
-      </button>
+      <p>No hay películas disponibles para este género</p>
     </div>
 
     <!-- Grid de películas -->
     <div *ngIf="!loading && movies.length > 0" class="movies-grid">
       <!-- Tarjeta de película individual -->
-      <mat-card 
-        *ngFor="let movie of movies" 
-        class="movie-card"
-        (click)="viewMovieDetail(movie.id)"
-      >
+      <mat-card *ngFor="let movie of movies" class="movie-card" (click)="viewMovieDetail(movie.id)">
         <!-- Póster de la película -->
-        <img 
-          mat-card-image 
-          [src]="movie.poster_path ? getImageUrl(movie.poster_path) : 'assets/img/poster-not-found.png'" 
-          [alt]="movie.title"
-          class="movie-poster"
-          (error)="onImageError($event)"
-        >
+        <img mat-card-image
+          [src]="movie.poster_path ? getImageUrl(movie.poster_path) : 'assets/img/poster-not-found.png'"
+          [alt]="movie.title" class="movie-poster" (error)="onImageError($event)">
         <!-- Contenido de la tarjeta -->
         <mat-card-content class="movie-content">
           <h3 class="movie-title">{{ movie.title }}</h3>
@@ -60,11 +48,8 @@
           </div>
           <!-- Géneros de la película -->
           <div class="movie-genres" *ngIf="movie.genres && movie.genres.length > 0">
-            <mat-chip 
-              *ngFor="let genre of movie.genres.slice(0, 3)" 
-              class="genre-chip clickable"
-              (click)="viewGenre(genre.id, $event)"
-            >
+            <mat-chip *ngFor="let genre of movie.genres.slice(0, 3)" class="genre-chip clickable"
+              (click)="viewGenre(genre.id, $event)">
               {{ genre.name }}
             </mat-chip>
           </div>
@@ -73,14 +58,8 @@
     </div>
 
     <!-- Paginador -->
-    <mat-paginator
-      *ngIf="!loading && totalPages > 1"
-      [length]="totalResults"
-      [pageSize]="20"
-      [pageIndex]="currentPage - 1"
-      [pageSizeOptions]="[20]"
-      (page)="onPageChange($event)"
-      class="paginator"
-    ></mat-paginator>
+    <mat-paginator *ngIf="!loading && totalPages > 1" [length]="totalResults" [pageSize]="20"
+      [pageIndex]="currentPage - 1" [pageSizeOptions]="[20]" (page)="onPageChange($event)"
+      class="paginator"></mat-paginator>
   </div>
-</div> 
+</div>
