@@ -173,19 +173,28 @@ export class HomeComponent implements OnInit {
    */
   onSearch(query: string): void {
     this.searchQuery = query;
-    this.currentPage = 1;
+    this.currentPage = 1; // Solo reiniciar página en búsquedas nuevas
     
     if (!query.trim()) {
       this.loadPopularMovies();
       return;
     }
 
+    this.performSearch(query, this.currentPage);
+  }
+
+  /**
+   * Realiza la búsqueda de películas con la página especificada
+   * @param query - Término de búsqueda
+   * @param page - Número de página
+   */
+  private performSearch(query: string, page: number): void {
     this.loading = true;
-    this.tmdbService.searchMoviesWithDetails(query, this.currentPage).subscribe({
+    this.tmdbService.searchMoviesWithDetails(query, page).subscribe({
       next: (movies) => {
         this.movies = movies;
         // Para mantener la paginación, necesitamos obtener el total de páginas
-        this.tmdbService.searchMovies(query, this.currentPage).subscribe({
+        this.tmdbService.searchMovies(query, page).subscribe({
           next: (response) => {
             this.totalPages = response.total_pages;
             this.totalResults = response.total_results;
@@ -210,8 +219,12 @@ export class HomeComponent implements OnInit {
   onPageChange(event: PageEvent): void {
     this.currentPage = event.pageIndex + 1;
     
+    // Hacer scroll al top cuando cambie de página
+    this.scrollToTop();
+    
     if (this.searchQuery) {
-      this.onSearch(this.searchQuery);
+      // Usar el método de búsqueda paginada sin reiniciar la página
+      this.performSearch(this.searchQuery, this.currentPage);
     } else {
       this.loadPopularMovies();
     }

@@ -27,36 +27,27 @@
           <mat-spinner diameter="20"></mat-spinner>
           <span>Cargando categorías...</span>
         </div>
-        
+
         <!-- Lista de géneros -->
-        <button 
-          *ngFor="let genre of genres" 
-          mat-button 
-          class="side-menu-genre-btn"
-          (click)="navigateToGenre(genre.id)"
-        >
+        <button *ngFor="let genre of genres" mat-button class="side-menu-genre-btn" (click)="navigateToGenre(genre.id)">
           {{ genre.name }}
         </button>
-        
+
         <!-- Estado cuando no hay géneros -->
         <span *ngIf="!loadingGenres && genres.length === 0" class="side-menu-empty">
           No se encontraron categorías
         </span>
       </div>
     </div>
-    
+
     <!-- Separador -->
     <div class="side-menu-divider"></div>
-    
+
     <!-- Botón de modo oscuro -->
     <div class="side-menu-theme-section">
       <span class="side-menu-theme-label">Tema</span>
-      <mat-button-toggle-group 
-        [value]="isDarkMode ? 'dark' : 'light'" 
-        (change)="toggleDarkMode()"
-        [hideSingleSelectionIndicator]="true"
-        class="theme-toggle-group"
-      >
+      <mat-button-toggle-group [value]="isDarkMode ? 'dark' : 'light'" (change)="toggleDarkMode()"
+        [hideSingleSelectionIndicator]="true" class="theme-toggle-group">
         <mat-button-toggle value="light" class="theme-toggle-btn">
           <mat-icon>light_mode</mat-icon>
         </mat-button-toggle>
@@ -73,8 +64,9 @@
   <div class="home-container">
     <!-- Encabezado de la página -->
     <header class="header">
-      <img src="../assets/img/filmnest-text-logo.png" alt="FilmNest" class="title" />
+      <img src="assets/img/filmnest-text-logo.png" alt="FilmNest" class="title" />
     </header>
+
 
     <!-- Componente de barra de búsqueda -->
     <app-search-bar (search)="onSearch($event)"></app-search-bar>
@@ -92,12 +84,7 @@
         <mat-icon>movie_off</mat-icon>
         <h3>No se encontraron películas</h3>
         <p *ngIf="searchQuery">Intenta con otros términos de búsqueda</p>
-        <button 
-          *ngIf="searchQuery" 
-          mat-raised-button 
-          color="primary" 
-          (click)="loadPopularMovies()"
-        >
+        <button *ngIf="searchQuery" mat-raised-button color="primary" (click)="loadPopularMovies()">
           Ver películas populares
         </button>
       </div>
@@ -105,19 +92,11 @@
       <!-- Grid de películas -->
       <div *ngIf="!loading && movies.length > 0" class="movies-grid">
         <!-- Tarjeta de película individual -->
-        <mat-card 
-          *ngFor="let movie of movies" 
-          class="movie-card"
-          (click)="viewMovieDetail(movie.id)"
-        >
+        <mat-card *ngFor="let movie of movies" class="movie-card" (click)="viewMovieDetail(movie.id)">
           <!-- Póster de la película -->
-          <img 
-            mat-card-image 
-            [src]="movie.poster_path ? getImageUrl(movie.poster_path) : 'assets/img/poster-not-found.png'" 
-            [alt]="movie.title"
-            class="movie-poster"
-            (error)="onImageError($event)"
-          >
+          <img mat-card-image
+            [src]="movie.poster_path ? getImageUrl(movie.poster_path) : 'assets/img/poster-not-found.png'"
+            [alt]="movie.title" class="movie-poster" (error)="onImageError($event)">
           <!-- Contenido de la tarjeta -->
           <mat-card-content class="movie-content">
             <h3 class="movie-title">{{ movie.title }}</h3>
@@ -131,11 +110,8 @@
             </div>
             <!-- Géneros de la película -->
             <div class="movie-genres" *ngIf="movie.genres && movie.genres.length > 0">
-              <mat-chip 
-                *ngFor="let genre of movie.genres.slice(0, 3)" 
-                class="genre-chip clickable"
-                (click)="viewGenre(genre.id, $event)"
-              >
+              <mat-chip *ngFor="let genre of movie.genres.slice(0, 3)" class="genre-chip clickable"
+                (click)="viewGenre(genre.id, $event)">
                 {{ genre.name }}
               </mat-chip>
             </div>
@@ -144,15 +120,9 @@
       </div>
 
       <!-- Paginador -->
-      <mat-paginator
-        *ngIf="!loading && totalPages > 1"
-        [length]="totalResults"
-        [pageSize]="20"
-        [pageIndex]="currentPage - 1"
-        [pageSizeOptions]="[20]"
-        (page)="onPageChange($event)"
-        class="paginator"
-      ></mat-paginator>
+      <mat-paginator *ngIf="!loading && totalPages > 1" [length]="totalResults" [pageSize]="20"
+        [pageIndex]="currentPage - 1" [pageSizeOptions]="[20]" (page)="onPageChange($event)"
+        class="paginator"></mat-paginator>
     </div>
   </div>
-</div> 
+</div>
