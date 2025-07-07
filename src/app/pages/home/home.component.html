@@ -19,7 +19,7 @@
     <div class="side-menu-section">
       <button mat-button class="side-menu-accordion" (click)="toggleCategories()">
         Categorías
-        <mat-icon class="expand-icon">{{ categoriesOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
+        <mat-icon>{{ categoriesOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
       </button>
       <div class="side-menu-categories" *ngIf="categoriesOpen">
         <!-- Aquí irán las categorías -->
