@@ -1,10 +1,14 @@
-/* Contenedor principal del detalle de actor */
+// ========================================
+// CONTAINER PRINCIPAL (.cast-detail-container)
+// ========================================
 .cast-detail-container {
   min-height: 100vh;
   background: var(--detail-bg);
 }
 
-/* Contenedor de carga */
+// ========================================
+// ESTADO DE CARGA (.loading-container)
+// ========================================
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -19,12 +23,16 @@
   color: #666;
 }
 
-/* Contenido del actor */
+// ========================================
+// CONTENIDO DEL ACTOR (.person-content)
+// ========================================
 .person-content {
   position: relative;
 }
 
-/* Contenedor de imagen de fondo */
+// ========================================
+// CONTENEDOR DE IMAGEN DE FONDO (.backdrop-container)
+// ========================================
 .backdrop-container {
   position: relative;
   height: 400px;
@@ -37,7 +45,6 @@
   object-fit: cover;
 }
 
-/* Overlay del fondo con gradiente */
 .backdrop-overlay {
   position: absolute;
   top: 0;
@@ -55,7 +62,9 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* Foto de perfil en móvil (sobre el backdrop) */
+// ========================================
+// FOTO DE PERFIL EN MÓVIL (.profile-section-mobile)
+// ========================================
 .profile-section-mobile {
   position: absolute;
   top: 25px;
@@ -73,7 +82,9 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Información del actor */
+// ========================================
+// INFORMACIÓN DEL ACTOR (.person-info)
+// ========================================
 .person-info {
   max-width: 1200px;
   margin: 0 auto;
@@ -86,7 +97,9 @@
   z-index: 1;
 }
 
-/* Sección de la foto de perfil */
+// ========================================
+// SECCIÓN DE LA FOTO DE PERFIL (.profile-section)
+// ========================================
 .profile-section {
   display: flex;
   justify-content: center;
@@ -100,7 +113,9 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Sección de detalles */
+// ========================================
+// SECCIÓN DE DETALLES (.details-section)
+// ========================================
 .details-section {
   background: var(--detail-card-bg);
   padding: 32px;
@@ -116,7 +131,9 @@
   line-height: 1.2;
 }
 
-/* Metadatos del actor */
+// ========================================
+// METADATOS DEL ACTOR (.person-meta)
+// ========================================
 .person-meta {
   display: flex;
   gap: 24px;
@@ -140,7 +157,9 @@ body.dark-mode .meta-item mat-icon {
   color: #f39c12 !important;
 }
 
-/* También conocido como */
+// ========================================
+// TAMBIÉN CONOCIDO COMO (.also-known-as)
+// ========================================
 .also-known-as {
   margin-bottom: 24px;
 }
@@ -156,7 +175,9 @@ body.dark-mode .meta-item mat-icon {
   color: var(--detail-genre-color);
 }
 
-/* Sección de biografía */
+// ========================================
+// SECCIÓN DE BIOGRAFÍA (.biography-section)
+// ========================================
 .biography-section {
   margin-bottom: 24px;
 }
@@ -168,7 +189,9 @@ body.dark-mode .meta-item mat-icon {
   margin: 0;
 }
 
-/* Información adicional */
+// ========================================
+// INFORMACIÓN ADICIONAL (.additional-info)
+// ========================================
 .additional-info {
   margin-bottom: 24px;
 }
@@ -196,7 +219,9 @@ body.dark-mode .info-item a {
   color: #64b5f6;
 }
 
-/* Sección de películas */
+// ========================================
+// SECCIÓN DE PELÍCULAS (.movies-section)
+// ========================================
 .movies-section {
   margin-bottom: 24px;
 }
@@ -287,7 +312,9 @@ body.dark-mode .info-item a {
   gap: 4px;
 }
 
-/* Controles de paginación de películas */
+// ========================================
+// CONTROLES DE PAGINACIÓN (.movies-carousel-controls)
+// ========================================
 .movies-carousel-controls {
   display: flex;
   align-items: center;
@@ -303,7 +330,9 @@ body.dark-mode .info-item a {
   text-align: center;
 }
 
-/* Títulos de sección */
+// ========================================
+// TÍTULOS DE SECCIÓN (.info-title)
+// ========================================
 .info-title {
   font-size: 1.3rem;
   font-weight: 500;
@@ -311,7 +340,9 @@ body.dark-mode .info-item a {
   color: var(--detail-title);
 }
 
-/* Contenedor de error */
+// ========================================
+// CONTENEDOR DE ERROR (.error-container)
+// ========================================
 .error-container {
   display: flex;
   flex-direction: column;
@@ -339,7 +370,9 @@ body.dark-mode .info-item a {
   color: var(--detail-info);
 }
 
-/* Estilos responsivos para tablets */
+// ========================================
+// MEDIA QUERIES
+// ========================================
 @media (max-width: 768px) {
   .backdrop-container {
     height: 300px;
@@ -383,7 +416,6 @@ body.dark-mode .info-item a {
   }
 }
 
-/* Estilos responsivos para móviles */
 @media (max-width: 480px) {
   .backdrop-container {
     height: 250px;

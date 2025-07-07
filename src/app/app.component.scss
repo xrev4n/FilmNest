@@ -1,14 +1,21 @@
-/* Contenedor principal de la aplicación */
+// ========================================
+// HOST COMPONENT (:host)
+// ========================================
 :host {
   display: block;
   min-height: 100vh;
 }
 
+// ========================================
+// CONTENIDO PRINCIPAL (main)
+// ========================================
 main {
   min-height: 100vh;
 }
 
-/* Estilos globales */
+// ========================================
+// ESTILOS GLOBALES (*, body)
+// ========================================
 * {
   box-sizing: border-box;
 }
@@ -22,6 +29,9 @@ body {
   color: var(--text-color);
 }
 
+// ========================================
+// ESTILOS DE MATERIAL DESIGN - MODO OSCURO
+// ========================================
 body.dark-mode .mat-button-toggle-group {
   background: #232323 !important;
   border-radius: 8px;
@@ -35,6 +45,9 @@ body.dark-mode .mat-icon {
   color: #fff !important;
 }
 
+// ========================================
+// FOOTER (.footer)
+// ========================================
 .footer {
   width: 100%;
   background: #232323;
@@ -57,17 +70,21 @@ body.dark-mode .mat-icon {
   margin-left: 8px;
 }
 
+body.dark-mode .footer {
+  background: #181818;
+  color: #fafafa;
+}
+
+body.dark-mode .footer a {
+  color: #90caf9;
+}
+
+// ========================================
+// MEDIA QUERIES
+// ========================================
 @media (max-width: 600px) {
   .footer {
     font-size: 0.9rem;
     padding: 12px 0;
   }
-}
-
-body.dark-mode .footer {
-  background: #181818;
-  color: #fafafa;
-}
-body.dark-mode .footer a {
-  color: #90caf9;
 }

@@ -1,3 +1,6 @@
+// ========================================
+// WRAPPER DEL FONDO (.background-wrapper)
+// ========================================
 .background-wrapper {
   position: fixed;
   top: 0;
@@ -9,6 +12,9 @@
   pointer-events: none;
 }
 
+// ========================================
+// IMAGEN DE FONDO (.background-image)
+// ========================================
 .background-image {
   position: absolute;
   top: 0;

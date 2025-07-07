@@ -2,6 +2,9 @@
 
 @use '@angular/material' as mat;
 
+// ========================================
+// ESTILOS BÁSICOS DEL HTML Y BODY
+// ========================================
 html, body { 
   height: 100%; 
 }
@@ -13,34 +16,13 @@ body {
   color: var(--text-color);
 }
 
-body.dark-mode {
-  --background-color: #181818;
-  --text-color: #fafafa;
-  @include mat.button-toggle-overrides((
-    background-color: #232323,
-    selected-state-background-color: #333,
-    selected-state-text-color: #fff
-  ));
-}
-
 * {
   box-sizing: border-box;
 }
 
-.mat-mdc-snack-bar-container {
-  &.success-snackbar {
-    --mdc-snackbar-container-color: #4caf50;
-    --mat-mdc-snack-bar-button-color: #fff;
-    --mdc-snackbar-supporting-text-color: #fff;
-  }
-
-  &.error-snackbar {
-    --mdc-snackbar-container-color: #f44336;
-    --mat-mdc-snack-bar-button-color: #fff;
-    --mdc-snackbar-supporting-text-color: #fff;
-  }
-}
-
+// ========================================
+// VARIABLES CSS - MODO CLARO (:root)
+// ========================================
 :root {
   --background-color: #fafafa;
   --text-color: #222;
@@ -61,6 +43,9 @@ body.dark-mode {
   --paginator-color: #222;
 }
 
+// ========================================
+// VARIABLES CSS - MODO OSCURO (body.dark-mode)
+// ========================================
 body.dark-mode {
   --background-color: #181818;
   --text-color: #fafafa;
@@ -79,6 +64,17 @@ body.dark-mode {
   --card-border: #444;
   --paginator-bg: #232323;
   --paginator-color: #fafafa;
+}
+
+// ========================================
+// ESTILOS DE MATERIAL DESIGN - MODO OSCURO
+// ========================================
+body.dark-mode {
+  @include mat.button-toggle-overrides((
+    background-color: #232323,
+    selected-state-background-color: #333,
+    selected-state-text-color: #fff
+  ));
 }
 
 body.dark-mode .mat-mdc-button-toggle-group {
@@ -105,20 +101,38 @@ body.dark-mode .movie-meta .meta-item mat-icon {
   color: #f39c12 !important;
 }
 
-/* Estilos para chips de géneros clickeables */
-.genre-chip.clickable {
-  cursor: pointer;
-  transition: all 0.2s ease;
+// ========================================
+// SNACKBAR PERSONALIZADOS
+// ========================================
+.mat-mdc-snack-bar-container {
+  &.success-snackbar {
+    --mdc-snackbar-container-color: #4caf50;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+
+  &.error-snackbar {
+    --mdc-snackbar-container-color: #f44336;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
 }
 
+// ========================================
+// ESTILOS DE CHIPS DE GÉNEROS
+// ========================================
 .genre-chip.clickable:hover {
   background: var(--primary-color, #1976d2) !important;
   color: white !important;
   transform: scale(1.05);
 }
 
-/* Asegurar que el color blanco se aplique en modo oscuro también */
 body.dark-mode .genre-chip.clickable:hover {
   background: var(--primary-color, #1976d2) !important;
   color: white !important;
+}
+
+.genre-chip, 
+.genre-chip .mdc-evolution-chip__text-label {
+  cursor: pointer !important;
 }

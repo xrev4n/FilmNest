@@ -1,3 +1,19 @@
+// ========================================
+// BOTÓN DE REGRESO (.back-button)
+// ========================================
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
+
+// ========================================
+// CONTAINER DE REGISTRO (.register-container)
+// ========================================
 .register-container {
   max-width: 400px;
   margin: 10rem auto 0 auto;
@@ -9,16 +25,25 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+// ========================================
+// TÍTULO DEL FORMULARIO (h2)
+// ========================================
 h2 {
   text-align: center;
   margin-bottom: 24px;
   color: var(--text-color);
 }
 
+// ========================================
+// GRUPOS DEL FORMULARIO (.form-group)
+// ========================================
 .form-group {
   margin-bottom: 8px;
 }
 
+// ========================================
+// BOTÓN DE REGISTRO (.register-btn)
+// ========================================
 .register-btn {
   width: 50%;
   color: #fff;
@@ -37,6 +62,9 @@ h2 {
   cursor: not-allowed;
 }
 
+// ========================================
+// MENSAJES DE ESTADO (.error, .success)
+// ========================================
 .error {
   color: #f44336;
   text-align: center;
@@ -47,21 +75,16 @@ h2 {
   text-align: center;
 }
 
-.back-button {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 10;
-  color: white;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-}
-
+// ========================================
+// UTILIDADES (.full-width)
+// ========================================
 .full-width {
   width: 100%;
 }
 
-// Modo oscuro - Texto blanco
+// ========================================
+// ESTILOS DE MATERIAL DESIGN - MODO OSCURO (::ng-deep)
+// ========================================
 ::ng-deep .dark-mode .mat-mdc-form-field .mat-mdc-form-field-label {
   color: rgba(255, 255, 255, 0.87) !important;
 }
@@ -106,7 +129,9 @@ h2 {
   color: rgba(255, 255, 255, 0.87) !important;
 }
 
-// Modo oscuro - mantener el fondo original
+// ========================================
+// CONTAINER EN MODO OSCURO
+// ========================================
 ::ng-deep .dark-mode .register-container {
   background: var(--card-bg);
   border: none;

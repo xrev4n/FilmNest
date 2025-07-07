@@ -1,10 +1,14 @@
-/* Contenedor principal del detalle de película */
+// ========================================
+// CONTAINER PRINCIPAL (.movie-detail-container)
+// ========================================
 .movie-detail-container {
   min-height: 100vh;
   background: var(--detail-bg);
 }
 
-/* Contenedor de carga */
+// ========================================
+// ESTADO DE CARGA (.loading-container)
+// ========================================
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -19,7 +23,9 @@
   color: #666;
 }
 
-/* Contenido de la película */
+// ========================================
+// CONTENIDO DE LA PELÍCULA (.movie-content)
+// ========================================
 .movie-content {
   position: relative;
   min-height: 100vh;
@@ -41,7 +47,9 @@
   z-index: 0;
 }
 
-/* Botón de regreso */
+// ========================================
+// BOTÓN DE REGRESO (.back-button)
+// ========================================
 .back-button {
   position: fixed;
   top: 20px;
@@ -51,7 +59,9 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* Información de la película */
+// ========================================
+// INFORMACIÓN DE LA PELÍCULA (.movie-info)
+// ========================================
 .movie-info {
   max-width: 1200px;
   margin: 0 auto;
@@ -64,7 +74,9 @@
   z-index: 1;
 }
 
-/* Sección del póster */
+// ========================================
+// SECCIÓN DEL PÓSTER (.poster-section)
+// ========================================
 .poster-section {
   display: flex;
   justify-content: center;
@@ -78,7 +90,9 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Sección de detalles */
+// ========================================
+// SECCIÓN DE DETALLES (.details-section)
+// ========================================
 .details-section {
   background: var(--detail-card-bg);
   padding: 32px;
@@ -94,7 +108,9 @@
   line-height: 1.2;
 }
 
-/* Tagline de la película */
+// ========================================
+// TAGLINE DE LA PELÍCULA (.movie-tagline)
+// ========================================
 .movie-tagline {
   font-size: 1.3rem;
   font-weight: 400;
@@ -105,7 +121,9 @@
   opacity: 0.8;
 }
 
-/* Metadatos de la película */
+// ========================================
+// METADATOS DE LA PELÍCULA (.movie-meta)
+// ========================================
 .movie-meta {
   display: flex;
   gap: 24px;
@@ -129,7 +147,9 @@ body.dark-mode .meta-item mat-icon {
   color: #f39c12 !important;
 }
 
-/* Banderas de países */
+// ========================================
+// BANDERAS DE PAÍSES (.country-flags)
+// ========================================
 .country-flags {
   display: flex;
   align-items: center;
@@ -150,7 +170,9 @@ body.dark-mode .meta-item mat-icon {
   margin: 0 2px;
 }
 
-/* Géneros de la película */
+// ========================================
+// GÉNEROS DE LA PELÍCULA (.genres)
+// ========================================
 .genres {
   display: flex;
   gap: 8px;
@@ -163,9 +185,9 @@ body.dark-mode .meta-item mat-icon {
   color: var(--detail-genre-color);
 }
 
-
-
-/* Sección del trailer */
+// ========================================
+// SECCIÓN DEL TRAILER (.trailer-section)
+// ========================================
 .trailer-section {
   margin-bottom: 24px;
 }
@@ -186,7 +208,9 @@ body.dark-mode .meta-item mat-icon {
   height: 1.2rem;
 }
 
-/* Sección de sinopsis */
+// ========================================
+// SECCIÓN DE SINOPSIS (.overview-section)
+// ========================================
 .overview-section {
   margin-bottom: 12px;
 }
@@ -205,7 +229,16 @@ body.dark-mode .meta-item mat-icon {
   margin: 0;
 }
 
-/* Información adicional */
+// ========================================
+// INFORMACIÓN ADICIONAL (.info-item, .info-title)
+// ========================================
+.info-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 0 0 16px 0;
+  color: var(--detail-title);
+}
+
 .info-item {
   margin-bottom: 12px;
   font-size: 0.95rem;
@@ -216,134 +249,9 @@ body.dark-mode .meta-item mat-icon {
   color: var(--detail-info-strong);
 }
 
-/* Contenedor de error */
-.error-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  text-align: center;
-}
-
-.error-container mat-icon {
-  font-size: 4rem;
-  width: 4rem;
-  height: 4rem;
-  color: #f44336;
-  margin-bottom: 16px;
-}
-
-.error-container h3 {
-  margin: 0 0 8px 0;
-  color: var(--detail-title);
-}
-
-.error-container p {
-  margin: 0 0 24px 0;
-  color: var(--detail-info);
-}
-
-/* Estilos responsivos para tablets */
-@media (max-width: 768px) {
-  .movie-content {
-    padding-top: 100px;
-  }
-
-  .movie-info {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-top: 0;
-    padding: 20px;
-  }
-
-  .poster-section {
-    order: 2;
-  }
-
-  .movie-poster {
-    width: 240px;
-    height: 360px;
-  }
-
-  .details-section {
-    padding: 24px;
-  }
-
-  .movie-title {
-    font-size: 2rem;
-  }
-
-  .movie-meta {
-    gap: 16px;
-  }
-}
-
-/* Estilos responsivos para móviles */
-@media (max-width: 480px) {
-  .movie-content {
-    padding-top: 250px;
-  }
-
-  .movie-info {
-    margin-top: 0;
-    padding: 16px;
-  }
-
-  .poster-section {
-    display: none;
-  }
-
-  .movie-poster {
-    width: 200px;
-    height: 300px;
-  }
-
-  .details-section {
-    padding: 20px;
-  }
-
-  .movie-title {
-    font-size: 1.8rem;
-  }
-
-  .movie-meta {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .recommendations-section .cast-cards {
-    flex-direction: row;
-    overflow-x: auto;
-    align-items: flex-start;
-    gap: 12px;
-    width: 100%;
-    padding-bottom: 8px;
-  }
-  .recommendations-section .cast-card {
-    width: 70vw;
-    min-width: 180px;
-    max-width: 240px;
-    min-height: 200px;
-    flex: 0 0 auto;
-  }
-  .recommendations-section .cast-photo {
-    width: 60vw;
-    max-width: 180px;
-    height: 90vw;
-    max-height: 260px;
-  }
-}
-
-.info-title {
-  font-size: 1.3rem;
-  font-weight: 500;
-  margin: 0 0 16px 0;
-  color: var(--detail-title);
-}
-
-/* Actores principales */
-
+// ========================================
+// ACTORES PRINCIPALES (.main-cast)
+// ========================================
 .cast-title {
   font-size: 1.3rem;
   font-weight: 500;
@@ -406,21 +314,9 @@ body.dark-mode .meta-item mat-icon {
   display: block;
 }
 
-@media (max-width: 768px) {
-  .cast-cards {
-    gap: 10px;
-  }
-  .cast-card {
-    width: 90px;
-    min-height: 170px;
-    padding: 8px 4px 8px 4px;
-  }
-  .cast-photo {
-    width: 60px;
-    height: 80px;
-  }
-}
-
+// ========================================
+// CONTROLES DE CARRUSEL (.cast-carousel-controls)
+// ========================================
 .cast-carousel-controls {
   display: flex;
   align-items: center;
@@ -435,6 +331,9 @@ body.dark-mode .meta-item mat-icon {
   text-align: center;
 }
 
+// ========================================
+// SECCIÓN DE RECOMENDACIONES (.recommendations-section)
+// ========================================
 .recommendations-section .cast-card {
   width: 180px;
   min-height: 260px;
@@ -443,4 +342,143 @@ body.dark-mode .meta-item mat-icon {
 .recommendations-section .cast-photo {
   width: 120px;
   height: 180px;
+}
+
+// ========================================
+// CONTENEDOR DE ERROR (.error-container)
+// ========================================
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.error-container mat-icon {
+  font-size: 4rem;
+  width: 4rem;
+  height: 4rem;
+  color: #f44336;
+  margin-bottom: 16px;
+}
+
+.error-container h3 {
+  margin: 0 0 8px 0;
+  color: var(--detail-title);
+}
+
+.error-container p {
+  margin: 0 0 24px 0;
+  color: var(--detail-info);
+}
+
+// ========================================
+// MEDIA QUERIES
+// ========================================
+@media (max-width: 768px) {
+  .movie-content {
+    padding-top: 100px;
+  }
+
+  .movie-info {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 0;
+    padding: 20px;
+  }
+
+  .poster-section {
+    order: 2;
+  }
+
+  .movie-poster {
+    width: 240px;
+    height: 360px;
+  }
+
+  .details-section {
+    padding: 24px;
+  }
+
+  .movie-title {
+    font-size: 2rem;
+  }
+
+  .movie-meta {
+    gap: 16px;
+  }
+
+  .cast-cards {
+    gap: 10px;
+  }
+
+  .cast-card {
+    width: 90px;
+    min-height: 170px;
+    padding: 8px 4px 8px 4px;
+  }
+
+  .cast-photo {
+    width: 60px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-content {
+    padding-top: 250px;
+  }
+
+  .movie-info {
+    margin-top: 0;
+    padding: 16px;
+  }
+
+  .poster-section {
+    display: none;
+  }
+
+  .movie-poster {
+    width: 200px;
+    height: 300px;
+  }
+
+  .details-section {
+    padding: 20px;
+  }
+
+  .movie-title {
+    font-size: 1.8rem;
+  }
+
+  .movie-meta {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .recommendations-section .cast-cards {
+    flex-direction: row;
+    overflow-x: auto;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding-bottom: 8px;
+  }
+
+  .recommendations-section .cast-card {
+    width: 70vw;
+    min-width: 180px;
+    max-width: 240px;
+    min-height: 200px;
+    flex: 0 0 auto;
+  }
+
+  .recommendations-section .cast-photo {
+    width: 60vw;
+    max-width: 180px;
+    height: 90vw;
+    max-height: 260px;
+  }
 } 

@@ -1,3 +1,6 @@
+// ========================================
+// CONTAINER PRINCIPAL (.trailer-modal-container)
+// ========================================
 .trailer-modal-container {
   max-width: 90vw;
   max-height: 90vh;
@@ -6,6 +9,9 @@
   overflow: hidden;
 }
 
+// ========================================
+// HEADER DEL MODAL (.modal-header)
+// ========================================
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -26,12 +32,18 @@
   color: var(--text-color);
 }
 
+// ========================================
+// CONTENIDO DEL MODAL (.modal-content)
+// ========================================
 .modal-content {
   padding: 0;
   max-height: 70vh;
   overflow: hidden;
 }
 
+// ========================================
+// ESTADO DE CARGA (.loading-container)
+// ========================================
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -46,6 +58,9 @@
   color: var(--text-color);
 }
 
+// ========================================
+// ESTADO DE ERROR (.error-container)
+// ========================================
 .error-container {
   display: flex;
   flex-direction: column;
@@ -74,6 +89,9 @@
   opacity: 0.7;
 }
 
+// ========================================
+// REPRODUCTOR DE VIDEO (.video-container)
+// ========================================
 .video-container {
   position: relative;
   width: 100%;
@@ -91,6 +109,9 @@
   border: none;
 }
 
+// ========================================
+// ACCIONES DEL MODAL (.modal-actions)
+// ========================================
 .modal-actions {
   display: flex;
   justify-content: flex-end;
@@ -103,7 +124,9 @@
   color: var(--text-color);
 }
 
-/* Estilos responsivos */
+// ========================================
+// MEDIA QUERIES
+// ========================================
 @media (max-width: 768px) {
   .trailer-modal-container {
     width: 95vw;

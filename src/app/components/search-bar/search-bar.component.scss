@@ -1,3 +1,6 @@
+// ========================================
+// VARIABLES CSS
+// ========================================
 :root {
   --searchbar-bg: #fff;
   --searchbar-text: #222;
@@ -14,6 +17,9 @@ body.dark-mode {
   --searchbar-btn-text: #fafafa;
 }
 
+// ========================================
+// CONTAINER PRINCIPAL (.search-container)
+// ========================================
 .search-container {
   display: flex;
   gap: 16px;
@@ -22,6 +28,9 @@ body.dark-mode {
   flex-wrap: wrap;
 }
 
+// ========================================
+// WRAPPER DEL CAMPO DE BÚSQUEDA (.search-field-wrapper)
+// ========================================
 .search-field-wrapper {
   display: flex;
   align-items: center;
@@ -30,19 +39,12 @@ body.dark-mode {
   min-width: 300px;
 }
 
+// ========================================
+// CAMPO DE BÚSQUEDA (.search-field)
+// ========================================
 .search-field {
   width: 100%;
   height: 100%;
-}
-
-.search-button {
-  height: 56px;
-  min-width: 100px;
-  padding: 0 24px;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .search-field-wrapper, .search-field, input[matInput] {
@@ -59,6 +61,42 @@ body.dark-mode {
   color: var(--searchbar-text) !important;
 }
 
+input[matInput]::placeholder {
+  color: var(--searchbar-text) !important;
+  opacity: 1;
+}
+
+input[matInput]::-webkit-input-placeholder {
+  color: var(--searchbar-text) !important;
+}
+
+input[matInput]:-ms-input-placeholder {
+  color: var(--searchbar-text) !important;
+}
+
+// ========================================
+// BOTÓN DE BÚSQUEDA (.search-button)
+// ========================================
+.search-button {
+  height: 56px;
+  min-width: 100px;
+  padding: 0 24px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ========================================
+// UTILIDADES
+// ========================================
+.poster-section {
+  display: none;
+}
+
+// ========================================
+// MEDIA QUERIES
+// ========================================
 @media (max-width: 768px) {
   .search-container {
     flex-direction: column;
@@ -76,20 +114,4 @@ body.dark-mode {
     height: 44px;
     margin-top: 0;
   }
-}
-.poster-section {
-  display: none;
-}
-
-input[matInput]::placeholder {
-  color: var(--searchbar-text) !important;
-  opacity: 1;
-}
-
-input[matInput]::-webkit-input-placeholder {
-  color: var(--searchbar-text) !important;
-}
-
-input[matInput]:-ms-input-placeholder {
-  color: var(--searchbar-text) !important;
 }

@@ -1,11 +1,15 @@
-/* Contenedor principal de la página de inicio */
+// ========================================
+// CONTAINER PRINCIPAL (.home-container)
+// ========================================
 .home-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Encabezado de la página */
+// ========================================
+// ENCABEZADO DE LA PÁGINA (.header)
+// ========================================
 .header {
   text-align: center;
 }
@@ -17,12 +21,16 @@
   object-fit: contain;
 }
 
-/* Contenido principal */
+// ========================================
+// CONTENIDO PRINCIPAL (.content)
+// ========================================
 .content {
   min-height: 400px;
 }
 
-/* Contenedor de carga */
+// ========================================
+// ESTADO DE CARGA (.loading-container)
+// ========================================
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -37,7 +45,9 @@
   color: #666;
 }
 
-/* Estado cuando no hay resultados */
+// ========================================
+// ESTADO SIN RESULTADOS (.no-results)
+// ========================================
 .no-results {
   display: flex;
   flex-direction: column;
@@ -65,7 +75,9 @@
   color: #666;
 }
 
-/* Grid de películas */
+// ========================================
+// GRID DE PELÍCULAS (.movies-grid)
+// ========================================
 .movies-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -73,7 +85,9 @@
   margin-bottom: 32px;
 }
 
-/* Tarjeta de película */
+// ========================================
+// TARJETA DE PELÍCULA (.movie-card)
+// ========================================
 .movie-card {
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -88,14 +102,18 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Póster de la película */
+// ========================================
+// PÓSTER DE LA PELÍCULA (.movie-poster)
+// ========================================
 .movie-poster {
   height: 400px;
   object-fit: cover;
   width: 100%;
 }
 
-/* Contenido de la tarjeta */
+// ========================================
+// CONTENIDO DE LA TARJETA (.movie-content)
+// ========================================
 .movie-content {
   padding: 16px;
 }
@@ -108,7 +126,9 @@
   line-height: 1.3;
 }
 
-/* Metadatos de la película */
+// ========================================
+// METADATOS DE LA PELÍCULA (.movie-meta)
+// ========================================
 .movie-meta {
   display: flex;
   justify-content: space-between;
@@ -139,7 +159,9 @@ body.dark-mode .movie-rating mat-icon {
   color: #f39c12 !important;
 }
 
-/* Géneros de la película */
+// ========================================
+// GÉNEROS DE LA PELÍCULA (.movie-genres)
+// ========================================
 .movie-genres {
   display: flex;
   gap: 6px;
@@ -154,9 +176,9 @@ body.dark-mode .movie-rating mat-icon {
   color: var(--detail-genre-color);
 }
 
-
-
-/* Paginador */
+// ========================================
+// PAGINADOR (.paginator)
+// ========================================
 .paginator {
   margin-top: 32px;
   background: var(--paginator-bg);
@@ -165,7 +187,9 @@ body.dark-mode .movie-rating mat-icon {
   padding: 8px 16px;
 }
 
-/* Estilos responsivos para tablets */
+// ========================================
+// MEDIA QUERIES
+// ========================================
 @media (max-width: 1024px) {
   .movies-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -187,9 +211,7 @@ body.dark-mode .movie-rating mat-icon {
   }
 }
 
-/* Estilos responsivos para móviles */
 @media (max-width: 480px) {
-
   .movies-grid {
     grid-template-columns: 1fr;
   }
