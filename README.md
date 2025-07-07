@@ -1,4 +1,4 @@
-# 🎬 FilmNest
+# ![FilmNest Logo](https://github.com/xrev4n/FilmNest/blob/main/src/assets/img/logo-no-margin.png?raw=true)
 
 Una plataforma web moderna para explorar y descubrir películas, construida con Angular e integrada con la API de TMDB. FilmNest ofrece una experiencia de usuario intuitiva con diseño responsive y funcionalidades avanzadas de búsqueda y navegación.
 
