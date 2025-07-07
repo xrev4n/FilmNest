@@ -103,6 +103,9 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
    * Inicializa el componente y carga los detalles de la película
    */
   ngOnInit(): void {
+    // Hacer scroll al inicio de la página
+    this.scrollToTop();
+    
     this.route.params.subscribe(params => {
       const movieId = +params['id'];
       if (movieId) {
@@ -111,6 +114,15 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
         this.loadMovieRecommendations(movieId);
       }
     });
+  }
+
+  /**
+   * Hace scroll al inicio de la página
+   */
+  private scrollToTop(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   /**

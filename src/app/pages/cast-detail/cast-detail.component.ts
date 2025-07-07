@@ -69,6 +69,9 @@ export class CastDetailComponent implements OnInit, OnDestroy {
    * Inicializa el componente y carga los detalles del actor
    */
   ngOnInit(): void {
+    // Hacer scroll al inicio de la página
+    this.scrollToTop();
+    
     this.route.params.subscribe(params => {
       const personId = +params['id'];
       if (personId) {
@@ -76,6 +79,15 @@ export class CastDetailComponent implements OnInit, OnDestroy {
         this.loadPersonMovieCredits(personId);
       }
     });
+  }
+
+  /**
+   * Hace scroll al inicio de la página
+   */
+  private scrollToTop(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   /**

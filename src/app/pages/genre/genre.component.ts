@@ -59,12 +59,22 @@ export class GenreComponent implements OnInit {
    * Inicializa el componente cargando las películas del género
    */
   ngOnInit(): void {
+    // Hacer scroll al inicio de la página
+    this.scrollToTop();
+    
     this.route.params.subscribe(params => {
       this.genreId = +params['id'];
       if (this.genreId) {
         this.loadGenresAndMovies();
       }
     });
+  }
+
+  /**
+   * Hace scroll al inicio de la página
+   */
+  private scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /**

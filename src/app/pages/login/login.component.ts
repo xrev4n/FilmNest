@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule , Location} from '@angular/common';
@@ -16,7 +16,7 @@ import { LoginBackgroundComponent } from './login-background.component';
   standalone: true,
   imports: [FormsModule, CommonModule, RouterModule, MatIconModule, MatButtonModule, MatFormFieldModule, MatInputModule, LoginBackgroundComponent] 
 })
-export class LoginComponent{
+export class LoginComponent implements OnInit{
 
   email = '';
   password = '';
@@ -28,6 +28,18 @@ export class LoginComponent{
     private router: Router,
     private location: Location
   ) {}
+
+  ngOnInit(): void {
+    // Hacer scroll al inicio de la página
+    this.scrollToTop();
+  }
+
+  /**
+   * Hace scroll al inicio de la página
+   */
+  private scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   async login() {
     this.loading = true;

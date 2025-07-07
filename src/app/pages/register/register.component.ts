@@ -40,6 +40,9 @@ export class RegisterComponent implements AfterViewInit, OnInit {
   hide = signal(true);
 
   ngOnInit() {
+    // Hacer scroll al inicio de la página
+    this.scrollToTop();
+    
     // Verificar si viene desde login
     this.route.queryParams.subscribe(params => {
       if (params['fromLogin'] === 'true') {
@@ -50,6 +53,13 @@ export class RegisterComponent implements AfterViewInit, OnInit {
         }, 300);
       }
     });
+  }
+
+  /**
+   * Hace scroll al inicio de la página
+   */
+  private scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   ngAfterViewInit() {

@@ -13,14 +13,19 @@
 .back-button {
   color: white;
   background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
 }
 
 // ========================================
 // ENCABEZADO DE LA PÁGINA (.header)
 // ========================================
 .header {
+  margin-top: 75px;
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 50px;
 }
 
 .title {

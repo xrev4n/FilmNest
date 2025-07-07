@@ -22,8 +22,26 @@
         <mat-icon>{{ categoriesOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
       </button>
       <div class="side-menu-categories" *ngIf="categoriesOpen">
-        <!-- Aquí irán las categorías -->
-        <span class="side-menu-empty">(Próximamente)</span>
+        <!-- Estado de carga de géneros -->
+        <div *ngIf="loadingGenres" class="side-menu-loading">
+          <mat-spinner diameter="20"></mat-spinner>
+          <span>Cargando categorías...</span>
+        </div>
+        
+        <!-- Lista de géneros -->
+        <button 
+          *ngFor="let genre of genres" 
+          mat-button 
+          class="side-menu-genre-btn"
+          (click)="navigateToGenre(genre.id)"
+        >
+          {{ genre.name }}
+        </button>
+        
+        <!-- Estado cuando no hay géneros -->
+        <span *ngIf="!loadingGenres && genres.length === 0" class="side-menu-empty">
+          No se encontraron categorías
+        </span>
       </div>
     </div>
     

@@ -13,6 +13,7 @@ import { isPlatformBrowser } from '@angular/common';
 
 import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
 import { TmdbService, Movie, MovieDetail } from '../../services/tmdb.service';
+import { ThemeService } from '../../services/theme.service';
 
 /**
  * Componente de la página principal del catálogo de películas
@@ -53,13 +54,16 @@ export class HomeComponent implements OnInit {
   categoriesOpen = false;
   /** Estado del menú lateral */
   sideMenuOpen = false;
-  /** Estado del modo oscuro */
-  isDarkMode = false;
+  /** Lista de géneros disponibles */
+  genres: { id: number; name: string }[] = [];
+  /** Estado de carga de géneros */
+  loadingGenres = false;
 
   constructor(
     private tmdbService: TmdbService,
     private router: Router,
     private snackBar: MatSnackBar,
+    private themeService: ThemeService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -83,40 +87,55 @@ export class HomeComponent implements OnInit {
    * Inicializa el componente cargando las películas populares
    */
   ngOnInit(): void {
+    // Hacer scroll al inicio de la página
+    this.scrollToTop();
+    
     this.loadPopularMovies();
-    this.loadThemePreference();
+    this.loadGenres();
   }
 
   /**
-   * Carga la preferencia de tema guardada en localStorage
+   * Hace scroll al inicio de la página
    */
-  loadThemePreference(): void {
+  private scrollToTop(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const savedTheme = localStorage.getItem('darkMode');
-      if (savedTheme === 'true') {
-        this.isDarkMode = true;
-        document.body.classList.add('dark-mode');
-      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
   /**
-   * Cambia entre modo claro y oscuro
+   * Carga los géneros disponibles desde la API
+   */
+  loadGenres(): void {
+    this.loadingGenres = true;
+    
+    this.tmdbService.getGenres().subscribe({
+      next: (response) => {
+        this.genres = response.genres;
+        this.loadingGenres = false;
+      },
+      error: (error) => {
+        console.error('Error loading genres:', error);
+        this.loadingGenres = false;
+        this.snackBar.open('Error al cargar las categorías', 'Cerrar', {
+          duration: 3000
+        });
+      }
+    });
+  }
+
+  /**
+   * Getter para obtener el estado del tema desde el servicio
+   */
+  get isDarkMode(): boolean {
+    return this.themeService.isDarkMode;
+  }
+
+  /**
+   * Cambia entre modo claro y oscuro usando el servicio
    */
   toggleDarkMode(): void {
-    this.isDarkMode = !this.isDarkMode;
-    
-    if (this.isDarkMode) {
-      document.body.classList.add('dark-mode');
-      if (isPlatformBrowser(this.platformId)) {
-        localStorage.setItem('darkMode', 'true');
-      }
-    } else {
-      document.body.classList.remove('dark-mode');
-      if (isPlatformBrowser(this.platformId)) {
-        localStorage.setItem('darkMode', 'false');
-      }
-    }
+    this.themeService.toggleDarkMode();
   }
 
   /**
@@ -239,6 +258,15 @@ export class HomeComponent implements OnInit {
    */
   viewGenre(genreId: number, event: Event): void {
     event.stopPropagation(); // Evita que se active el click de la tarjeta
+    this.router.navigate(['/genre', genreId]);
+  }
+
+  /**
+   * Navega a la página de género desde el side-menu
+   * @param genreId - ID del género
+   */
+  navigateToGenre(genreId: number): void {
+    this.sideMenuOpen = false; // Cierra el side-menu
     this.router.navigate(['/genre', genreId]);
   }
 }
