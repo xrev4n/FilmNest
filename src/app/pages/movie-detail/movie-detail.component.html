@@ -77,12 +77,26 @@
 
         <!-- Información adicional (presupuesto y recaudación) -->
         <div class="additional-info" *ngIf="movie.budget || movie.revenue">
-          <h3 class="info-title">Información adicional</h3>
+          <h3 class="info-title">Información financiera</h3>
           <div class="info-item" *ngIf="movie.budget">
-            Presupuesto: {{ formatCurrency(movie.budget) }}
+            <strong>Presupuesto: </strong>{{ formatCurrency(movie.budget) }}
           </div>
           <div class="info-item" *ngIf="movie.revenue">
-            Recaudación: {{ formatCurrency(movie.revenue) }}
+            <strong>Recaudación: </strong>{{ formatCurrency(movie.revenue) }}
+          </div>
+          
+          <!-- Comparador visual de rentabilidad -->
+          <div class="revenue-comparison" *ngIf="movie.budget && movie.revenue">
+            <div class="progress-container">
+              <div class="progress-bar">
+                <div class="budget-segment" [style.width.%]="getBudgetPercentage(movie.budget, movie.revenue)"></div>
+                <div class="revenue-segment" [style.width.%]="getRevenuePercentage(movie.budget, movie.revenue)"></div>
+              </div>
+              <div class="progress-labels">
+                <span class="budget-label">Presupuesto ({{ getBudgetPercentage(movie.budget, movie.revenue) }}%)</span>
+                <span class="revenue-label">Recaudación ({{ getRevenuePercentage(movie.budget, movie.revenue) }}%)</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -115,7 +129,7 @@
 
         <!-- Sección de películas recomendadas -->
         <div class="recommendations-section" *ngIf="recommendations.length > 0">
-          <h3 class="cast-title">Películas sugeridas</h3>
+          <h3 class="cast-title">Te puede interesar...</h3>
           <div class="cast-cards">
             <div class="cast-card" *ngFor="let rec of visibleRecommendations"
                  [routerLink]="['/movie', rec.id]"

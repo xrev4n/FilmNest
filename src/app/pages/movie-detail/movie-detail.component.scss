@@ -250,6 +250,68 @@ body.dark-mode .meta-item mat-icon {
 }
 
 // ========================================
+// COMPARADOR DE RENTABILIDAD (.revenue-comparison)
+// ========================================
+.revenue-comparison {
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+.progress-container {
+  margin-top: 12px;
+}
+
+.progress-bar {
+  display: flex;
+  height: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--card-border);
+  margin-bottom: 8px;
+}
+
+.budget-segment {
+  background: #B71C1C;
+  transition: width 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 0;
+}
+
+.revenue-segment {
+  background: #33691E;
+  transition: width 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 0;
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--detail-info);
+}
+
+.budget-label {
+  color: #B71C1C;
+  font-weight: 500;
+}
+
+.revenue-label {
+  color: #33691E;
+  font-weight: 500;
+}
+
+// ========================================
 // ACTORES PRINCIPALES (.main-cast)
 // ========================================
 .cast-title {

@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -28,6 +29,7 @@ import { TrailerModalComponent } from '../../components/trailer-modal/trailer-mo
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatChipsModule,
     MatDialogModule
   ],
@@ -265,6 +267,38 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(amount);
+  }
+
+  /**
+   * Calcula el porcentaje de rentabilidad de la película
+   * @param budget - Presupuesto de la película
+   * @param revenue - Recaudación de la película
+   * @returns Porcentaje de rentabilidad (máximo 500%)
+   */
+  getRevenueRatio(budget: number, revenue: number): number {
+    return Math.min(Math.round((revenue / budget) * 100), 500); // Máximo 500% para no romper la barra
+  }
+
+  /**
+   * Calcula el porcentaje del presupuesto respecto al total (presupuesto + recaudación)
+   * @param budget - Presupuesto de la película
+   * @param revenue - Recaudación de la película
+   * @returns Porcentaje del presupuesto
+   */
+  getBudgetPercentage(budget: number, revenue: number): number {
+    const total = budget + revenue;
+    return Math.round((budget / total) * 100);
+  }
+
+  /**
+   * Calcula el porcentaje de la recaudación respecto al total (presupuesto + recaudación)
+   * @param budget - Presupuesto de la película
+   * @param revenue - Recaudación de la película
+   * @returns Porcentaje de la recaudación
+   */
+  getRevenuePercentage(budget: number, revenue: number): number {
+    const total = budget + revenue;
+    return Math.round((revenue / total) * 100);
   }
 
   /**
