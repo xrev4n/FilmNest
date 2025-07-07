@@ -1,10 +1,161 @@
 // ========================================
-// CONTAINER PRINCIPAL (.home-container)
+// LAYOUT PRINCIPAL SIN SIDEMENU FIJO
+// ========================================
+.home-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--background-color);
+}
+
+// ========================================
+// CONTENIDO PRINCIPAL (OCUPA TODO EL ESPACIO)
 // ========================================
 .home-container {
+  flex: 1;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+}
+
+// ========================================
+// BOTÓN HAMBURGUESA PARA ABRIR EL SIDEMENU
+// ========================================
+.menu-toggle-btn {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 1201;
+  background: var(--card-bg);
+  color: var(--text-color) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 50%;
+  transition: background 0.3s, color 0.3s, opacity 0.3s;
+}
+
+.menu-toggle-btn mat-icon {
+  color: var(--text-color) !important;
+}
+
+// Ocultar el botón hamburguesa cuando el menú está abierto
+.side-menu.open ~ .menu-toggle-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+
+// ========================================
+// SIDEMENU LATERAL COMO OVERLAY (SIEMPRE)
+// ========================================
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 260px;
+  background: var(--card-bg);
+  border-right: 1px solid var(--card-border);
+  box-shadow: 2px 0 16px rgba(0,0,0,0.10);
+  padding: 32px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1202;
+  transform: translateX(-110%);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+.side-menu.open {
+  transform: translateX(0);
+}
+
+.side-menu nav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 16px;
+}
+
+.side-menu-close {
+  align-self: flex-end;
+  margin-bottom: 8px;
+  color: var(--text-color) !important;
+  cursor: pointer;
+}
+
+.side-menu-close mat-icon {
+  color: var(--text-color) !important;
+}
+
+.side-menu-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.35);
+  z-index: 1200;
+}
+
+.side-menu-btn {
+  width: 100%;
+  justify-content: flex-start;
+  color: var(--text-color) !important;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: transparent !important;
+}
+
+.side-menu-btn mat-icon {
+  margin-right: 8px;
+  color: var(--text-color) !important;
+}
+
+.side-menu-section {
+  margin-top: 16px;
+}
+
+.side-menu-accordion {
+  width: 100%;
+  justify-content: flex-start;
+  color: var(--text-color) !important;
+  font-weight: 500;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  background: transparent !important;
+  padding: 0;
+}
+
+.side-menu-accordion mat-icon {
+  color: var(--text-color) !important;
+  margin-right: 8px;
+}
+
+.expand-icon {
+  margin-left: auto;
+  color: var(--text-color) !important;
+}
+
+.side-menu-categories {
+  padding-left: 32px;
+  margin-top: 6px;
+  color: var(--detail-meta);
+  font-size: 0.95rem;
+}
+
+.side-menu-empty {
+  color: var(--detail-meta);
+  font-style: italic;
+}
+
+// ========================================
+// RESPONSIVE: AJUSTAR ANCHO DEL MENÚ EN DESKTOP
+// ========================================
+@media (min-width: 900px) {
+  .side-menu {
+    width: 280px;
+  }
 }
 
 // ========================================

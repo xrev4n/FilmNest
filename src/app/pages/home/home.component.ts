@@ -46,11 +46,32 @@ export class HomeComponent implements OnInit {
   /** Término de búsqueda actual */
   searchQuery = '';
 
+  /** Estado del desplegable de categorías */
+  categoriesOpen = false;
+  /** Estado del menú lateral */
+  sideMenuOpen = false;
+
   constructor(
     private tmdbService: TmdbService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {}
+
+  /** Alterna el menú lateral */
+  toggleSideMenu(): void {
+    this.sideMenuOpen = !this.sideMenuOpen;
+  }
+
+  /** Alterna el desplegable de categorías */
+  toggleCategories(): void {
+    this.categoriesOpen = !this.categoriesOpen;
+  }
+
+  /** Navega al login y cierra el menú */
+  navigateToLogin(): void {
+    this.sideMenuOpen = false;
+    this.router.navigate(['/login']);
+  }
 
   /**
    * Inicializa el componente cargando las películas populares

@@ -92,10 +92,43 @@ body.dark-mode .mat-mdc-button-toggle-checked {
   color: #fff !important;
 }
 
-body.dark-mode .mat-icon {
-  color: #fff !important;
+// Estilos específicos para botones de Material en modo oscuro
+body.dark-mode .mat-mdc-button {
+  color: var(--text-color) !important;
 }
 
+body.dark-mode .mat-mdc-icon-button {
+  color: var(--text-color) !important;
+}
+
+body.dark-mode .mat-icon {
+  color: var(--text-color) !important;
+}
+
+// Estilos específicos para el sidemenu en modo oscuro
+body.dark-mode .side-menu-btn,
+body.dark-mode .side-menu-accordion,
+body.dark-mode .side-menu-close {
+  color: var(--text-color) !important;
+}
+
+body.dark-mode .side-menu-btn mat-icon,
+body.dark-mode .side-menu-accordion mat-icon,
+body.dark-mode .side-menu-close mat-icon {
+  color: var(--text-color) !important;
+}
+
+// Estilos específicos para el botón hamburguesa en modo oscuro
+body.dark-mode .menu-toggle-btn {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+body.dark-mode .menu-toggle-btn mat-icon {
+  color: var(--text-color) !important;
+}
+
+// Excepciones para iconos específicos
 body.dark-mode .movie-rating mat-icon,
 body.dark-mode .movie-meta .meta-item mat-icon {
   color: #f39c12 !important;
