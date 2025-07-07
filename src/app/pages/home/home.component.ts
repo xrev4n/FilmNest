@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -8,6 +8,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { isPlatformBrowser } from '@angular/common';
 
 import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
 import { TmdbService, Movie, MovieDetail } from '../../services/tmdb.service';
@@ -27,6 +29,7 @@ import { TmdbService, Movie, MovieDetail } from '../../services/tmdb.service';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatChipsModule,
+    MatButtonToggleModule,
     SearchBarComponent
   ],
   templateUrl: './home.component.html',
@@ -50,11 +53,14 @@ export class HomeComponent implements OnInit {
   categoriesOpen = false;
   /** Estado del menú lateral */
   sideMenuOpen = false;
+  /** Estado del modo oscuro */
+  isDarkMode = false;
 
   constructor(
     private tmdbService: TmdbService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   /** Alterna el menú lateral */
@@ -78,6 +84,39 @@ export class HomeComponent implements OnInit {
    */
   ngOnInit(): void {
     this.loadPopularMovies();
+    this.loadThemePreference();
+  }
+
+  /**
+   * Carga la preferencia de tema guardada en localStorage
+   */
+  loadThemePreference(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const savedTheme = localStorage.getItem('darkMode');
+      if (savedTheme === 'true') {
+        this.isDarkMode = true;
+        document.body.classList.add('dark-mode');
+      }
+    }
+  }
+
+  /**
+   * Cambia entre modo claro y oscuro
+   */
+  toggleDarkMode(): void {
+    this.isDarkMode = !this.isDarkMode;
+    
+    if (this.isDarkMode) {
+      document.body.classList.add('dark-mode');
+      if (isPlatformBrowser(this.platformId)) {
+        localStorage.setItem('darkMode', 'true');
+      }
+    } else {
+      document.body.classList.remove('dark-mode');
+      if (isPlatformBrowser(this.platformId)) {
+        localStorage.setItem('darkMode', 'false');
+      }
+    }
   }
 
   /**

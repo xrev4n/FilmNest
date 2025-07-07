@@ -73,6 +73,7 @@
   flex-direction: column;
   gap: 16px;
   padding: 0 16px;
+  height: 100%;
 }
 
 .side-menu-close {
@@ -137,6 +138,62 @@
 .side-menu-empty {
   color: var(--detail-meta);
   font-style: italic;
+}
+
+// ========================================
+// SEPARADOR DEL SIDEMENU
+// ========================================
+.side-menu-divider {
+  height: 1px;
+  background: var(--card-border);
+  margin: 24px 0;
+  opacity: 0.6;
+}
+
+// ========================================
+// SECCIÓN DE TEMA EN EL SIDEMENU
+// ========================================
+.side-menu-theme-section {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.side-menu-theme-label {
+  display: block;
+  color: var(--text-color);
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+}
+
+.theme-toggle-group {
+  width: 50%;
+  height: 50%;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+}
+
+.theme-toggle-btn {
+  flex: 1;
+  color: var(--text-color) !important;
+  background: var(--card-bg) !important;
+  border: none !important;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle-btn.mat-button-toggle-checked {
+  background: var(--primary-color) !important;
+  color: white !important;
+}
+
+.theme-toggle-btn mat-icon {
+  font-size: 1.1rem;
+  width: 1.1rem;
+  height: 1.1rem;
 }
 
 // ========================================
