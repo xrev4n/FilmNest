@@ -34,24 +34,42 @@ Una plataforma web moderna para explorar y descubrir películas, construida con 
    npm install
    ```
 
-3. **Configura la API Key de TMDB**
-   
-   Para usar la aplicación, necesitas obtener una API key gratuita de TMDB:
-   
-   - Ve a [TMDB](https://www.themoviedb.org/settings/api)
-   - Crea una cuenta gratuita
-   - Solicita una API key
-   - Copia tu API key
+3. **Configura la API Key de TMDB y SUPABASE**
 
-   Luego crea el archivo `src/environments/environment.ts` , pega el siguiente codigo y reemplaza el campo tmdbApiKey por tu APIKey de TMDB:
-   ```typescript
-   export const environment = {
-     production: false,
-     tmdbApiKey: 'tu_api_key_aqui' // Reemplaza con tu API key real
-     tmdbBaseUrl: 'https://api.themoviedb.org/3',
-     tmdbImageBaseUrl: 'https://image.tmdb.org/t/p'};
-   }
-   ```
+🔑 Obtener API Key de TMDB
+Para usar la API de películas, necesitas obtener una API key gratuita de [TMDB](https://www.themoviedb.org):
+
+1. Ve a [https://www.themoviedb.org/settings/api](https://www.themoviedb.org/settings/api)
+2. Crea una cuenta gratuita (si aún no tienes una)
+3. Dirígete a "API" en el panel de usuario
+4. Solicita una API Key (elige "Developer Key")
+5. Copia tu API key
+
+🛠️ Obtener URL y API Key de Supabase
+Para conectar tu proyecto a Supabase:
+
+1. Ve a [https://supabase.com/](https://supabase.com/) y crea una cuenta
+2. Crea un nuevo proyecto
+3. Una vez creado, ve al **Project Settings > API**
+4. Copia:
+   - La **URL del proyecto** (por ejemplo, `https://xxxxx.supabase.co`)
+   - La **anon public key** (clave pública) que usarás en el frontend
+
+> ⚠️ **No uses la service_role key en el frontend**, ya que tiene permisos administrativos.
+
+🧪 Crear archivo `environment.ts`
+En tu proyecto Angular, crea o edita el archivo `src/environments/environment.ts` con el siguiente contenido, reemplazando los valores con los tuyos:
+
+```ts
+export const environment = {
+  production: false,
+  tmdbApiKey: 'tu_api_key_tmdb_aqui',
+  tmdbBaseUrl: 'https://api.themoviedb.org/3',
+  tmdbImageBaseUrl: 'https://image.tmdb.org/t/p',
+  supabaseUrl: 'https://tu_proyecto.supabase.co',
+  supabaseKey: 'tu_anon_public_key_aqui'
+};
+```
 
 4. **Ejecuta la aplicación**
    ```bash
