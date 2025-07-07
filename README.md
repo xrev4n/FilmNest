@@ -2,6 +2,8 @@
 
 Una plataforma web moderna para explorar y descubrir películas, construida con Angular e integrada con la API de TMDB. FilmNest ofrece una experiencia de usuario intuitiva con diseño responsive y funcionalidades avanzadas de búsqueda y navegación.
 
+[![Ver en GitHub Pages](https://img.shields.io/badge/🔗%20Ver%20Demo-GitHub%20Pages-blue?style=for-the-badge)](https://xrev4n.github.io/FilmNest/)
+
 ## ✨ Características Actuales
 
 - 🎯 **Diseño Minimalista**: Interfaz limpia y moderna con Material Design
