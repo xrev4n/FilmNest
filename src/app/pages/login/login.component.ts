@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { FormsModule } from '@angular/forms';
-import { CommonModule , Location} from '@angular/common';
+import { CommonModule, Location, isPlatformBrowser } from '@angular/common';
 import { Router, RouterModule } from '@angular/router'; 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,19 +26,24 @@ export class LoginComponent implements OnInit{
   constructor(
     private supabaseService: SupabaseService,
     private router: Router,
-    private location: Location
+    private location: Location,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
-    // Hacer scroll al inicio de la página
-    this.scrollToTop();
+    // Hacer scroll al inicio de la página solo en el navegador
+    if (isPlatformBrowser(this.platformId)) {
+      this.scrollToTop();
+    }
   }
 
   /**
    * Hace scroll al inicio de la página
    */
   private scrollToTop(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   async login() {

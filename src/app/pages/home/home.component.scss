@@ -55,7 +55,7 @@
   background: var(--card-bg);
   border-right: 1px solid var(--card-border);
   box-shadow: 2px 0 16px rgba(0,0,0,0.10);
-  padding: 32px 0 0 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -72,8 +72,7 @@
 .side-menu nav {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 0 16px;
+  padding: 60px 16px 0 16px;
   height: 100%;
   overflow-y: auto;
   scrollbar-width: none; /* Firefox */
@@ -86,10 +85,12 @@
 }
 
 .side-menu-close {
-  align-self: flex-end;
-  margin-bottom: 8px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
   color: var(--text-color) !important;
   cursor: pointer;
+  z-index: 1;
 }
 
 .side-menu-close mat-icon {
@@ -119,10 +120,6 @@
 .side-menu-btn mat-icon {
   margin-right: 8px;
   color: var(--text-color) !important;
-}
-
-.side-menu-section {
-  margin-top: 16px;
 }
 
 .side-menu-accordion {
@@ -172,8 +169,6 @@
   justify-content: flex-start;
   color: var(--text-color) !important;
   font-size: 0.9rem;
-  padding: 8px 12px;
-  margin-bottom: 4px;
   border-radius: 6px;
   background: transparent !important;
   transition: background 0.2s ease;
@@ -185,6 +180,23 @@
 
 .side-menu-genre-btn:last-child {
   margin-bottom: 0;
+}
+
+// ========================================
+// SECCIÓN DE USUARIO AUTENTICADO
+// ========================================
+
+.side-menu-logout-btn {
+  color: #f44336 !important;
+  margin-top: 4px;
+}
+
+.side-menu-logout-btn mat-icon {
+  color: #f44336 !important;
+}
+
+.side-menu-logout-btn:hover {
+  background: rgba(244, 67, 54, 0.1) !important;
 }
 
 // ========================================

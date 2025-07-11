@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -10,10 +10,12 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { isPlatformBrowser } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
 import { TmdbService, Movie, MovieDetail } from '../../services/tmdb.service';
 import { ThemeService } from '../../services/theme.service';
+import { SupabaseService } from '../../services/supabase.service';
 
 /**
  * Componente de la página principal del catálogo de películas
@@ -36,7 +38,7 @@ import { ThemeService } from '../../services/theme.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   /** Lista de películas a mostrar */
   movies: MovieDetail[] = [];
   /** Estado de carga */
@@ -59,11 +61,19 @@ export class HomeComponent implements OnInit {
   /** Estado de carga de géneros */
   loadingGenres = false;
 
+  /** Estado de autenticación del usuario */
+  isAuthenticated = false;
+  /** Usuario actual */
+  currentUser: any = null;
+  /** Subscription para el estado de autenticación */
+  private authSubscription?: Subscription;
+
   constructor(
     private tmdbService: TmdbService,
     private router: Router,
     private snackBar: MatSnackBar,
     private themeService: ThemeService,
+    private supabaseService: SupabaseService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -83,6 +93,33 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  /** Navega al perfil del usuario y cierra el menú */
+  navigateToProfile(): void {
+    this.sideMenuOpen = false;
+    this.router.navigate(['/my-account']);
+  }
+
+  /** Cierra la sesión del usuario */
+  async logout(): Promise<void> {
+    try {
+      const { error } = await this.supabaseService.signOut();
+      if (error) {
+        this.snackBar.open('Error al cerrar sesión', 'Cerrar', {
+          duration: 3000
+        });
+      } else {
+        this.snackBar.open('Sesión cerrada exitosamente', 'Cerrar', {
+          duration: 3000
+        });
+        this.sideMenuOpen = false;
+      }
+    } catch (error) {
+      this.snackBar.open('Error al cerrar sesión', 'Cerrar', {
+        duration: 3000
+      });
+    }
+  }
+
   /**
    * Inicializa el componente cargando las películas populares
    */
@@ -92,6 +129,24 @@ export class HomeComponent implements OnInit {
     
     this.loadPopularMovies();
     this.loadGenres();
+    this.initializeAuth();
+  }
+
+  /**
+   * Inicializa la suscripción al estado de autenticación
+   */
+  private initializeAuth(): void {
+    this.authSubscription = this.supabaseService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+      this.isAuthenticated = user !== null;
+    });
+  }
+
+  /**
+   * Limpia las suscripciones al destruir el componente
+   */
+  ngOnDestroy(): void {
+    this.authSubscription?.unsubscribe();
   }
 
   /**

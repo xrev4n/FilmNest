@@ -8,14 +8,26 @@
 
 <!-- SIDEMENU LATERAL (overlay) -->
 <aside class="side-menu" [class.open]="sideMenuOpen">
+  <button mat-icon-button class="side-menu-close" (click)="toggleSideMenu()">
+    <mat-icon>close</mat-icon>
+  </button>
+
   <nav>
-    <button mat-icon-button class="side-menu-close" (click)="toggleSideMenu()">
-      <mat-icon>close</mat-icon>
-    </button>
-    <button mat-button class="side-menu-btn" (click)="navigateToLogin()">
-      <mat-icon>login</mat-icon>
-      Iniciar sesión
-    </button>
+    <!-- Botón de login o perfil según el estado de autenticación -->
+    <div *ngIf="!isAuthenticated">
+      <button mat-button class="side-menu-btn" (click)="navigateToLogin()">
+        <mat-icon>login</mat-icon>
+        Iniciar sesión
+      </button>
+    </div>
+
+    <div *ngIf="isAuthenticated" class="side-menu-user-section">
+      <button mat-button class="side-menu-btn" (click)="navigateToProfile()">
+        <mat-icon>account_circle</mat-icon>
+        Mi perfil
+      </button>
+    </div>
+
     <div class="side-menu-section">
       <button mat-button class="side-menu-accordion" (click)="toggleCategories()">
         Categorías
@@ -40,8 +52,13 @@
       </div>
     </div>
 
-    <!-- Separador -->
-    <div class="side-menu-divider"></div>
+    <!-- Botón de cerrar sesión -->
+    <div *ngIf="isAuthenticated" class="side-menu-user-section"> <button mat-button
+        class="side-menu-btn side-menu-logout-btn" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Cerrar sesión
+      </button>
+    </div>
 
     <!-- Botón de modo oscuro -->
     <div class="side-menu-theme-section">
