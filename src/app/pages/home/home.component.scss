@@ -459,6 +459,19 @@ body.dark-mode .movie-rating mat-icon {
     padding: 16px;
   }
 
+  .menu-toggle-btn {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 1201;
+  }
+
+  .header {
+    position: relative;
+    padding-top: 60px;
+    margin-bottom: 20px;
+  }
+
   .movies-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
@@ -470,6 +483,15 @@ body.dark-mode .movie-rating mat-icon {
 }
 
 @media (max-width: 480px) {
+  .menu-toggle-btn {
+    top: 12px;
+    left: 12px;
+  }
+
+  .header {
+    padding-top: 50px;
+  }
+
   .movies-grid {
     grid-template-columns: 1fr;
   }

@@ -13,11 +13,24 @@
 }
 
 // ========================================
+// OVERLAY CON BOTÓN DE REGRESO (.backdrop-overlay)
+// ========================================
+.back-button {
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+// ========================================
 // ENCABEZADO DE LA PÁGINA
 // ========================================
 .page-header {
   text-align: center;
   margin-bottom: 32px;
+  margin-top: 50px;
 }
 
 .page-header h1 {
@@ -217,13 +230,14 @@
 
   .account-section mat-card-header {
     padding: 12px 16px;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     gap: 8px;
   }
 
   .card-actions {
-    align-self: flex-end;
+    flex-shrink: 0;
   }
 
   .account-section mat-card-content {

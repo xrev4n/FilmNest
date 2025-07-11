@@ -1,11 +1,14 @@
 <div class="my-account-container">
   <div class="my-account-content">
+    <!-- Botón de regreso -->
+    <button mat-icon-button class="back-button" (click)="goBack()" aria-label="Volver">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
     <!-- Encabezado de la página -->
     <header class="page-header">
       <h1>Mi Cuenta</h1>
       <p>Gestiona tu perfil y configuración</p>
     </header>
-
     <!-- Estado de carga -->
     <div *ngIf="loading" class="loading-container">
       <mat-spinner></mat-spinner>
@@ -41,41 +44,30 @@
             <!-- Nombre de usuario -->
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Nombre de usuario</mat-label>
-              <input matInput 
-                     [(ngModel)]="editForm.username" 
-                     [readonly]="!isEditing"
-                     placeholder="Tu nombre de usuario">
+              <input matInput [(ngModel)]="editForm.username" [readonly]="!isEditing"
+                placeholder="Tu nombre de usuario">
               <mat-hint *ngIf="!isEditing && !profile?.username">No especificado</mat-hint>
             </mat-form-field>
 
             <!-- Nombre completo -->
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Nombre completo</mat-label>
-              <input matInput 
-                     [(ngModel)]="editForm.full_name" 
-                     [readonly]="!isEditing"
-                     placeholder="Tu nombre completo">
+              <input matInput [(ngModel)]="editForm.full_name" [readonly]="!isEditing" placeholder="Tu nombre completo">
               <mat-hint *ngIf="!isEditing && !profile?.full_name">No especificado</mat-hint>
             </mat-form-field>
 
             <!-- Fecha de nacimiento -->
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Fecha de nacimiento</mat-label>
-              <input matInput 
-                     type="date" 
-                     [(ngModel)]="editForm.birthdate" 
-                     [readonly]="!isEditing">
+              <input matInput type="date" [(ngModel)]="editForm.birthdate" [readonly]="!isEditing">
               <mat-hint *ngIf="!isEditing && !profile?.birthdate">No especificada</mat-hint>
             </mat-form-field>
 
             <!-- Biografía -->
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Biografía</mat-label>
-              <textarea matInput 
-                        [(ngModel)]="editForm.bio" 
-                        [readonly]="!isEditing"
-                        placeholder="Cuéntanos sobre ti..."
-                        rows="3"></textarea>
+              <textarea matInput [(ngModel)]="editForm.bio" [readonly]="!isEditing" placeholder="Cuéntanos sobre ti..."
+                rows="3"></textarea>
               <mat-hint *ngIf="!isEditing && !profile?.bio">No especificada</mat-hint>
             </mat-form-field>
           </div>
@@ -111,4 +103,4 @@
       </mat-card>
     </div>
   </div>
-</div> 
+</div>

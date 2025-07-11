@@ -10,6 +10,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SupabaseService, UserProfile } from '../../services/supabase.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-account',
@@ -42,11 +43,16 @@ export class MyAccountComponent implements OnInit {
 
   constructor(
     private supabaseService: SupabaseService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.loadProfile();
+  }
+
+  goBack(): void {
+    this.router.navigate(['/home']);
   }
 
   async loadProfile(): Promise<void> {
