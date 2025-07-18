@@ -1,0 +1,1 @@
+import{Ib as o,_ as r,u as t,wb as a}from"./chunk-KOLL3EMX.js";var n=(()=>{class e{static \u0275fac=function(i){return new(i||e)};static \u0275mod=r({type:e});static \u0275inj=t({imports:[o,a,o]})}return e})();export{n as a};
