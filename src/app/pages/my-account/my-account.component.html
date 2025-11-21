@@ -59,7 +59,10 @@
             <!-- Fecha de nacimiento -->
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Fecha de nacimiento</mat-label>
-              <input matInput type="date" [(ngModel)]="editForm.birthdate" [readonly]="!isEditing">
+              <input matInput [matDatepicker]="picker" [(ngModel)]="editForm.birthdate" [readonly]="!isEditing"
+                placeholder="DD/MM/YYYY">
+              <mat-datepicker-toggle matIconSuffix [for]="picker" [disabled]="!isEditing"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
               <mat-hint *ngIf="!isEditing && !profile?.birthdate">No especificada</mat-hint>
             </mat-form-field>
 

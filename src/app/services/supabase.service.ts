@@ -6,11 +6,11 @@ import { User } from '@supabase/supabase-js';
 export interface UserProfile {
   id: string;
   updated_at?: string;
-  username?: string;
-  full_name?: string;
-  avatar_url?: string;
-  bio?: string;
-  birthdate?: string;
+  username?: string | null;
+  full_name?: string | null;
+  avatar_url?: string | null;
+  bio?: string | null;
+  birthdate?: string | null;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -90,4 +90,4 @@ export class SupabaseService {
     const { error } = await supabase.auth.signOut();
     return { error };
   }
-} 
+}
