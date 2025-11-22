@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private themeService: ThemeService,
     private supabaseService: SupabaseService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) { }
 
   /** Alterna el menú lateral */
   toggleSideMenu(): void {
@@ -99,6 +99,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/my-account']);
   }
 
+  /** Navega a las listas del usuario y cierra el menú */
+  navigateToWatchlists(): void {
+    this.sideMenuOpen = false;
+    this.router.navigate(['/my-watchlists']);
+  }
+
   /** Cierra la sesión del usuario */
   async logout(): Promise<void> {
     try {
@@ -112,6 +118,9 @@ export class HomeComponent implements OnInit, OnDestroy {
           duration: 3000
         });
         this.sideMenuOpen = false;
+        this.isAuthenticated = false;
+        this.currentUser = null;
+        this.router.navigate(['/']);
       }
     } catch (error) {
       this.snackBar.open('Error al cerrar sesión', 'Cerrar', {
@@ -126,7 +135,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Hacer scroll al inicio de la página
     this.scrollToTop();
-    
+
     this.loadPopularMovies();
     this.loadGenres();
     this.initializeAuth();
@@ -163,7 +172,7 @@ export class HomeComponent implements OnInit, OnDestroy {
    */
   loadGenres(): void {
     this.loadingGenres = true;
-    
+
     this.tmdbService.getGenres().subscribe({
       next: (response) => {
         this.genres = response.genres;
@@ -199,7 +208,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadPopularMovies(): void {
     this.loading = true;
     this.searchQuery = '';
-    
+
     this.tmdbService.getPopularMoviesWithDetails(this.currentPage).subscribe({
       next: (movies) => {
         this.movies = movies;
@@ -229,7 +238,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   onSearch(query: string): void {
     this.searchQuery = query;
     this.currentPage = 1; // Solo reiniciar página en búsquedas nuevas
-    
+
     if (!query.trim()) {
       this.loadPopularMovies();
       return;
@@ -273,10 +282,10 @@ export class HomeComponent implements OnInit, OnDestroy {
    */
   onPageChange(event: PageEvent): void {
     this.currentPage = event.pageIndex + 1;
-    
+
     // Hacer scroll al top cuando cambie de página
     this.scrollToTop();
-    
+
     if (this.searchQuery) {
       // Usar el método de búsqueda paginada sin reiniciar la página
       this.performSearch(this.searchQuery, this.currentPage);

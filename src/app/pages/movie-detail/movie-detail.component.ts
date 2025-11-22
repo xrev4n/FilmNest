@@ -13,7 +13,10 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { isPlatformBrowser } from '@angular/common';
 
 import { TmdbService, MovieDetail, MovieImagesResponse } from '../../services/tmdb.service';
+
 import { TrailerModalComponent } from '../../components/trailer-modal/trailer-modal.component';
+import { WatchlistService } from '../../services/watchlist.service';
+import { SupabaseService } from '../../services/supabase.service';
 
 /**
  * Componente de detalle de película
@@ -53,8 +56,16 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   recommendations: any[] = [];
   /** Página actual de recomendaciones */
   recommendationsPage = 0;
+
   /** Tamaño de página de recomendaciones */
   recommendationsPageSize = 3;
+
+  /** Estado de la watchlist */
+  isInWatchlist = false;
+  /** Cargando estado de watchlist */
+  watchlistLoading = false;
+  /** Usuario autenticado */
+  isAuthenticated = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -63,6 +74,9 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private location: Location,
+
+    private watchlistService: WatchlistService,
+    private supabaseService: SupabaseService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     if (isPlatformBrowser(this.platformId)) {
@@ -105,13 +119,76 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Hacer scroll al inicio de la página
     this.scrollToTop();
-    
+
     this.route.params.subscribe(params => {
       const movieId = +params['id'];
       if (movieId) {
         this.loadMovieDetail(movieId);
         this.loadMovieCast(movieId);
         this.loadMovieRecommendations(movieId);
+        this.checkAuthAndWatchlist(movieId);
+      }
+    });
+  }
+
+  /**
+   * Verifica autenticación y estado de watchlist
+   */
+  checkAuthAndWatchlist(movieId: number): void {
+    this.supabaseService.currentUser$.subscribe(user => {
+      this.isAuthenticated = !!user;
+      if (this.isAuthenticated) {
+        this.checkWatchlistStatus(movieId);
+      }
+    });
+  }
+
+  /**
+   * Verifica si la película está en la watchlist
+   */
+  checkWatchlistStatus(movieId: number): void {
+    this.watchlistLoading = true;
+    this.watchlistService.isMovieInWatchlist(movieId).subscribe({
+      next: (isInList) => {
+        this.isInWatchlist = isInList;
+        this.watchlistLoading = false;
+      },
+      error: (error) => {
+        console.error('Error checking watchlist status:', error);
+        this.watchlistLoading = false;
+      }
+    });
+  }
+
+  /**
+   * Alterna el estado de la película en la watchlist
+   */
+  toggleWatchlist(): void {
+    if (!this.isAuthenticated) {
+      this.snackBar.open('Debes iniciar sesión para agregar a tu lista', 'Cerrar', { duration: 3000 });
+      return;
+    }
+
+    if (!this.movie) return;
+
+    this.watchlistLoading = true;
+    // Optimistic update
+    const previousState = this.isInWatchlist;
+    this.isInWatchlist = !this.isInWatchlist;
+
+    this.watchlistService.toggleWatchlist(this.movie.id).subscribe({
+      next: (isInList) => {
+        this.isInWatchlist = isInList;
+        this.watchlistLoading = false;
+        const message = isInList ? 'Agregada a tu lista' : 'Eliminada de tu lista';
+        this.snackBar.open(message, 'Cerrar', { duration: 3000 });
+      },
+      error: (error) => {
+        console.error('Error toggling watchlist:', error);
+        // Revert optimistic update
+        this.isInWatchlist = previousState;
+        this.watchlistLoading = false;
+        this.snackBar.open('Error al actualizar tu lista', 'Cerrar', { duration: 3000 });
       }
     });
   }
@@ -131,7 +208,7 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
    */
   loadMovieDetail(movieId: number): void {
     this.loading = true;
-    
+
     this.tmdbService.getMovieDetail(movieId).subscribe({
       next: (movie) => {
         this.movie = movie;

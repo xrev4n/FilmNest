@@ -18,8 +18,7 @@
       <!-- Sección del póster -->
       <div class="poster-section">
         <img [src]="movie.poster_path ? getImageUrl(movie.poster_path) : 'assets/img/poster-not-found.png'"
-          [alt]="movie.title" class="movie-poster"
-          (error)="onImageError($event)">
+          [alt]="movie.title" class="movie-poster" (error)="onImageError($event)">
       </div>
 
       <!-- Sección de detalles -->
@@ -61,11 +60,17 @@
           </mat-chip>
         </div>
 
-        <!-- Botón para ver trailer -->
+        <!-- Botón para ver trailer y watchlist -->
         <div class="trailer-section">
           <button mat-flat-button (click)="openTrailerModal()" class="trailer-button" color="primary">
             <mat-icon>play_circle</mat-icon>
             Ver Trailer
+          </button>
+
+          <button mat-stroked-button *ngIf="isAuthenticated" (click)="toggleWatchlist()" class="watchlist-button"
+            [disabled]="watchlistLoading" [color]="isInWatchlist ? 'warn' : 'primary'">
+            <mat-icon>{{ isInWatchlist ? 'remove_circle_outline' : 'add_circle_outline' }}</mat-icon>
+            {{ isInWatchlist ? 'Quitar de mi lista' : 'Agregar a mi lista' }}
           </button>
         </div>
 
@@ -84,7 +89,7 @@
           <div class="info-item" *ngIf="movie.revenue">
             <strong>Recaudación: </strong>{{ formatCurrency(movie.revenue) }}
           </div>
-          
+
           <!-- Comparador visual de rentabilidad -->
           <div class="revenue-comparison" *ngIf="movie.budget && movie.revenue">
             <div class="progress-container">
@@ -94,7 +99,8 @@
               </div>
               <div class="progress-labels">
                 <span class="budget-label">Presupuesto ({{ getBudgetPercentage(movie.budget, movie.revenue) }}%)</span>
-                <span class="revenue-label">Recaudación ({{ getRevenuePercentage(movie.budget, movie.revenue) }}%)</span>
+                <span class="revenue-label">Recaudación ({{ getRevenuePercentage(movie.budget, movie.revenue)
+                  }}%)</span>
               </div>
             </div>
           </div>
@@ -104,10 +110,10 @@
         <div class="main-cast" *ngIf="actors.length > 0">
           <h3 class="cast-title">Reparto</h3>
           <div class="cast-cards">
-            <div class="cast-card" *ngFor="let actor of visibleActors" 
-                 [routerLink]="['/cast', actor.id]" 
-                 style="cursor: pointer;">
-              <img [src]="actor.profile_path ? 'https://image.tmdb.org/t/p/w185' + actor.profile_path : 'assets/img/cast-not-found.png'"
+            <div class="cast-card" *ngFor="let actor of visibleActors" [routerLink]="['/cast', actor.id]"
+              style="cursor: pointer;">
+              <img
+                [src]="actor.profile_path ? 'https://image.tmdb.org/t/p/w185' + actor.profile_path : 'assets/img/cast-not-found.png'"
                 [alt]="actor.name" class="cast-photo">
               <div class="cast-info">
                 <span class="cast-name">{{ actor.name }}</span>
@@ -131,11 +137,10 @@
         <div class="recommendations-section" *ngIf="recommendations.length > 0">
           <h3 class="cast-title">Te puede interesar...</h3>
           <div class="cast-cards">
-            <div class="cast-card" *ngFor="let rec of visibleRecommendations"
-                 [routerLink]="['/movie', rec.id]"
-                 style="cursor: pointer;">
+            <div class="cast-card" *ngFor="let rec of visibleRecommendations" [routerLink]="['/movie', rec.id]"
+              style="cursor: pointer;">
               <img [src]="rec.poster_path ? getImageUrl(rec.poster_path) : 'assets/img/poster-not-found.png'"
-                   [alt]="rec.title" class="cast-photo">
+                [alt]="rec.title" class="cast-photo">
               <div class="cast-info">
                 <span class="cast-name">{{ rec.title }}</span>
                 <span class="cast-character">{{ rec.release_date | date:'yyyy' }}</span>
@@ -148,7 +153,7 @@
             </button>
             <span class="cast-page-indicator">{{ recommendationsPage + 1 }} / {{ recommendationsTotalPages }}</span>
             <button mat-icon-button (click)="nextRecommendationsPage()"
-                    [disabled]="(recommendationsPage + 1) * recommendationsPageSize >= recommendations.length">
+              [disabled]="(recommendationsPage + 1) * recommendationsPageSize >= recommendations.length">
               <mat-icon>chevron_right</mat-icon>
             </button>
           </div>

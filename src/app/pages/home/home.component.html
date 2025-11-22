@@ -26,6 +26,10 @@
         <mat-icon>account_circle</mat-icon>
         Mi perfil
       </button>
+      <button mat-button class="side-menu-btn" (click)="navigateToWatchlists()">
+        <mat-icon>list</mat-icon>
+        Mis listas
+      </button>
     </div>
 
     <div class="side-menu-section">
@@ -53,8 +57,8 @@
     </div>
 
     <!-- Botón de cerrar sesión -->
-    <div *ngIf="isAuthenticated" class="side-menu-user-section"> <button mat-button
-        class="side-menu-btn side-menu-logout-btn" (click)="logout()">
+    <div *ngIf="isAuthenticated" class="side-menu-user-section">
+      <button mat-button class="side-menu-btn side-menu-logout-btn" (click)="logout()">
         <mat-icon>logout</mat-icon>
         Cerrar sesión
       </button>
