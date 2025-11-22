@@ -444,6 +444,202 @@ body.dark-mode {
     color: var(--text-color) !important;
   }
 
+  --detail-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --detail-title: #fafafa;
+  --detail-meta: #bdbdbd;
+  --detail-genre-bg: #263238;
+  --detail-genre-color: #90caf9;
+  --detail-overview: #bdbdbd;
+  --detail-info: #bdbdbd;
+  --detail-info-strong: #fafafa;
+  --card-bg: #232323;
+  --card-border: #444;
+  --paginator-bg: #232323;
+  --paginator-color: #fafafa;
+}
+
+// ========================================
+// ESTILOS DE MATERIAL DESIGN - MODO OSCURO
+// ========================================
+body.dark-mode {
+  @include mat.button-toggle-overrides((background-color: #232323,
+      selected-state-background-color: #333,
+      selected-state-text-color: #fff));
+}
+
+body.dark-mode .mat-mdc-button-toggle-group {
+  background: #232323 !important;
+  border-radius: 8px;
+}
+
+body.dark-mode .mat-mdc-button-toggle-button {
+  background: transparent !important;
+  color: #fff !important;
+}
+
+body.dark-mode .mat-mdc-button-toggle-checked {
+  background: #333 !important;
+  color: #fff !important;
+}
+
+// Estilos específicos para botones de Material en modo oscuro
+body.dark-mode .mat-mdc-button {
+  color: var(--text-color) !important;
+}
+
+body.dark-mode .mat-mdc-icon-button {
+  color: var(--text-color) !important;
+}
+
+body.dark-mode .mat-icon {
+  color: var(--text-color) !important;
+}
+
+// Estilos específicos para el sidemenu en modo oscuro
+body.dark-mode .side-menu-btn,
+body.dark-mode .side-menu-accordion,
+body.dark-mode .side-menu-close {
+  color: var(--text-color) !important;
+}
+
+body.dark-mode .side-menu-btn mat-icon,
+body.dark-mode .side-menu-accordion mat-icon,
+body.dark-mode .side-menu-close mat-icon {
+  color: var(--text-color) !important;
+}
+
+// Estilos específicos para el botón hamburguesa en modo oscuro
+body.dark-mode .menu-toggle-btn {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+body.dark-mode .menu-toggle-btn mat-icon {
+  color: var(--text-color) !important;
+}
+
+// Excepciones para iconos específicos
+body.dark-mode .movie-rating mat-icon,
+body.dark-mode .movie-meta .meta-item mat-icon {
+  color: #f39c12 !important;
+}
+
+// ========================================
+// SNACKBAR PERSONALIZADOS
+// ========================================
+.mat-mdc-snack-bar-container {
+  &.success-snackbar {
+    --mdc-snackbar-container-color: #4caf50;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+
+  &.error-snackbar {
+    --mdc-snackbar-container-color: #f44336;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+}
+
+// ========================================
+// ESTILOS DE CHIPS DE GÉNEROS
+// ========================================
+.genre-chip.clickable:hover {
+  background: var(--primary-color, #1976d2) !important;
+  color: white !important;
+  transform: scale(1.05);
+}
+
+body.dark-mode .genre-chip.clickable:hover {
+  background: var(--primary-color, #1976d2) !important;
+  color: white !important;
+}
+
+.genre-chip,
+.genre-chip .mdc-evolution-chip__text-label {
+  cursor: pointer !important;
+}
+
+// ========================================
+// ESTILOS DE DATEPICKER - MODO OSCURO
+// ========================================
+body.dark-mode {
+
+  // Fondo y color del contenedor principal
+  .mat-datepicker-content {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+  }
+
+  // Encabezado del calendario (mes/año)
+  .mat-calendar-table-header th {
+    color: var(--detail-meta) !important;
+  }
+
+  // Flechas de navegación
+  .mat-calendar-previous-button,
+  .mat-calendar-next-button {
+    color: var(--text-color) !important;
+  }
+
+  // Texto de los días
+  .mat-calendar-body-cell-content {
+    color: var(--text-color) !important;
+    border-color: transparent !important;
+  }
+
+  // Hover en los días
+  .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  // Día seleccionado
+  .mat-calendar-body-selected {
+    background-color: var(--primary-color) !important;
+    color: #fff !important;
+  }
+
+  // Día de hoy (círculo bordeado)
+  .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+    border-color: var(--primary-color) !important;
+  }
+
+  // Botón de cambio de vista (mes/año)
+  .mat-calendar-period-button {
+    color: var(--text-color) !important;
+  }
+
+  // Flecha del botón de periodo
+  .mat-calendar-arrow {
+    fill: var(--text-color) !important;
+  }
+
+  // Etiquetas de meses/años en la vista de selección múltiple
+  .mat-calendar-body-label {
+    color: var(--text-color) !important;
+    font-weight: 500;
+  }
+
+  // Asegurar que todo el texto dentro del calendario sea del color correcto
+  .mat-calendar-table * {
+    color: var(--text-color);
+  }
+}
+
+// ========================================
+// ESTILOS DE DIÁLOGOS - MODO OSCURO
+// ========================================
+body.dark-mode {
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-color: var(--card-bg);
+    --mdc-dialog-subhead-color: var(--text-color);
+    --mdc-dialog-supporting-text-color: var(--detail-meta);
+  }
+
+  .mat-mdc-dialog-title {
+    color: var(--text-color) !important;
+  }
+
   .mat-mdc-dialog-content {
     color: var(--text-color) !important;
   }
@@ -461,5 +657,46 @@ body.dark-mode {
     &.mat-form-field-appearance-outline .mat-mdc-notched-outline__stroke {
       border-color: rgba(255, 255, 255, 0.3) !important;
     }
+  }
+}
+
+// ========================================
+// BOTÓN HAMBURGUESA GLOBAL
+// ========================================
+.menu-toggle-btn {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 1201;
+  background: var(--card-bg);
+  color: var(--text-color) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  transition: background 0.3s, color 0.3s, opacity 0.3s;
+}
+
+.menu-toggle-btn mat-icon {
+  color: var(--text-color) !important;
+}
+
+// Ocultar el botón hamburguesa cuando el menú está abierto
+.side-menu.open~.menu-toggle-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle-btn {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 1201;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-toggle-btn {
+    top: 12px;
+    left: 12px;
   }
 }

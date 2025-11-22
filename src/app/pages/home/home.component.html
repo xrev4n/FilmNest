@@ -1,84 +1,9 @@
+<app-side-menu [isOpen]="sideMenuOpen" (close)="sideMenuOpen = false"></app-side-menu>
+
 <!-- Botón de menú hamburguesa -->
 <button mat-icon-button class="menu-toggle-btn" (click)="toggleSideMenu()">
   <mat-icon>menu</mat-icon>
 </button>
-
-<!-- Fondo oscuro para cerrar el menú al hacer click fuera -->
-<div class="side-menu-backdrop" *ngIf="sideMenuOpen" (click)="toggleSideMenu()"></div>
-
-<!-- SIDEMENU LATERAL (overlay) -->
-<aside class="side-menu" [class.open]="sideMenuOpen">
-  <button mat-icon-button class="side-menu-close" (click)="toggleSideMenu()">
-    <mat-icon>close</mat-icon>
-  </button>
-
-  <nav>
-    <!-- Botón de login o perfil según el estado de autenticación -->
-    <div *ngIf="!isAuthenticated">
-      <button mat-button class="side-menu-btn" (click)="navigateToLogin()">
-        <mat-icon>login</mat-icon>
-        Iniciar sesión
-      </button>
-    </div>
-
-    <div *ngIf="isAuthenticated" class="side-menu-user-section">
-      <button mat-button class="side-menu-btn" (click)="navigateToProfile()">
-        <mat-icon>account_circle</mat-icon>
-        Mi perfil
-      </button>
-      <button mat-button class="side-menu-btn" (click)="navigateToWatchlists()">
-        <mat-icon>list</mat-icon>
-        Mis listas
-      </button>
-    </div>
-
-    <div class="side-menu-section">
-      <button mat-button class="side-menu-accordion" (click)="toggleCategories()">
-        Categorías
-        <mat-icon>{{ categoriesOpen ? 'expand_less' : 'expand_more' }}</mat-icon>
-      </button>
-      <div class="side-menu-categories" *ngIf="categoriesOpen">
-        <!-- Estado de carga de géneros -->
-        <div *ngIf="loadingGenres" class="side-menu-loading">
-          <mat-spinner diameter="20"></mat-spinner>
-          <span>Cargando categorías...</span>
-        </div>
-
-        <!-- Lista de géneros -->
-        <button *ngFor="let genre of genres" mat-button class="side-menu-genre-btn" (click)="navigateToGenre(genre.id)">
-          {{ genre.name }}
-        </button>
-
-        <!-- Estado cuando no hay géneros -->
-        <span *ngIf="!loadingGenres && genres.length === 0" class="side-menu-empty">
-          No se encontraron categorías
-        </span>
-      </div>
-    </div>
-
-    <!-- Botón de cerrar sesión -->
-    <div *ngIf="isAuthenticated" class="side-menu-user-section">
-      <button mat-button class="side-menu-btn side-menu-logout-btn" (click)="logout()">
-        <mat-icon>logout</mat-icon>
-        Cerrar sesión
-      </button>
-    </div>
-
-    <!-- Botón de modo oscuro -->
-    <div class="side-menu-theme-section">
-      <span class="side-menu-theme-label">Tema</span>
-      <mat-button-toggle-group [value]="isDarkMode ? 'dark' : 'light'" (change)="toggleDarkMode()"
-        [hideSingleSelectionIndicator]="true" class="theme-toggle-group">
-        <mat-button-toggle value="light" class="theme-toggle-btn">
-          <mat-icon>light_mode</mat-icon>
-        </mat-button-toggle>
-        <mat-button-toggle value="dark" class="theme-toggle-btn">
-          <mat-icon>dark_mode</mat-icon>
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-  </nav>
-</aside>
 
 <div class="home-layout">
   <!-- CONTENIDO PRINCIPAL -->

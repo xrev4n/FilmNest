@@ -11,6 +11,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { WatchlistService, Watchlist } from '../../services/watchlist.service';
 import { TmdbService } from '../../services/tmdb.service';
 import { CreateWatchlistModalComponent } from '../../components/create-watchlist-modal/create-watchlist-modal.component';
+import { SideMenuComponent } from '../../components/side-menu/side-menu.component';
 
 interface WatchlistWithCover extends Watchlist {
   coverUrl?: string;
@@ -27,9 +28,17 @@ interface WatchlistWithCover extends Watchlist {
     MatDialogModule,
     MatProgressSpinnerModule,
     RouterModule,
-    MatTooltipModule
+    MatTooltipModule,
+    SideMenuComponent
   ],
   template: `
+    <app-side-menu [isOpen]="sideMenuOpen" (close)="sideMenuOpen = false"></app-side-menu>
+
+    <!-- Botón de menú hamburguesa -->
+    <button mat-icon-button class="menu-toggle-btn" (click)="toggleSideMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
     <div class="watchlists-container">
       <header class="page-header">
         <h1>Mis Listas</h1>
@@ -86,6 +95,7 @@ interface WatchlistWithCover extends Watchlist {
       max-width: 1200px;
       margin: 0 auto;
       min-height: 80vh;
+      padding-top: 80px; /* Espacio para el botón hamburguesa en móvil si se superpone, o ajuste general */
     }
 
     .page-header {
@@ -226,6 +236,7 @@ interface WatchlistWithCover extends Watchlist {
     @media (max-width: 600px) {
       .watchlists-container {
         padding: 1rem;
+        padding-top: 60px;
       }
       
       .page-header {
@@ -239,6 +250,7 @@ interface WatchlistWithCover extends Watchlist {
 export class MyWatchlistsComponent implements OnInit {
   watchlists: WatchlistWithCover[] = [];
   loading = true;
+  sideMenuOpen = false;
 
   constructor(
     private watchlistService: WatchlistService,
@@ -252,6 +264,10 @@ export class MyWatchlistsComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.loadWatchlists();
     }
+  }
+
+  toggleSideMenu(): void {
+    this.sideMenuOpen = !this.sideMenuOpen;
   }
 
   loadWatchlists(): void {

@@ -1,0 +1,227 @@
+@use '@angular/material' as mat;
+
+// ========================================
+// SIDEMENU LATERAL COMO OVERLAY (SIEMPRE)
+// ========================================
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 260px;
+    background: var(--card-bg);
+    border-right: 1px solid var(--card-border);
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.10);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    z-index: 1202;
+    transform: translateX(-110%);
+    transition: transform 0.3s cubic-bezier(.4, 0, .2, 1);
+    overflow: hidden;
+    /* Evita scroll en el contenedor principal */
+}
+
+.side-menu.open {
+    transform: translateX(0);
+}
+
+.side-menu nav {
+    display: flex;
+    flex-direction: column;
+    padding: 60px 16px 0 16px;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+}
+
+/* Ocultar scrollbar para Chrome, Safari y Opera */
+.side-menu nav::-webkit-scrollbar {
+    display: none;
+}
+
+.side-menu-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: var(--text-color) !important;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.side-menu-close mat-icon {
+    color: var(--text-color) !important;
+}
+
+.side-menu-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 1200;
+}
+
+.side-menu-btn {
+    width: 100%;
+    justify-content: flex-start;
+    color: var(--text-color) !important;
+    font-weight: 500;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: transparent !important;
+}
+
+.side-menu-btn mat-icon {
+    margin-right: 8px;
+    color: var(--text-color) !important;
+}
+
+.side-menu-accordion {
+    width: 100%;
+    justify-content: flex-start;
+    color: var(--text-color) !important;
+    font-weight: 500;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    background: transparent !important;
+    padding: 0;
+}
+
+.side-menu-categories {
+    padding-left: 32px;
+    margin-top: 6px;
+    color: var(--detail-meta);
+    font-size: 0.95rem;
+}
+
+.side-menu-empty {
+    color: var(--detail-meta);
+    font-style: italic;
+}
+
+// ========================================
+// ESTADO DE CARGA DE GÉNEROS EN EL SIDEMENU
+// ========================================
+.side-menu-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--detail-meta);
+    font-size: 0.9rem;
+}
+
+.side-menu-loading mat-spinner {
+    margin: 0;
+}
+
+// ========================================
+// BOTONES DE GÉNEROS EN EL SIDEMENU
+// ========================================
+.side-menu-genre-btn {
+    width: 100%;
+    justify-content: flex-start;
+    color: var(--text-color) !important;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    background: transparent !important;
+    transition: background 0.2s ease;
+}
+
+.side-menu-genre-btn:hover {
+    background: var(--card-border) !important;
+}
+
+.side-menu-genre-btn:last-child {
+    margin-bottom: 0;
+}
+
+// ========================================
+// SECCIÓN DE USUARIO AUTENTICADO
+// ========================================
+
+.side-menu-logout-btn {
+    color: #f44336 !important;
+    margin-top: 4px;
+}
+
+.side-menu-logout-btn mat-icon {
+    color: #f44336 !important;
+}
+
+.side-menu-logout-btn:hover {
+    background: rgba(244, 67, 54, 0.1) !important;
+}
+
+// ========================================
+// SEPARADOR DEL SIDEMENU
+// ========================================
+.side-menu-divider {
+    height: 1px;
+    background: var(--card-border);
+    margin: 24px 0;
+    opacity: 0.6;
+}
+
+// ========================================
+// SECCIÓN DE TEMA EN EL SIDEMENU
+// ========================================
+.side-menu-theme-section {
+    margin-top: auto;
+    padding-top: 16px;
+    flex-shrink: 0;
+    /* Evita que se comprima */
+}
+
+.side-menu-theme-label {
+    display: block;
+    color: var(--text-color);
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.theme-toggle-group {
+    width: 50%;
+    height: 50%;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+}
+
+.theme-toggle-btn {
+    flex: 1;
+    color: var(--text-color) !important;
+    background: var(--card-bg) !important;
+    border: none !important;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle-btn.mat-button-toggle-checked {
+    background: var(--primary-color) !important;
+    color: white !important;
+}
+
+.theme-toggle-btn mat-icon {
+    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+// ========================================
+// RESPONSIVE: AJUSTAR ANCHO DEL MENÚ EN DESKTOP
+// ========================================
+@media (min-width: 900px) {
+    .side-menu {
+        width: 280px;
+    }
+}

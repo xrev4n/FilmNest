@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -8,14 +8,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { isPlatformBrowser } from '@angular/common';
-import { Subscription } from 'rxjs';
 
 import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
-import { TmdbService, Movie, MovieDetail } from '../../services/tmdb.service';
+import { SideMenuComponent } from '../../components/side-menu/side-menu.component';
+import { TmdbService, MovieDetail } from '../../services/tmdb.service';
 import { ThemeService } from '../../services/theme.service';
-import { SupabaseService } from '../../services/supabase.service';
 
 /**
  * Componente de la página principal del catálogo de películas
@@ -32,13 +30,13 @@ import { SupabaseService } from '../../services/supabase.service';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatChipsModule,
-    MatButtonToggleModule,
-    SearchBarComponent
+    SearchBarComponent,
+    SideMenuComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   /** Lista de películas a mostrar */
   movies: MovieDetail[] = [];
   /** Estado de carga */
@@ -52,81 +50,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   /** Término de búsqueda actual */
   searchQuery = '';
 
-  /** Estado del desplegable de categorías */
-  categoriesOpen = false;
   /** Estado del menú lateral */
   sideMenuOpen = false;
-  /** Lista de géneros disponibles */
-  genres: { id: number; name: string }[] = [];
-  /** Estado de carga de géneros */
-  loadingGenres = false;
-
-  /** Estado de autenticación del usuario */
-  isAuthenticated = false;
-  /** Usuario actual */
-  currentUser: any = null;
-  /** Subscription para el estado de autenticación */
-  private authSubscription?: Subscription;
 
   constructor(
     private tmdbService: TmdbService,
     private router: Router,
     private snackBar: MatSnackBar,
     private themeService: ThemeService,
-    private supabaseService: SupabaseService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
   /** Alterna el menú lateral */
   toggleSideMenu(): void {
     this.sideMenuOpen = !this.sideMenuOpen;
-  }
-
-  /** Alterna el desplegable de categorías */
-  toggleCategories(): void {
-    this.categoriesOpen = !this.categoriesOpen;
-  }
-
-  /** Navega al login y cierra el menú */
-  navigateToLogin(): void {
-    this.sideMenuOpen = false;
-    this.router.navigate(['/login']);
-  }
-
-  /** Navega al perfil del usuario y cierra el menú */
-  navigateToProfile(): void {
-    this.sideMenuOpen = false;
-    this.router.navigate(['/my-account']);
-  }
-
-  /** Navega a las listas del usuario y cierra el menú */
-  navigateToWatchlists(): void {
-    this.sideMenuOpen = false;
-    this.router.navigate(['/my-watchlists']);
-  }
-
-  /** Cierra la sesión del usuario */
-  async logout(): Promise<void> {
-    try {
-      const { error } = await this.supabaseService.signOut();
-      if (error) {
-        this.snackBar.open('Error al cerrar sesión', 'Cerrar', {
-          duration: 3000
-        });
-      } else {
-        this.snackBar.open('Sesión cerrada exitosamente', 'Cerrar', {
-          duration: 3000
-        });
-        this.sideMenuOpen = false;
-        this.isAuthenticated = false;
-        this.currentUser = null;
-        this.router.navigate(['/']);
-      }
-    } catch (error) {
-      this.snackBar.open('Error al cerrar sesión', 'Cerrar', {
-        duration: 3000
-      });
-    }
   }
 
   /**
@@ -137,25 +74,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.scrollToTop();
 
     this.loadPopularMovies();
-    this.loadGenres();
-    this.initializeAuth();
-  }
-
-  /**
-   * Inicializa la suscripción al estado de autenticación
-   */
-  private initializeAuth(): void {
-    this.authSubscription = this.supabaseService.currentUser$.subscribe(user => {
-      this.currentUser = user;
-      this.isAuthenticated = user !== null;
-    });
-  }
-
-  /**
-   * Limpia las suscripciones al destruir el componente
-   */
-  ngOnDestroy(): void {
-    this.authSubscription?.unsubscribe();
   }
 
   /**
@@ -165,41 +83,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }
-
-  /**
-   * Carga los géneros disponibles desde la API
-   */
-  loadGenres(): void {
-    this.loadingGenres = true;
-
-    this.tmdbService.getGenres().subscribe({
-      next: (response) => {
-        this.genres = response.genres;
-        this.loadingGenres = false;
-      },
-      error: (error) => {
-        console.error('Error loading genres:', error);
-        this.loadingGenres = false;
-        this.snackBar.open('Error al cargar las categorías', 'Cerrar', {
-          duration: 3000
-        });
-      }
-    });
-  }
-
-  /**
-   * Getter para obtener el estado del tema desde el servicio
-   */
-  get isDarkMode(): boolean {
-    return this.themeService.isDarkMode;
-  }
-
-  /**
-   * Cambia entre modo claro y oscuro usando el servicio
-   */
-  toggleDarkMode(): void {
-    this.themeService.toggleDarkMode();
   }
 
   /**
@@ -335,15 +218,6 @@ export class HomeComponent implements OnInit, OnDestroy {
    */
   viewGenre(genreId: number, event: Event): void {
     event.stopPropagation(); // Evita que se active el click de la tarjeta
-    this.router.navigate(['/genre', genreId]);
-  }
-
-  /**
-   * Navega a la página de género desde el side-menu
-   * @param genreId - ID del género
-   */
-  navigateToGenre(genreId: number): void {
-    this.sideMenuOpen = false; // Cierra el side-menu
     this.router.navigate(['/genre', genreId]);
   }
 }
